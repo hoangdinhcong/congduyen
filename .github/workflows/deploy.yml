@@ -48,6 +48,8 @@ jobs:
         env:
           # Add the base path as an environment variable for next.js
           NEXT_PUBLIC_BASE_PATH: "/congduyen"
+          # Specify the deployment target for GitHub Pages
+          DEPLOY_TARGET: "github"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
