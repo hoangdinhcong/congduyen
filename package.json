@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "clean": "rm -rf .next out",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "build:static": "npm run clean && npm run build",
+    "serve": "npx serve out"
   },
   "dependencies": {
     "react": "^19.0.0",
