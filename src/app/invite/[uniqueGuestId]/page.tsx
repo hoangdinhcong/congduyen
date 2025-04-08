@@ -15,12 +15,7 @@ import PersonalizedGreeting from '../../../components/sections/PersonalizedGreet
 import { supabase } from '../../../lib/supabase';
 import { Guest } from '../../../lib/types';
 
-export const metadata: Metadata = {
-  title: 'Your Personal Invitation | Cong & Duyen Wedding',
-  description: 'Your personal invitation to Cong & Duyen\'s wedding',
-};
-
-// Generate static metadata for each page
+// Generate dynamic metadata for each page
 export async function generateMetadata({ 
   params 
 }: { 
