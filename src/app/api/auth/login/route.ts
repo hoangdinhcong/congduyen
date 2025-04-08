@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Set a cookie to maintain the session
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     cookieStore.set('admin_session', 'true', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
