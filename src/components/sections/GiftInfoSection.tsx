@@ -1,8 +1,8 @@
+'use client';
+
 import React from 'react';
-import Image from 'next/image';
 import SectionTitle from '../ui/SectionTitle';
 import { FaGift, FaQrcode, FaEnvelope } from 'react-icons/fa';
-import getImagePath from '../../utils/imagePath';
 
 export default function GiftInfoSection() {
   return (
@@ -15,7 +15,7 @@ export default function GiftInfoSection() {
         
         <div className="max-w-3xl mx-auto text-center">
           <p className="mb-8">
-            Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we've included some options below.
+            Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we&apos;ve included some options below.
           </p>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -83,7 +83,7 @@ export default function GiftInfoSection() {
             
             <h3 className="text-xl font-heading mb-3">Registry</h3>
             <p className="text-gray-700">
-              We've also created a registry for those who prefer to give a specific gift.
+              We&apos;ve also created a registry for those who prefer to give a specific gift.
             </p>
             <div className="mt-4">
               <a 

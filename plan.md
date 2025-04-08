@@ -8,18 +8,18 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Install and configure Tailwind CSS according to the design spec (colors, fonts).
     *   Establish the basic folder structure (`app`, `components`, `lib`, `api` or Route Handlers).
     *   Create the main `layout.tsx` including font loading.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 2.  **Database Setup (Supabase):**
     *   Define and create the `guests` table in Supabase using the specified schema (`id`, `name`, `side`, `tags`, `unique_invite_id`, `rsvp_status`, `created_at`, `updated_at`).
-    *   **Status:** Pending
+    *   **Status:** Done
 
 3.  **Static Content Pages & Base Views:**
     *   Implement the single-page structure (`app/page.tsx`, `app/bride/page.tsx`, `app/groom/page.tsx`).
     *   Create reusable components for each content section (Hero with Timer, Invitation, Parents, Event Details with Maps, Schedule, Gallery, Gift Info, Contact).
     *   Populate sections with placeholder content and apply initial styling.
     *   Implement the logic for the base views (`/`, `/bride`, `/groom`) to show the main content and the "Use personalized link to RSVP" message.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 4.  **Admin Panel - Authentication:**
     *   Create the route group `app/(admin)/host`.
@@ -27,13 +27,13 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Create a Route Handler or API route for handling login. Use `bcrypt` to compare the submitted password against a securely stored hash (environment variable).
     *   Implement middleware or route protection to secure all routes under `/host`.
     *   Manage authentication state (e.g., using cookies or a simple state management solution).
-    *   **Status:** Pending
+    *   **Status:** Done
 
 5.  **Admin Panel - Dashboard:**
     *   Create the dashboard page (`app/(admin)/host/page.tsx`).
     *   Develop a Route Handler to fetch aggregate RSVP statistics (`total`, `attending`, `declined`, `pending` counts, possibly grouped by `side`) from the Supabase `guests` table.
     *   Display these statistics clearly on the dashboard, potentially using simple cards or charts.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 6.  **Admin Panel - Guest List Management UI:**
     *   Create the guest management page (`app/(admin)/host/guests/page.tsx`).
@@ -44,7 +44,7 @@ This document outlines the steps to build the elegant wedding invitation website
         *   A "Copy Link" button for each guest.
         *   An "Add Guest" button/modal trigger.
         *   A CSV import section/button.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 7.  **Admin Panel - Guest List API & Logic:**
     *   Create Route Handlers for:
@@ -54,21 +54,21 @@ This document outlines the steps to build the elegant wedding invitation website
         *   `PATCH /api/guests/[id]/rsvp`: Update only the RSVP status.
         *   `POST /api/guests/import`: Handle CSV upload, parse data, validate, and insert new guests (auto-generating `unique_invite_id`). Provide a downloadable template link/info.
     *   Implement the client-side logic to interact with these endpoints for displaying, adding, editing, updating RSVP, and importing guests.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 8.  **Personalized Invitation Route & Greeting:**
     *   Create the dynamic route `app/invite/[uniqueGuestId]/page.tsx`.
     *   Implement server-side data fetching (`getServerSideProps` or equivalent in App Router) to retrieve guest data from Supabase based on the `uniqueGuestId` parameter. Handle cases where the ID is invalid.
     *   Display the personalized welcome message (e.g., "Welcome, [Guest Name]!") before showing the main invitation content. A modal could work well here.
     *   Pass guest data down to the RSVP component.
-    *   **Status:** Pending
+    *   **Status:** Done
 
 9.  **Personalized RSVP Component & Logic:**
     *   Create a specific RSVP component displayed only on the `/invite/[uniqueGuestId]` page.
     *   This component should display the guest's name and the "Attend" / "Decline" buttons.
     *   Create a Route Handler (`PATCH /api/rsvp/[uniqueGuestId]`) to receive the RSVP choice ('attending' or 'declined') and update the corresponding guest record in Supabase.
     *   Implement client-side logic to handle button clicks, call the API endpoint, and provide immediate visual feedback (success/error messages, updating the UI state).
-    *   **Status:** Pending
+    *   **Status:** Done
 
 10. **Styling, Polish & Refinement:**
     *   Apply the final elegant styling using Tailwind CSS, adhering strictly to the color palette, typography, and layout guidelines.

@@ -70,7 +70,7 @@ export default async function PersonalizedInvitationPage({
   
   // If guest not found, show 404 page
   if (!guest) {
-    notFound();
+    return notFound();
   }
   
   // Wedding date - April 15, 2025
