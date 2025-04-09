@@ -28,13 +28,13 @@ export interface RSVPStats {
   attending: number;
   declined: number;
   pending: number;
-  bride: {
+  bride?: {
     total: number;
     attending: number;
     declined: number;
     pending: number;
   };
-  groom: {
+  groom?: {
     total: number;
     attending: number;
     declined: number;
