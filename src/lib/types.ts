@@ -21,3 +21,23 @@ export interface Guest {
   created_at?: string;
   updated_at?: string;
 }
+
+// RSVP statistics structure
+export interface RSVPStats {
+  total: number;
+  attending: number;
+  declined: number;
+  pending: number;
+  bride: {
+    total: number;
+    attending: number;
+    declined: number;
+    pending: number;
+  };
+  groom: {
+    total: number;
+    attending: number;
+    declined: number;
+    pending: number;
+  };
+}

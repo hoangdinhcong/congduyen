@@ -1,20 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../../lib/supabase';
 
+type RouteParams = {
+  id: string;
+};
+
 // GET /api/guests/[id] - Get a specific guest
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<RouteParams> }
 ) {
   try {
-    const id = params.id;
-    
+    const { id } = await params;
+
     const { data, error } = await supabase
       .from('guests')
       .select('*')
       .eq('id', id)
       .single();
-    
+
     if (error) {
       if (error.code === 'PGRST116') {
         return NextResponse.json(
@@ -24,7 +28,7 @@ export async function GET(
       }
       throw error;
     }
-    
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error('Error fetching guest:', error);
@@ -38,12 +42,12 @@ export async function GET(
 // PUT /api/guests/[id] - Update a guest
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<RouteParams> }
 ) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
-    
+
     // Validate required fields
     if (!body.name || !body.side || !body.rsvp_status) {
       return NextResponse.json(
@@ -51,7 +55,7 @@ export async function PUT(
         { status: 400 }
       );
     }
-    
+
     // Prepare the guest data
     const guestData = {
       name: body.name,
@@ -59,7 +63,7 @@ export async function PUT(
       tags: body.tags || [],
       rsvp_status: body.rsvp_status,
     };
-    
+
     // Update the guest in the database
     const { data, error } = await supabase
       .from('guests')
@@ -67,7 +71,7 @@ export async function PUT(
       .eq('id', id)
       .select()
       .single();
-    
+
     if (error) {
       if (error.code === 'PGRST116') {
         return NextResponse.json(
@@ -77,7 +81,7 @@ export async function PUT(
       }
       throw error;
     }
-    
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error('Error updating guest:', error);
@@ -91,12 +95,12 @@ export async function PUT(
 // PATCH /api/guests/[id] - Update RSVP status only
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<RouteParams> }
 ) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
-    
+
     // Validate RSVP status
     if (!body.rsvp_status || !['pending', 'attending', 'declined'].includes(body.rsvp_status)) {
       return NextResponse.json(
@@ -104,7 +108,7 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    
+
     // Update the RSVP status in the database
     const { data, error } = await supabase
       .from('guests')
@@ -112,7 +116,7 @@ export async function PATCH(
       .eq('id', id)
       .select()
       .single();
-    
+
     if (error) {
       if (error.code === 'PGRST116') {
         return NextResponse.json(
@@ -122,7 +126,7 @@ export async function PATCH(
       }
       throw error;
     }
-    
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error('Error updating RSVP status:', error);
@@ -136,20 +140,20 @@ export async function PATCH(
 // DELETE /api/guests/[id] - Delete a guest
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<RouteParams> }
 ) {
   try {
-    const id = params.id;
-    
+    const { id } = await params;
+
     const { error } = await supabase
       .from('guests')
       .delete()
       .eq('id', id);
-    
+
     if (error) {
       throw error;
     }
-    
+
     return NextResponse.json(
       { message: 'Guest deleted successfully' },
       { status: 200 }

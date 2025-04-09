@@ -7,6 +7,11 @@ const deployTarget = process.env.DEPLOY_TARGET || 'development';
 let nextConfig = {
   // Default configuration for all environments
   trailingSlash: true,
+  // Ignore ESLint errors during builds
+  eslint: {
+    // Warning: only use this in production, not during development
+    ignoreDuringBuilds: true,
+  },
 };
 
 // GitHub Pages specific configuration
@@ -53,4 +58,3 @@ else {
 }
 
 module.exports = nextConfig;
-

@@ -10,6 +10,18 @@ export default function DashboardStats() {
     attending: 0,
     declined: 0,
     pending: 0,
+    bride: {
+      total: 0,
+      attending: 0,
+      declined: 0,
+      pending: 0,
+    },
+    groom: {
+      total: 0,
+      attending: 0,
+      declined: 0,
+      pending: 0,
+    },
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

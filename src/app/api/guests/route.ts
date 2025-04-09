@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../../../lib/supabase';
-import { Guest } from '../../../lib/types';
 
 // GET /api/guests - Fetch all guests
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const { data, error } = await supabase
       .from('guests')

@@ -2,13 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../../lib/supabase';
 import { RSVPStatus } from '../../../../lib/types';
 
+type RouteParams = {
+    uniqueInviteId: string;
+};
+
 // PATCH /api/rsvp/[uniqueInviteId] - Update RSVP status
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { uniqueInviteId: string } }
+  { params }: { params: Promise<RouteParams> }
 ) {
   try {
-    const uniqueInviteId = params.uniqueInviteId;
+    const { uniqueInviteId } = await params;
     const body = await request.json();
     
     // Validate RSVP status

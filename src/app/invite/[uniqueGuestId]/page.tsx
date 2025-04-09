@@ -19,13 +19,14 @@ import { Guest } from '../../../lib/types';
 export async function generateMetadata({ 
   params 
 }: { 
-  params: { uniqueGuestId: string } 
+  params: Promise<{ uniqueGuestId: string }> 
 }): Promise<Metadata> {
   // Fetch guest data
+  const { uniqueGuestId } = await params;
   const { data: guest } = await supabase
     .from('guests')
     .select('*')
-    .eq('unique_invite_id', params.uniqueGuestId)
+    .eq('unique_invite_id', uniqueGuestId)
     .single();
   
   if (!guest) {
@@ -59,9 +60,12 @@ async function getGuest(uniqueGuestId: string): Promise<Guest | null> {
 export default async function PersonalizedInvitationPage({ 
   params 
 }: { 
-  params: { uniqueGuestId: string } 
+  params: Promise<{ uniqueGuestId: string }> 
 }) {
-  const guest = await getGuest(params.uniqueGuestId);
+  // Await the params if it's a promise (Next.js 15 compatibility)
+  const { uniqueGuestId } = await params;
+  
+  const guest = await getGuest(uniqueGuestId);
   
   // If guest not found, show 404 page
   if (!guest) {

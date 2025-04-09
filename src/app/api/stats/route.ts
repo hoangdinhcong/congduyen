@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabase';
 import { RSVPStats } from '../../../lib/types';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get total count
     const { count: total } = await supabase
