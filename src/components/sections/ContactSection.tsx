@@ -7,15 +7,15 @@ export default function ContactSection() {
     <section className="py-16 bg-gray-50">
       <div className="container-wedding">
         <SectionTitle 
-          title="Contact Us" 
-          subtitle="Feel free to reach out if you have any questions"
+          title="Liên Hệ" 
+          subtitle="Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào"
         />
         
         <div className="max-w-3xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Bride Contact */}
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h3 className="text-xl font-heading mb-4 text-center">Bride</h3>
+              <h3 className="text-xl font-heading mb-4 text-center">Cô Dâu</h3>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -23,8 +23,8 @@ export default function ContactSection() {
                     <FaPhone className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Phone</p>
-                    <p className="font-medium">+1 (234) 567-8901</p>
+                    <p className="text-sm text-gray-600">Điện thoại</p>
+                    <p className="font-medium">+84 123 456 789</p>
                   </div>
                 </div>
                 
@@ -34,7 +34,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Email</p>
-                    <p className="font-medium">duyen@example.com</p>
+                    <p className="font-medium">myduyen@example.com</p>
                   </div>
                 </div>
                 
@@ -43,8 +43,8 @@ export default function ContactSection() {
                     <FaWhatsapp className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">WhatsApp</p>
-                    <p className="font-medium">+1 (234) 567-8901</p>
+                    <p className="text-sm text-gray-600">Zalo</p>
+                    <p className="font-medium">+84 123 456 789</p>
                   </div>
                 </div>
               </div>
@@ -52,7 +52,7 @@ export default function ContactSection() {
             
             {/* Groom Contact */}
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h3 className="text-xl font-heading mb-4 text-center">Groom</h3>
+              <h3 className="text-xl font-heading mb-4 text-center">Chú Rể</h3>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -60,8 +60,8 @@ export default function ContactSection() {
                     <FaPhone className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Phone</p>
-                    <p className="font-medium">+1 (234) 567-8902</p>
+                    <p className="text-sm text-gray-600">Điện thoại</p>
+                    <p className="font-medium">+84 987 654 321</p>
                   </div>
                 </div>
                 
@@ -71,7 +71,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Email</p>
-                    <p className="font-medium">cong@example.com</p>
+                    <p className="font-medium">hoangcong@example.com</p>
                   </div>
                 </div>
                 
@@ -80,8 +80,8 @@ export default function ContactSection() {
                     <FaWhatsapp className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">WhatsApp</p>
-                    <p className="font-medium">+1 (234) 567-8902</p>
+                    <p className="text-sm text-gray-600">Zalo</p>
+                    <p className="font-medium">+84 987 654 321</p>
                   </div>
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function ContactSection() {
           
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Please don't hesitate to contact us if you have any questions or need assistance with travel arrangements.
+              Đừng ngần ngại liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ về việc di chuyển đến địa điểm tổ chức.
             </p>
           </div>
         </div>

@@ -6,7 +6,6 @@ import HeroSection from '../../../components/sections/HeroSection';
 import InvitationSection from '../../../components/sections/InvitationSection';
 import ParentsSection from '../../../components/sections/ParentsSection';
 import EventDetailsSection from '../../../components/sections/EventDetailsSection';
-import ScheduleSection from '../../../components/sections/ScheduleSection';
 import GallerySection from '../../../components/sections/GallerySection';
 import GiftInfoSection from '../../../components/sections/GiftInfoSection';
 import ContactSection from '../../../components/sections/ContactSection';
@@ -31,14 +30,14 @@ export async function generateMetadata({
   
   if (!guest) {
     return {
-      title: 'Invitation Not Found | Cong & Duyen Wedding',
+      title: 'Invitation Not Found | Hoàng Công & Mỹ Duyên Wedding',
       description: 'The invitation you are looking for could not be found.',
     };
   }
   
   return {
-    title: `${guest.name}'s Invitation | Cong & Duyen Wedding`,
-    description: `${guest.name}, you are cordially invited to Cong & Duyen's wedding.`,
+    title: `${guest.name}'s Invitation | Hoàng Công & Mỹ Duyên Wedding`,
+    description: `${guest.name}, you are cordially invited to Hoàng Công & Mỹ Duyên's wedding.`,
   };
 }
 
@@ -72,8 +71,8 @@ export default async function PersonalizedInvitationPage({
     return notFound();
   }
   
-  // Wedding date - April 15, 2025
-  const weddingDate = '2025-04-15T15:00:00';
+  // Wedding date - May 1, 2025 at 17:00
+  const weddingDate = '2025-05-01T17:00:00';
   
   return (
     <MainLayout>
@@ -82,7 +81,6 @@ export default async function PersonalizedInvitationPage({
       <InvitationSection />
       <ParentsSection />
       <EventDetailsSection />
-      <ScheduleSection />
       <GallerySection />
       <GiftInfoSection />
       <ContactSection />

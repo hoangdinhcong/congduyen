@@ -114,3 +114,19 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Configure environment variables (Supabase keys, login password hash) in Vercel.
     *   Final performance checks.
     *   **Status:** Pending
+
+15. **Vietnamese Localization & Content Updates:**
+    *   Update all invitation information with Vietnamese text
+    *   Replace bride and groom names with correct Vietnamese names
+    *   Update venue information with correct Vietnamese address
+    *   Update parents' information with correct Vietnamese names
+    *   Remove Wedding Day Schedule and Registry sections
+    *   Translate remaining sections (RSVP, Contact Us, etc.) to Vietnamese
+    *   Update venue name to "Trung Tâm Tiệc Cưới Nguyên Đình"
+    *   **Status:** Done
+
+16. **Media & Visual Improvements:**
+    *   Update gallery section with images from /public/gallery folder
+    *   Replace frontpage hero image with hero.jpg
+    *   Add floating RSVP button for quick response without scrolling
+    *   **Status:** Done

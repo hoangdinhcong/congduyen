@@ -45,14 +45,14 @@ export default function InvitationSection() {
     <section ref={sectionRef} id="invitation" className="py-20 bg-gradient-to-b from-white to-primary-light">
       <div className="container-wedding">
         <SectionTitle 
-          title="You Are Invited" 
-          subtitle="We would be honored to have you join us on our special day"
+          title="Thiệp Mời" 
+          subtitle="Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi"
         />
         
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-lg mb-8 section-fade-in">
-            With great pleasure, we invite you to share in our joy as we unite in marriage.
-            Your presence will make our celebration even more meaningful as we begin our new life together.
+            Với niềm hân hoan, chúng tôi trân trọng kính mời quý vị đến dự buổi lễ thành hôn.
+            Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng tôi trong ngày trọng đại này.
           </p>
           
           <div 
@@ -70,12 +70,12 @@ export default function InvitationSection() {
               <FaHeart className="text-primary text-xl" />
             </div>
             
-            <h3 className="font-heading text-2xl md:text-3xl mb-3 text-secondary">Cong & Duyen</h3>
-            <p className="text-xl mb-5 font-light">Request the honor of your presence</p>
+            <h3 className="font-heading text-2xl md:text-3xl mb-3 text-secondary">Hoàng Công & Mỹ Duyên</h3>
+            <p className="text-xl mb-5 font-light">Trân trọng kính mời</p>
             <p className="text-lg leading-relaxed">
-              Saturday, the fifteenth of April<br />
-              Two thousand and twenty-five<br />
-              at three o&apos;clock in the afternoon
+              17:00, ngày 01 tháng 05 năm 2025<br />
+              461 Đ. Trương Định, Tân Mai<br />
+              Hoàng Mai, Hà Nội
             </p>
             
             {/* Decorative heart at bottom */}
@@ -85,7 +85,7 @@ export default function InvitationSection() {
           </div>
           
           <p className="italic text-gray-600 section-fade-in">
-            &ldquo;Love is patient, love is kind. It always protects, always trusts, always hopes, always perseveres.&rdquo;
+            &ldquo;Tình yêu là sự kiên nhẫn, tình yêu là lòng tốt. Tình yêu luôn bảo vệ, luôn tin tưởng, luôn hy vọng, luôn kiên trì.&rdquo;
           </p>
         </div>
       </div>

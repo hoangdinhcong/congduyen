@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import CountdownTimer from '../ui/CountdownTimer';
-import getImagePath from '../../utils/imagePath';
 import { FaChevronDown } from 'react-icons/fa';
 
 type HeroSectionProps = {
@@ -13,8 +12,8 @@ type HeroSectionProps = {
 export default function HeroSection({ weddingDate }: HeroSectionProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Format date for display (e.g., "April 15, 2025")
-  const displayDate = new Date(weddingDate).toLocaleDateString('en-US', {
+  // Format date for display in Vietnamese
+  const displayDate = new Date(weddingDate).toLocaleDateString('vi-VN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -50,8 +49,8 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" />
         <Image
-          src={getImagePath('/couple.jpg')}
-          alt="Cong and Duyen"
+          src="/hero.jpg"
+          alt="Hoàng Công và Mỹ Duyên"
           fill
           className={`object-cover hero-image transition-opacity duration-1000 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
@@ -82,7 +81,7 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Cong & Duyen
+            Hoàng Công & Mỹ Duyên
           </h1>
           
           {/* Date */}
@@ -100,7 +99,7 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <p className="text-lg mb-4 font-light">Countdown to our special day</p>
+            <p className="text-lg mb-4 font-light">Đếm ngược đến ngày trọng đại</p>
             <CountdownTimer targetDate={weddingDate} />
           </div>
           
@@ -112,7 +111,7 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
             onClick={scrollToNextSection}
           >
             <div className="animate-bounce flex flex-col items-center">
-              <span className="text-sm mb-2">Scroll Down</span>
+              <span className="text-sm mb-2">Cuộn xuống</span>
               <FaChevronDown />
             </div>
           </div>
