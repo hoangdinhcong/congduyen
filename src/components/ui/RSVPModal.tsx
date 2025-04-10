@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import { FaCheck, FaTimes, FaEnvelope } from 'react-icons/fa';
+import AnonymousRSVPForm from './AnonymousRSVPForm';
 
 type RSVPModalProps = {
   isOpen: boolean;
@@ -25,6 +26,8 @@ export default function RSVPModal({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const isPersonalized = !!uniqueInviteId;
 
   const handleRSVP = async (newStatus: 'attending' | 'declined') => {
     if (!guestId || !uniqueInviteId) {
@@ -66,82 +69,88 @@ export default function RSVPModal({
       onClose={onClose}
       title="Phản Hồi Tham Dự"
     >
-      {status === 'pending' ? (
-        <>
-          <div className="mb-6 text-center">
-            <FaEnvelope className="text-3xl text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-heading mb-3 text-secondary">
-              {guestName ? `${guestName}, bạn` : 'Bạn'} sẽ tham dự đám cưới của chúng tôi chứ?
-            </h3>
-            <p className="text-gray-600">
-              Chúng tôi rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
-              Vui lòng cho chúng tôi biết bạn có thể tham dự không.
-            </p>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => handleRSVP('attending')}
-              disabled={submitting}
-              className="btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <FaCheck className="text-sm" />
-              {submitting ? 'Đang gửi...' : 'Có, tôi sẽ tham dự'}
-            </button>
+      {isPersonalized ? (
+        // Personalized RSVP for guests with invitation ID
+        status === 'pending' ? (
+          <>
+            <div className="mb-6 text-center">
+              <FaEnvelope className="text-3xl text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-heading mb-3 text-secondary">
+                {guestName ? `${guestName}, bạn` : 'Bạn'} sẽ tham dự đám cưới của chúng tôi chứ?
+              </h3>
+              <p className="text-gray-600">
+                Chúng tôi rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
+                Vui lòng cho chúng tôi biết bạn có thể tham dự không.
+              </p>
+            </div>
             
-            <button 
-              onClick={() => handleRSVP('declined')}
-              disabled={submitting}
-              className="btn-outline flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => handleRSVP('attending')}
+                disabled={submitting}
+                className="btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <FaCheck className="text-sm" />
+                {submitting ? 'Đang gửi...' : 'Có, tôi sẽ tham dự'}
+              </button>
+              
+              <button 
+                onClick={() => handleRSVP('declined')}
+                disabled={submitting}
+                className="btn-outline flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <FaTimes className="text-sm" />
+                {submitting ? 'Đang gửi...' : 'Rất tiếc, tôi không thể tham dự'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-4">
+            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
+              {status === 'attending' ? (
+                <div className="bg-green-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
+                  <FaCheck className="text-green-600 text-2xl animate-bounce" />
+                </div>
+              ) : (
+                <div className="bg-red-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
+                  <FaTimes className="text-red-600 text-2xl" />
+                </div>
+              )}
+            </div>
+            
+            <h3 className="text-xl font-heading mb-4 text-secondary">
+              {status === 'attending' 
+                ? 'Bạn đã xác nhận tham dự!' 
+                : 'Bạn đã từ chối lời mời.'}
+            </h3>
+            
+            <p className="text-gray-600 mb-6">
+              {status === 'attending'
+                ? 'Chúng tôi rất mong được gặp bạn! Cảm ơn bạn đã đồng hành cùng chúng tôi trong ngày đặc biệt này.'
+                : 'Chúng tôi sẽ nhớ bạn, nhưng cảm ơn bạn đã thông báo. Chúng tôi đánh giá cao phản hồi của bạn.'}
+            </p>
+            
+            <button
+              onClick={() => setStatus('pending')}
+              className="text-primary hover:text-primary-dark transition-colors duration-300 flex items-center gap-2 mx-auto"
             >
-              <FaTimes className="text-sm" />
-              {submitting ? 'Đang gửi...' : 'Rất tiếc, tôi không thể tham dự'}
+              <span className="underline">Thay đổi phản hồi của bạn</span>
             </button>
           </div>
-        </>
+        )
       ) : (
-        <div className="text-center py-2">
-          <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
-            {status === 'attending' ? (
-              <div className="bg-green-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
-                <FaCheck className="text-green-600 text-xl animate-bounce" />
-              </div>
-            ) : (
-              <div className="bg-red-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
-                <FaTimes className="text-red-600 text-xl" />
-              </div>
-            )}
-          </div>
-          
-          <h3 className="text-xl font-heading mb-3 text-secondary">
-            {status === 'attending' 
-              ? 'Bạn đã xác nhận tham dự!' 
-              : 'Bạn đã từ chối lời mời.'}
-          </h3>
-          
-          <p className="text-gray-600 mb-6">
-            {status === 'attending'
-              ? 'Chúng tôi rất mong được gặp bạn! Cảm ơn bạn đã đồng hành cùng chúng tôi trong ngày đặc biệt này.'
-              : 'Chúng tôi sẽ nhớ bạn, nhưng cảm ơn bạn đã thông báo. Chúng tôi đánh giá cao phản hồi của bạn.'}
-          </p>
-          
-          <button
-            onClick={() => setStatus('pending')}
-            className="text-primary hover:text-primary-dark transition-colors duration-300 flex items-center gap-2 mx-auto"
-          >
-            <span className="underline">Thay đổi phản hồi của bạn</span>
-          </button>
-        </div>
+        // Anonymous RSVP - display form immediately
+        <AnonymousRSVPForm />
       )}
       
       {error && (
-        <div className="mt-4 text-red-600 bg-red-50 p-3 rounded-md">
+        <div className="mt-6 text-red-600 bg-red-50 p-3 rounded-md">
           {error}
         </div>
       )}
       
       {success && (
-        <div className="mt-4 text-green-600 bg-green-50 p-3 rounded-md">
+        <div className="mt-6 text-green-600 bg-green-50 p-3 rounded-md">
           {success}
         </div>
       )}

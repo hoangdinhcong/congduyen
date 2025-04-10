@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { FaUsers, FaCheck, FaTimes, FaClock } from 'react-icons/fa';
+import { FaUsers, FaCheck, FaTimes, FaClock, FaUserSecret } from 'react-icons/fa';
 import { RSVPStats } from '../../lib/types';
 
 export default function DashboardStats() {
@@ -10,6 +10,7 @@ export default function DashboardStats() {
     attending: 0,
     declined: 0,
     pending: 0,
+    anonymous: 0,
     bride: {
       total: 0,
       attending: 0,
@@ -95,13 +96,20 @@ export default function DashboardStats() {
       color: 'bg-yellow-100 text-yellow-800',
       iconColor: 'text-yellow-500',
     },
+    {
+      title: 'Anonymous',
+      value: stats.anonymous || 0,
+      icon: FaUserSecret,
+      color: 'bg-purple-100 text-purple-800',
+      iconColor: 'text-purple-500',
+    },
   ];
 
   return (
     <div>
       <h2 className="text-lg font-medium text-gray-900 mb-4">RSVP Statistics</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {statCards.map((card) => (
           <div key={card.title} className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
@@ -170,6 +178,32 @@ export default function DashboardStats() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+      
+      {/* Anonymous RSVPs Section */}
+      {stats.anonymous && stats.anonymous > 0 && (
+        <div className="mt-8">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Anonymous RSVPs</h2>
+          <div className="bg-white overflow-hidden shadow rounded-lg p-6">
+            <div className="flex items-center mb-4">
+              <div className="flex-shrink-0 rounded-md p-3 bg-purple-100 text-purple-800">
+                <FaUserSecret className="h-6 w-6 text-purple-500" aria-hidden="true" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  {stats.anonymous} Anonymous {stats.anonymous === 1 ? 'Response' : 'Responses'}
+                </h3>
+                <p className="text-sm text-gray-500">
+                  These are guests who RSVP&apos;d without an invitation ID
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600">
+              Anonymous RSVPs are included in the total guest count and RSVP statistics above.
+              You can view and manage these responses in the guest list by filtering for the &quot;anonymous&quot; tag.
+            </p>
           </div>
         </div>
       )}

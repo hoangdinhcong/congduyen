@@ -1,8 +1,27 @@
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCalendarPlus } from 'react-icons/fa';
+import { generateGoogleCalendarUrl } from '../../utils/calendarUtils';
 
 export default function EventDetailsSection() {
+  // Wedding event details
+  const eventDetails = {
+    title: 'Đám Cưới Công & Duyên',
+    description: 'Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi',
+    location: 'Trung Tâm Tiệc Cưới Nguyên Đình, 461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam',
+    startDate: '2025-05-01T17:00:00+07:00',
+    endDate: '2025-05-01T21:00:00+07:00',
+  };
+
+  // Generate Google Calendar URL
+  const googleCalendarUrl = generateGoogleCalendarUrl(
+    eventDetails.title,
+    eventDetails.description,
+    eventDetails.location,
+    eventDetails.startDate,
+    eventDetails.endDate
+  );
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container-wedding">
@@ -36,6 +55,19 @@ export default function EventDetailsSection() {
               <div>
                 <p className="font-medium">17:00</p>
               </div>
+            </div>
+            
+            {/* Add to Calendar Button */}
+            <div className="flex justify-center mb-6">
+              <a 
+                href={googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition-colors"
+              >
+                <FaCalendarPlus />
+                <span>Thêm vào Google Calendar</span>
+              </a>
             </div>
             
             {/* Map */}

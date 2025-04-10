@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaUpload, FaSearch, FaFilter, FaCopy, FaEdit, FaTrash, FaUsers } from 'react-icons/fa';
+import { FaPlus, FaUpload, FaSearch, FaFilter, FaCopy, FaEdit, FaTrash, FaUsers, FaUserSecret } from 'react-icons/fa';
 import { Guest, RSVPStatus, GuestSide } from '../../lib/types';
 import { showToast } from '@/components/ui/ToastProvider';
 import AddGuestModal from './AddGuestModal';
@@ -19,6 +19,7 @@ export default function GuestList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sideFilter, setSideFilter] = useState<'all' | GuestSide>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | RSVPStatus>('all');
+  const [anonymousFilter, setAnonymousFilter] = useState<'all' | 'anonymous' | 'invited'>('all');
   
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -59,17 +60,28 @@ export default function GuestList() {
       result = result.filter(guest => guest.rsvp_status === statusFilter);
     }
     
+    // Apply anonymous filter
+    if (anonymousFilter !== 'all') {
+      if (anonymousFilter === 'anonymous') {
+        result = result.filter(guest => guest.is_anonymous === true);
+      } else {
+        result = result.filter(guest => guest.is_anonymous !== true);
+      }
+    }
+    
     // Apply search term
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(guest => 
         guest.name.toLowerCase().includes(term) ||
-        guest.unique_invite_id.toLowerCase().includes(term)
+        guest.unique_invite_id.toLowerCase().includes(term) ||
+        (guest.email && guest.email.toLowerCase().includes(term)) ||
+        (guest.phone && guest.phone.toLowerCase().includes(term))
       );
     }
     
     setFilteredGuests(result);
-  }, [guests, searchTerm, sideFilter, statusFilter]);
+  }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter]);
 
   const fetchGuests = async () => {
     try {
@@ -345,113 +357,138 @@ export default function GuestList() {
   }
 
   return (
-    <div>
-      {/* Action buttons */}
-      <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="p-4 border-b border-gray-200 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <h2 className="text-lg font-medium text-gray-900 flex items-center">
+          <FaUsers className="mr-2 text-primary" />
+          Guest List
+          <span className="ml-2 text-sm text-gray-500">
+            ({filteredGuests.length} of {guests.length})
+          </span>
+        </h2>
+        
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="btn-primary-sm flex items-center"
           >
-            <FaPlus className="-ml-1 mr-2 h-4 w-4" />
+            <FaPlus className="mr-1" />
             Add Guest
           </button>
           
           <button
             onClick={() => setIsImportModalOpen(true)}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="btn-outline-sm flex items-center"
           >
-            <FaUpload className="-ml-1 mr-2 h-4 w-4" />
-            Import CSV
+            <FaUpload className="mr-1" />
+            Import
           </button>
-
-          {/* Bulk action buttons */}
+          
           {selectedGuests.length > 0 && (
             <>
               <button
                 onClick={() => setIsBulkEditModalOpen(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="btn-secondary-sm flex items-center"
               >
-                <FaUsers className="-ml-1 mr-2 h-4 w-4" />
-                Edit Selected ({selectedGuests.length})
+                <FaEdit className="mr-1" />
+                Bulk Edit ({selectedGuests.length})
               </button>
               
               <button
                 onClick={handleBulkDelete}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="btn-danger-sm flex items-center"
               >
-                <FaTrash className="-ml-1 mr-2 h-4 w-4" />
-                Delete Selected ({selectedGuests.length})
+                <FaTrash className="mr-1" />
+                Delete ({selectedGuests.length})
               </button>
             </>
           )}
         </div>
+      </div>
+      
+      <div className="p-4 border-b border-gray-200 bg-white flex flex-col md:flex-row gap-4">
+        <div className="flex-1 relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search by name, email, phone, or invite ID..."
+            className="pl-10 w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         
-        {/* Search and filters */}
         <div className="flex flex-wrap gap-2">
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaSearch className="h-4 w-4 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search guests..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-            />
-          </div>
-          
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaFilter className="h-4 w-4 text-gray-400" />
-            </div>
             <select
+              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
               value={sideFilter}
-              onChange={(e) => setSideFilter(e.target.value as any)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              onChange={(e) => setSideFilter(e.target.value as 'all' | GuestSide)}
             >
               <option value="all">All Sides</option>
               <option value="bride">Bride's Side</option>
               <option value="groom">Groom's Side</option>
             </select>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaFilter className="text-gray-400" />
+            </div>
           </div>
           
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaFilter className="h-4 w-4 text-gray-400" />
-            </div>
             <select
+              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              onChange={(e) => setStatusFilter(e.target.value as 'all' | RSVPStatus)}
             >
               <option value="all">All Statuses</option>
-              <option value="pending">Pending</option>
               <option value="attending">Attending</option>
               <option value="declined">Declined</option>
+              <option value="pending">Pending</option>
             </select>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaFilter className="text-gray-400" />
+            </div>
+          </div>
+          
+          <div className="relative">
+            <select
+              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              value={anonymousFilter}
+              onChange={(e) => setAnonymousFilter(e.target.value as 'all' | 'anonymous' | 'invited')}
+            >
+              <option value="all">All Guests</option>
+              <option value="anonymous">Anonymous RSVPs</option>
+              <option value="invited">Invited Guests</option>
+            </select>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaUserSecret className="text-gray-400" />
+            </div>
           </div>
         </div>
       </div>
-      
+
       {/* Guest table */}
-      <div className="overflow-x-auto bg-white shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-4 py-3">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 <div className="flex items-center">
                   <input
                     type="checkbox"
+                    className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                     checked={selectAll}
                     onChange={handleSelectAll}
-                    className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                   />
                 </div>
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Contact
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Side
@@ -460,48 +497,77 @@ export default function GuestList() {
                 RSVP Status
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Unique ID
+                Invite Link
               </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredGuests.length === 0 ? (
+            {loading ? (
               <tr>
-                <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
-                  No guests found. Add a new guest or adjust your filters.
+                <td colSpan={7} className="px-6 py-4 text-center">
+                  <LoadingSpinner />
+                </td>
+              </tr>
+            ) : filteredGuests.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
+                  No guests found. {searchTerm && 'Try adjusting your search or filters.'}
                 </td>
               </tr>
             ) : (
               filteredGuests.map((guest) => {
                 const isAnimated = animatedRows.find(row => row.id === guest.id);
-                const animationClass = isAnimated 
-                  ? isAnimated.action === 'add' 
-                    ? 'animate-fadeIn bg-green-50' 
-                    : isAnimated.action === 'update' 
-                      ? 'animate-pulse bg-blue-50' 
-                      : 'animate-fadeOut opacity-0 h-0 overflow-hidden' 
-                  : '';
-                
                 return (
                   <tr 
                     key={guest.id} 
-                    className={`${selectedGuests.includes(guest.id) ? "bg-blue-50" : ""} ${animationClass} transition-all duration-500`}
+                    className={`${
+                      isAnimated 
+                        ? isAnimated.action === 'add' 
+                          ? 'animate-fade-in bg-green-50' 
+                          : isAnimated.action === 'update' 
+                            ? 'animate-pulse bg-blue-50' 
+                            : ''
+                        : ''
+                    } hover:bg-gray-50 transition-colors`}
                   >
-                    <td className="px-4 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                        checked={selectedGuests.includes(guest.id)}
+                        onChange={() => handleSelectGuest(guest.id)}
+                      />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <input
-                          type="checkbox"
-                          checked={selectedGuests.includes(guest.id)}
-                          onChange={() => handleSelectGuest(guest.id)}
-                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                        />
+                        <div className="text-sm font-medium text-gray-900 flex items-center">
+                          {guest.name}
+                          {guest.is_anonymous && (
+                            <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
+                              <FaUserSecret className="mr-1" />
+                              Anonymous
+                            </span>
+                          )}
+                        </div>
+                        {guest.plus_one && (
+                          <div className="ml-2 text-xs inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
+                            +1 {guest.plus_one_name ? `(${guest.plus_one_name})` : ''}
+                          </div>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{guest.name}</div>
+                      <div className="text-sm text-gray-500">
+                        {guest.email && (
+                          <div className="mb-1">{guest.email}</div>
+                        )}
+                        {guest.phone && (
+                          <div>{guest.phone}</div>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -557,9 +623,7 @@ export default function GuestList() {
           </tbody>
         </table>
       </div>
-      
-      {/* Pagination could be added here */}
-      
+
       {/* Modals */}
       {isAddModalOpen && (
         <AddGuestModal

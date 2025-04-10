@@ -20,6 +20,15 @@ export interface Guest {
   notes?: string;
   created_at?: string;
   updated_at?: string;
+  is_anonymous?: boolean; // Flag to indicate if this is an anonymous RSVP
+}
+
+// Anonymous RSVP submission data
+export interface AnonymousRSVP {
+  name: string;
+  email?: string;
+  side?: GuestSide;
+  rsvp_status: RSVPStatus;
 }
 
 // RSVP statistics structure
@@ -28,6 +37,7 @@ export interface RSVPStats {
   attending: number;
   declined: number;
   pending: number;
+  anonymous?: number; // Count of anonymous RSVPs
   bride?: {
     total: number;
     attending: number;
