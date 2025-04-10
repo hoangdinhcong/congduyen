@@ -27,8 +27,12 @@ export async function POST(request: NextRequest) {
     const fileContent = await file.text();
     const rows = fileContent.split('\n');
     
+    // Detect the separator (comma or semicolon)
+    const firstRow = rows[0];
+    const separator = firstRow.includes(';') ? ';' : ',';
+    
     // Parse header row
-    const header = rows[0].split(',');
+    const header = firstRow.split(separator);
     const nameIndex = header.findIndex(col => col.trim().toLowerCase() === 'name');
     const sideIndex = header.findIndex(col => col.trim().toLowerCase() === 'side');
     const tagsIndex = header.findIndex(col => col.trim().toLowerCase() === 'tags');
@@ -59,7 +63,7 @@ export async function POST(request: NextRequest) {
         
         if (char === '"' && (j === 0 || row[j-1] !== '\\')) {
           inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
+        } else if ((char === separator) && !inQuotes) {
           columns.push(currentValue.trim());
           currentValue = '';
         } else {

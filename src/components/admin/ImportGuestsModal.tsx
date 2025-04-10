@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaTimes, FaDownload, FaUpload } from 'react-icons/fa';
+import { showToast } from '@/components/ui/ToastProvider';
 
 type ImportGuestsModalProps = {
   onClose: () => void;
@@ -12,6 +13,7 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -28,6 +30,46 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
       setError('');
     }
   };
+
+  const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    
+    const droppedFiles = e.dataTransfer.files;
+    
+    if (droppedFiles.length > 0) {
+      const selectedFile = droppedFiles[0];
+      
+      // Check if it's a CSV file
+      if (selectedFile.type !== 'text/csv' && !selectedFile.name.endsWith('.csv')) {
+        setError('Please select a CSV file');
+        setFile(null);
+        return;
+      }
+      
+      setFile(selectedFile);
+      setError('');
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,10 +96,12 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
         throw new Error(data.message || 'Failed to import guests');
       }
       
+      showToast.success('Guests imported successfully');
       onImportSuccess();
     } catch (err: any) {
       console.error('Error importing guests:', err);
       setError(err.message || 'An error occurred while importing guests');
+      showToast.error(err.message || 'An error occurred while importing guests');
     } finally {
       setUploading(false);
     }
@@ -98,6 +142,9 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
             <code className="block bg-gray-100 p-2 mt-2 rounded text-xs">
               name,side,tags,rsvp_status
             </code>
+            <span className="block mt-2 text-xs">
+              Both comma (,) and semicolon (;) separators are supported.
+            </span>
           </p>
           
           <div className="mb-6">
@@ -117,7 +164,13 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
                 Select CSV File
               </label>
               
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div 
+                className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${isDragging ? 'border-primary bg-primary-light' : 'border-gray-300'} border-dashed rounded-md`}
+                onDragEnter={handleDragEnter}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
                 <div className="space-y-1 text-center">
                   <FaUpload className="mx-auto h-12 w-12 text-gray-400" />
                   <div className="flex text-sm text-gray-600">
