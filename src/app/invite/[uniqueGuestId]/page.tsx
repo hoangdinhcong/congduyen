@@ -75,7 +75,12 @@ export default async function PersonalizedInvitationPage({
   const weddingDate = '2025-05-01T17:00:00';
   
   return (
-    <MainLayout>
+    <MainLayout
+      guestName={guest.name}
+      guestId={guest.id}
+      uniqueInviteId={guest.unique_invite_id}
+      rsvpStatus={guest.rsvp_status}
+    >
       <PersonalizedGreeting guest={guest} />
       <HeroSection weddingDate={weddingDate} />
       <InvitationSection />

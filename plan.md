@@ -130,3 +130,22 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Replace frontpage hero image with hero.jpg
     *   Add floating RSVP button for quick response without scrolling
     *   **Status:** Done
+
+17. **UI/UX Enhancements & Responsive Design:**
+   *   Set max-width for popular screen sizes while maintaining mobile-first approach
+   *   Display invitation header only in development mode, not in production
+   *   Update Gift section:
+       *   Remove cash option and update subtitle
+       *   Add copy info button functionality to copy account number
+   *   Add 3 fixed floating buttons in bottom center:
+       *   Response: Show RSVP modal instead of scrolling down
+       *   Send gift: Show modal with banking QR code and info
+       *   Send reaction: Create party popper animation from left and right
+   *   **Status:** Done
+
+18. **Floating Button Improvements:**
+   *   Remove the old floating RSVP button to avoid duplication with the new action buttons
+   *   Enhance responsive design for floating action buttons:
+       *   Display only icons on small screens to save space
+       *   Show icon and text on larger screens
+   *   **Status:** Done

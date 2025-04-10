@@ -1,7 +1,20 @@
+'use client';
+
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
+  const [isDevelopment, setIsDevelopment] = useState(false);
+  
+  useEffect(() => {
+    // Check if we're in development mode
+    setIsDevelopment(process.env.NODE_ENV === 'development');
+  }, []);
+  
+  // Don't render the header in production mode
+  if (!isDevelopment) return null;
+  
   return (
     <header className="py-4 border-b border-gray-100">
       <div className="container-wedding flex justify-between items-center">

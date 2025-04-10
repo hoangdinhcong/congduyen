@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 @layer components {
   .container-wedding {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: min(100%, 1280px); /* Limit max width to 1280px for popular screens */
   }
   
   .btn-primary {
