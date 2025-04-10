@@ -198,3 +198,16 @@ This document outlines the steps to build the elegant wedding invitation website
    *   Update layout components to remove footer references
    *   Test all pages to ensure proper layout after footer removal
    *   **Status:** Done
+
+24. **UI Simplification and Mobile Optimization:**
+   *   Remove monogram from all pages for a cleaner interface
+   *   Optimize bride and groom name display for mobile:
+       *   Add line break between names in mobile view (e.g., "Công & Duyên" becomes "Công\n&\nDuyên")
+   *   Remove countdown timer functionality and related files to simplify UI
+   *   Streamline contact section:
+       *   Remove redundant "Note" section
+       *   Remove Zalo reference (since phone numbers already support Zalo)
+   *   Improve RSVP experience:
+       *   Display RSVP form directly without redirect button
+       *   Remove email input field for simpler form submission
+   *   **Status:** Completed

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaPhone, FaWhatsapp, FaInfoCircle } from 'react-icons/fa';
+import { FaPhone, FaInfoCircle } from 'react-icons/fa';
 import { useRoutePerspective } from '@/utils/routeUtils';
 
 export default function ContactSection() {
@@ -13,12 +13,10 @@ export default function ContactSection() {
     bride: {
       name: 'Mỹ Duyên',
       phone: '+84 123 456 789',
-      zalo: '+84 123 456 789',
     },
     groom: {
       name: 'Hoàng Công',
       phone: '+84 987 654 321',
-      zalo: '+84 987 654 321',
     }
   };
 
@@ -54,7 +52,7 @@ export default function ContactSection() {
           
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="p-6 md:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8">
                 {/* Contact info */}
                 <div className="space-y-6">
                   <h3 className="text-xl font-heading text-secondary">
@@ -68,37 +66,13 @@ export default function ContactSection() {
                         <FaPhone className="text-primary" />
                       </div>
                       <div className="ml-4">
-                        <p className="text-sm font-medium text-gray-900">Điện thoại</p>
+                        <p className="text-sm font-medium text-gray-900">Điện thoại / Zalo</p>
                         <p className="text-sm text-gray-500">
                           {isBride ? contactInfo.bride.phone : isGroom ? contactInfo.groom.phone : '+84 xxx xxx xxx'}
                         </p>
                       </div>
                     </div>
-                    
-                    {/* Zalo */}
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
-                        <FaWhatsapp className="text-primary" />
-                      </div>
-                      <div className="ml-4">
-                        <p className="text-sm font-medium text-gray-900">Zalo</p>
-                        <p className="text-sm text-gray-500">
-                          {isBride ? contactInfo.bride.zalo : isGroom ? contactInfo.groom.zalo : '+84 xxx xxx xxx'}
-                        </p>
-                      </div>
-                    </div>
                   </div>
-                </div>
-                
-                {/* Contact form or additional info */}
-                <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-heading text-secondary mb-4">Lưu ý</h3>
-                  <p className="text-gray-600 mb-4">
-                    Nếu bạn có bất kỳ câu hỏi nào về đám cưới, vui lòng liên hệ với chúng tôi qua số điện thoại hoặc Zalo.
-                  </p>
-                  <p className="text-gray-600">
-                    Chúng tôi sẽ phản hồi bạn trong thời gian sớm nhất.
-                  </p>
                 </div>
               </div>
             </div>

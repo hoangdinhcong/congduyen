@@ -8,19 +8,12 @@ export type GuestSide = 'bride' | 'groom';
 export interface Guest {
   id: string;
   name: string;
-  email?: string;
-  phone?: string;
   side: GuestSide;
   tags?: string[];
   unique_invite_id: string;
   rsvp_status: RSVPStatus;
-  plus_one?: boolean;
-  plus_one_name?: string;
-  dietary_restrictions?: string;
-  notes?: string;
   created_at?: string;
   updated_at?: string;
-  is_anonymous?: boolean; // Flag to indicate if this is an anonymous RSVP
 }
 
 // Anonymous RSVP submission data

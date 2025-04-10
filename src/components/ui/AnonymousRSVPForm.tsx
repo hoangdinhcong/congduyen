@@ -32,7 +32,6 @@ export default function AnonymousRSVPForm() {
   } = useForm(
     {
       name: '',
-      email: '',
       side: '' as GuestSide | '',
       rsvp_status: 'attending' as RSVPStatus,
     },
@@ -57,7 +56,6 @@ export default function AnonymousRSVPForm() {
     try {
       const result = await submitAnonymousRSVP({
         name: values.name,
-        email: values.email || undefined,
         side: values.side as GuestSide,
         rsvp_status: values.rsvp_status,
       });
@@ -133,19 +131,6 @@ export default function AnonymousRSVPForm() {
             touched={touched.name}
             placeholder="Nhập họ và tên của bạn"
             required
-          />
-          
-          <FormInput
-            label="Email (không bắt buộc)"
-            id="email"
-            name="email"
-            type="email"
-            value={values.email}
-            onChange={(e) => handleChange('email', e.target.value)}
-            onBlur={() => handleBlur('email')}
-            error={errors.email}
-            touched={touched.email}
-            placeholder="Nhập email của bạn"
           />
           
           <FormSelect

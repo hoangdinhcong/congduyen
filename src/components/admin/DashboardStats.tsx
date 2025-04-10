@@ -31,11 +31,11 @@ export default function DashboardStats() {
     const fetchStats = async () => {
       try {
         const response = await fetch('/api/stats');
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch statistics');
         }
-        
+
         const data = await response.json();
         setStats(data);
       } catch (err: any) {
@@ -108,7 +108,7 @@ export default function DashboardStats() {
   return (
     <div>
       <h2 className="text-lg font-medium text-gray-900 mb-4">RSVP Statistics</h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {statCards.map((card) => (
           <div key={card.title} className="bg-white overflow-hidden shadow rounded-lg">
@@ -130,12 +130,12 @@ export default function DashboardStats() {
           </div>
         ))}
       </div>
-      
+
       {/* Side-specific stats if available */}
       {(stats.bride || stats.groom) && (
         <div>
           <h2 className="text-lg font-medium text-gray-900 mb-4">Side-Specific Statistics</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Bride's Side */}
             {stats.bride && (
@@ -157,7 +157,7 @@ export default function DashboardStats() {
                 </div>
               </div>
             )}
-            
+
             {/* Groom's Side */}
             {stats.groom && (
               <div className="bg-white overflow-hidden shadow rounded-lg p-6">
@@ -181,32 +181,7 @@ export default function DashboardStats() {
           </div>
         </div>
       )}
-      
-      {/* Anonymous RSVPs Section */}
-      {stats.anonymous && stats.anonymous > 0 && (
-        <div className="mt-8">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Anonymous RSVPs</h2>
-          <div className="bg-white overflow-hidden shadow rounded-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="flex-shrink-0 rounded-md p-3 bg-purple-100 text-purple-800">
-                <FaUserSecret className="h-6 w-6 text-purple-500" aria-hidden="true" />
-              </div>
-              <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  {stats.anonymous} Anonymous {stats.anonymous === 1 ? 'Response' : 'Responses'}
-                </h3>
-                <p className="text-sm text-gray-500">
-                  These are guests who RSVP&apos;d without an invitation ID
-                </p>
-              </div>
-            </div>
-            <p className="text-sm text-gray-600">
-              Anonymous RSVPs are included in the total guest count and RSVP statistics above.
-              You can view and manage these responses in the guest list by filtering for the &quot;anonymous&quot; tag.
-            </p>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }

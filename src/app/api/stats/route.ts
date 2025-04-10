@@ -27,11 +27,11 @@ export async function GET() {
       .select('*', { count: 'exact', head: true })
       .eq('rsvp_status', 'pending');
     
-    // Get anonymous count
+    // Get anonymous stats
     const { count: anonymous } = await supabase
       .from('guests')
       .select('*', { count: 'exact', head: true })
-      .eq('is_anonymous', true);
+      .contains('tags', ['anonymous']);
     
     // Get bride's side stats
     const { count: brideTotal } = await supabase

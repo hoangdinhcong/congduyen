@@ -63,9 +63,9 @@ export default function GuestList() {
     // Apply anonymous filter
     if (anonymousFilter !== 'all') {
       if (anonymousFilter === 'anonymous') {
-        result = result.filter(guest => guest.is_anonymous === true);
+        result = result.filter(guest => guest.tags?.includes('anonymous'));
       } else {
-        result = result.filter(guest => guest.is_anonymous !== true);
+        result = result.filter(guest => !guest.tags?.includes('anonymous'));
       }
     }
     
@@ -74,9 +74,7 @@ export default function GuestList() {
       const term = searchTerm.toLowerCase();
       result = result.filter(guest => 
         guest.name.toLowerCase().includes(term) ||
-        guest.unique_invite_id.toLowerCase().includes(term) ||
-        (guest.email && guest.email.toLowerCase().includes(term)) ||
-        (guest.phone && guest.phone.toLowerCase().includes(term))
+        guest.unique_invite_id.toLowerCase().includes(term)
       );
     }
     
@@ -413,7 +411,7 @@ export default function GuestList() {
           </div>
           <input
             type="text"
-            placeholder="Search by name, email, phone, or invite ID..."
+            placeholder="Search by name or invite ID..."
             className="pl-10 w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -488,13 +486,13 @@ export default function GuestList() {
                 Name
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Contact
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Side
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 RSVP Status
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Tags
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Invite Link
@@ -545,28 +543,13 @@ export default function GuestList() {
                       <div className="flex items-center">
                         <div className="text-sm font-medium text-gray-900 flex items-center">
                           {guest.name}
-                          {guest.is_anonymous && (
+                          {guest.tags?.includes('anonymous') && (
                             <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
                               <FaUserSecret className="mr-1" />
                               Anonymous
                             </span>
                           )}
                         </div>
-                        {guest.plus_one && (
-                          <div className="ml-2 text-xs inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
-                            +1 {guest.plus_one_name ? `(${guest.plus_one_name})` : ''}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
-                        {guest.email && (
-                          <div className="mb-1">{guest.email}</div>
-                        )}
-                        {guest.phone && (
-                          <div>{guest.phone}</div>
-                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -586,6 +569,21 @@ export default function GuestList() {
                       }`}>
                         {guest.rsvp_status.charAt(0).toUpperCase() + guest.rsvp_status.slice(1)}
                       </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex flex-wrap gap-1">
+                        {guest.tags?.map((tag, index) => (
+                          <span 
+                            key={index}
+                            className="px-2 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {(!guest.tags || guest.tags.length === 0) && (
+                          <span className="text-gray-400 text-xs">No tags</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {guest.unique_invite_id}

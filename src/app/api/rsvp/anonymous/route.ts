@@ -31,7 +31,6 @@ export async function POST(request: NextRequest) {
         side: data.side || 'bride', // Default to bride if not specified
         unique_invite_id: uniqueInviteId,
         rsvp_status: data.rsvp_status,
-        is_anonymous: true,
         tags: ['anonymous']
       })
       .select()

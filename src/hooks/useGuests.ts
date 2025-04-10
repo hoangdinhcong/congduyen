@@ -277,7 +277,6 @@ export function useGuests() {
       
       // Convert to regular guest
       const updatedGuest = await GuestAPI.updateGuest(id, {
-        is_anonymous: false,
         unique_invite_id: uniqueInviteId,
       });
       

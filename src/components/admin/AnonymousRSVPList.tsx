@@ -91,11 +91,6 @@ export default function AnonymousRSVPList() {
       ),
     },
     {
-      key: 'email',
-      header: 'Email',
-      render: (row: Guest) => row.email || 'N/A',
-    },
-    {
       key: 'side',
       header: 'Side',
       render: (row: Guest) => (

@@ -132,8 +132,8 @@ export const GuestAPI = {
   async submitAnonymousRSVP(data: AnonymousRSVP): Promise<Guest> {
     const guestData: Partial<Guest> = {
       ...data,
-      is_anonymous: true,
       unique_invite_id: `anon-${Date.now().toString(36)}`,
+      tags: ['anonymous']
     };
     
     return this.createGuest(guestData);
@@ -157,7 +157,7 @@ export const GuestAPI = {
       attending: guests.filter(g => g.rsvp_status === 'attending').length,
       declined: guests.filter(g => g.rsvp_status === 'declined').length,
       pending: guests.filter(g => g.rsvp_status === 'pending').length,
-      anonymous: guests.filter(g => g.is_anonymous).length,
+      anonymous: guests.filter(g => g.tags?.includes('anonymous')).length,
       bride: {
         total: guests.filter(g => g.side === 'bride').length,
         attending: guests.filter(g => g.side === 'bride' && g.rsvp_status === 'attending').length,

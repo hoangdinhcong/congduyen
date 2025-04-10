@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import SectionTitle from '../ui/SectionTitle';
-import { FaCheck, FaTimes, FaHeart, FaEnvelope, FaArrowRight } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaHeart } from 'react-icons/fa';
 import { RSVPStatus } from '../../lib/types';
 import AnonymousRSVPForm from '../ui/AnonymousRSVPForm';
-import { Button } from '../ui/Button';
 
 type RSVPSectionProps = {
   isPersonalized?: boolean;
@@ -28,7 +26,6 @@ export default function RSVPSection({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [showAnonymousForm, setShowAnonymousForm] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -112,7 +109,7 @@ export default function RSVPSection({
               {status === 'pending' ? (
                 <>
                   <div className="mb-8">
-                    <FaEnvelope className="text-4xl text-primary mx-auto mb-4" />
+                    <FaHeart className="text-4xl text-primary mx-auto mb-4" />
                     <h3 className="text-2xl font-heading mb-4 text-secondary">
                       Bạn sẽ tham dự đám cưới của chúng tôi chứ?
                     </h3>
@@ -191,50 +188,9 @@ export default function RSVPSection({
               )}
             </div>
           ) : (
-            // Anonymous RSVP options
-            <div className="bg-white p-8 md:p-10 rounded-lg shadow-md border border-primary-light text-center">
-              {showAnonymousForm ? (
-                // Show the form when requested
-                <AnonymousRSVPForm />
-              ) : (
-                // Show options for anonymous RSVP
-                <div className="space-y-8">
-                  <div>
-                    <FaEnvelope className="text-4xl text-primary mx-auto mb-4" />
-                    <h3 className="text-2xl font-heading mb-4 text-secondary">
-                      Xác Nhận Tham Dự
-                    </h3>
-                    <p className="text-gray-600 max-w-md mx-auto mb-8">
-                      Nếu bạn chưa nhận được thư mời cá nhân, bạn vẫn có thể xác nhận tham dự tại đây.
-                    </p>
-                  </div>
-                  
-                  <div className="flex flex-col gap-4">
-                    <Button 
-                      variant="primary"
-                      onClick={() => setShowAnonymousForm(true)}
-                      className="w-full md:w-auto mx-auto"
-                    >
-                      Xác nhận tham dự ngay
-                    </Button>
-                    
-                    <div className="relative flex items-center justify-center">
-                      <div className="border-t border-gray-200 w-full absolute"></div>
-                      <span className="bg-white px-4 relative text-sm text-gray-500">hoặc</span>
-                    </div>
-                    
-                    <Link href="/rsvp" className="inline-block mx-auto">
-                      <Button 
-                        variant="outline"
-                        icon={<FaArrowRight />}
-                        iconPosition="right"
-                      >
-                        Đến trang xác nhận tham dự
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              )}
+            // Anonymous RSVP form
+            <div className="bg-white p-8 md:p-10 rounded-lg shadow-md border border-primary-light">
+              <AnonymousRSVPForm />
             </div>
           )}
         </div>
