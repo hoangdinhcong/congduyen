@@ -96,7 +96,14 @@ This document outlines the steps to build the elegant wedding invitation website
         *   Position toasts in the bottom-right corner for better visibility
     *   **Status:** Done
 
-13. **Testing, Accessibility & Deployment:**
+13. **UI Refinements & Visual Enhancements:**
+    *   Implement nicer confirmation dialogs to replace standard browser confirmations
+    *   Add smooth table animations for guest list operations (add, update, delete)
+    *   Replace default loading indicators with elegant, branded loading spinners
+    *   Update the favicon with a heart icon to match the wedding theme
+    *   **Status:** Done
+
+14. **Testing, Accessibility & Deployment:**
     *   Conduct thorough testing:
         *   Guest flow (receiving link, viewing info, RSVPing).
         *   Admin flow (login, dashboard stats, adding, importing, editing, filtering guests).

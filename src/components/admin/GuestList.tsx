@@ -8,6 +8,8 @@ import AddGuestModal from './AddGuestModal';
 import EditGuestModal from './EditGuestModal';
 import ImportGuestsModal from './ImportGuestsModal';
 import BulkEditModal from './BulkEditModal';
+import ConfirmDialog from '../ui/ConfirmDialog';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 export default function GuestList() {
   const [guests, setGuests] = useState<Guest[]>([]);
@@ -20,13 +22,24 @@ export default function GuestList() {
   
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isBulkEditModalOpen, setIsBulkEditModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
   
   // New state for multi-select functionality
   const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+
+  // New state for confirmation dialog
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+  });
+
+  // New state for table animations
+  const [animatedRows, setAnimatedRows] = useState<{id: string, action: 'add' | 'update' | 'delete'}[]>([]);
 
   useEffect(() => {
     fetchGuests();
@@ -92,8 +105,17 @@ export default function GuestList() {
         throw new Error('Failed to add guest');
       }
       
-      // Refresh the guest list
-      fetchGuests();
+      const data = await response.json();
+      
+      // Add new guest to the top of the list with animation
+      setGuests(prevGuests => {
+        const updatedGuests = [data, ...prevGuests];
+        // Trigger animation for the new guest
+        setAnimatedRows([{ id: data.id, action: 'add' }]);
+        setTimeout(() => setAnimatedRows([]), 1000);
+        return updatedGuests;
+      });
+      
       setIsAddModalOpen(false);
       showToast.success('Guest added successfully');
     } catch (err: any) {
@@ -118,8 +140,17 @@ export default function GuestList() {
         throw new Error('Failed to update guest');
       }
       
-      // Refresh the guest list
-      fetchGuests();
+      // Update guest in the list with animation
+      setGuests(prevGuests => {
+        const updatedGuests = prevGuests.map(guest => 
+          guest.id === selectedGuest.id ? { ...guest, ...updatedGuest } : guest
+        );
+        // Trigger animation for the updated guest
+        setAnimatedRows([{ id: selectedGuest.id, action: 'update' }]);
+        setTimeout(() => setAnimatedRows([]), 1000);
+        return updatedGuests;
+      });
+      
       setIsEditModalOpen(false);
       setSelectedGuest(null);
       showToast.success('Guest updated successfully');
@@ -130,24 +161,37 @@ export default function GuestList() {
   };
 
   const handleDeleteGuest = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this guest?')) return;
-    
-    try {
-      const response = await fetch(`/api/guests/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete guest');
-      }
-      
-      // Refresh the guest list
-      fetchGuests();
-      showToast.success('Guest deleted successfully');
-    } catch (err: any) {
-      console.error('Error deleting guest:', err);
-      showToast.error(err.message || 'An error occurred while deleting the guest');
-    }
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Delete Guest',
+      message: 'Are you sure you want to delete this guest? This action cannot be undone.',
+      onConfirm: async () => {
+        try {
+          const response = await fetch(`/api/guests/${id}`, {
+            method: 'DELETE',
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to delete guest');
+          }
+          
+          // Remove guest from the list with animation
+          setAnimatedRows([{ id, action: 'delete' }]);
+          
+          // Wait for animation to complete before removing from state
+          setTimeout(() => {
+            setGuests(prevGuests => prevGuests.filter(guest => guest.id !== id));
+            setAnimatedRows([]);
+          }, 500);
+          
+          setConfirmDialog({ ...confirmDialog, isOpen: false });
+          showToast.success('Guest deleted successfully');
+        } catch (err: any) {
+          console.error('Error deleting guest:', err);
+          showToast.error(err.message || 'An error occurred while deleting the guest');
+        }
+      },
+    });
   };
 
   const handleCopyLink = (uniqueId: string) => {
@@ -197,30 +241,43 @@ export default function GuestList() {
       return;
     }
 
-    if (!confirm(`Are you sure you want to delete ${selectedGuests.length} selected guests?`)) return;
-    
-    try {
-      const response = await fetch('/api/guests/bulk-delete', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ids: selectedGuests }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete guests');
-      }
-      
-      // Refresh the guest list
-      fetchGuests();
-      setSelectedGuests([]);
-      setSelectAll(false);
-      showToast.success(`Successfully deleted ${selectedGuests.length} guests`);
-    } catch (err: any) {
-      console.error('Error deleting guests:', err);
-      showToast.error(err.message || 'An error occurred while deleting guests');
-    }
+    setConfirmDialog({
+      isOpen: true,
+      title: 'Delete Selected Guests',
+      message: `Are you sure you want to delete ${selectedGuests.length} selected guests? This action cannot be undone.`,
+      onConfirm: async () => {
+        try {
+          const response = await fetch('/api/guests/bulk-delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ids: selectedGuests }),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to delete guests');
+          }
+          
+          // Animate all selected guests for deletion
+          setAnimatedRows(selectedGuests.map(id => ({ id, action: 'delete' })));
+          
+          // Wait for animation to complete before removing from state
+          setTimeout(() => {
+            setGuests(prevGuests => prevGuests.filter(guest => !selectedGuests.includes(guest.id)));
+            setSelectedGuests([]);
+            setSelectAll(false);
+            setAnimatedRows([]);
+          }, 500);
+          
+          setConfirmDialog({ ...confirmDialog, isOpen: false });
+          showToast.success(`Successfully deleted ${selectedGuests.length} guests`);
+        } catch (err: any) {
+          console.error('Error deleting guests:', err);
+          showToast.error(err.message || 'An error occurred while deleting guests');
+        }
+      },
+    });
   };
 
   const handleBulkEdit = async (data: { side?: GuestSide; rsvp_status?: RSVPStatus }) => {
@@ -245,8 +302,22 @@ export default function GuestList() {
         throw new Error('Failed to update guests');
       }
       
-      // Refresh the guest list
-      fetchGuests();
+      // Update guests in the list with animation
+      setGuests(prevGuests => {
+        const updatedGuests = prevGuests.map(guest => {
+          if (selectedGuests.includes(guest.id)) {
+            return { ...guest, ...data };
+          }
+          return guest;
+        });
+        
+        // Trigger animation for all updated guests
+        setAnimatedRows(selectedGuests.map(id => ({ id, action: 'update' })));
+        setTimeout(() => setAnimatedRows([]), 1000);
+        
+        return updatedGuests;
+      });
+      
       setIsBulkEditModalOpen(false);
       showToast.success(`Successfully updated ${selectedGuests.length} guests`);
     } catch (err: any) {
@@ -258,7 +329,7 @@ export default function GuestList() {
   if (loading && guests.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        <LoadingSpinner size="large" />
         <p className="mt-4 text-gray-600">Loading guests...</p>
       </div>
     );
@@ -404,70 +475,84 @@ export default function GuestList() {
                 </td>
               </tr>
             ) : (
-              filteredGuests.map((guest) => (
-                <tr key={guest.id} className={selectedGuests.includes(guest.id) ? "bg-blue-50" : ""}>
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedGuests.includes(guest.id)}
-                        onChange={() => handleSelectGuest(guest.id)}
-                        className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                      />
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{guest.name}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      guest.side === 'bride' ? 'bg-pink-100 text-pink-800' :
-                      guest.side === 'groom' ? 'bg-blue-100 text-blue-800' :
-                      'bg-purple-100 text-purple-800'
-                    }`}>
-                      {guest.side.charAt(0).toUpperCase() + guest.side.slice(1)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      guest.rsvp_status === 'attending' ? 'bg-green-100 text-green-800' :
-                      guest.rsvp_status === 'declined' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {guest.rsvp_status.charAt(0).toUpperCase() + guest.rsvp_status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {guest.unique_invite_id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                      onClick={() => handleCopyLink(guest.unique_invite_id)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-3"
-                      title="Copy invitation link"
-                    >
-                      <FaCopy />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedGuest(guest);
-                        setIsEditModalOpen(true);
-                      }}
-                      className="text-blue-600 hover:text-blue-900 mr-3"
-                      title="Edit guest"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteGuest(guest.id)}
-                      className="text-red-600 hover:text-red-900"
-                      title="Delete guest"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))
+              filteredGuests.map((guest) => {
+                const isAnimated = animatedRows.find(row => row.id === guest.id);
+                const animationClass = isAnimated 
+                  ? isAnimated.action === 'add' 
+                    ? 'animate-fadeIn bg-green-50' 
+                    : isAnimated.action === 'update' 
+                      ? 'animate-pulse bg-blue-50' 
+                      : 'animate-fadeOut opacity-0 h-0 overflow-hidden' 
+                  : '';
+                
+                return (
+                  <tr 
+                    key={guest.id} 
+                    className={`${selectedGuests.includes(guest.id) ? "bg-blue-50" : ""} ${animationClass} transition-all duration-500`}
+                  >
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedGuests.includes(guest.id)}
+                          onChange={() => handleSelectGuest(guest.id)}
+                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                        />
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{guest.name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        guest.side === 'bride' ? 'bg-pink-100 text-pink-800' :
+                        guest.side === 'groom' ? 'bg-blue-100 text-blue-800' :
+                        'bg-purple-100 text-purple-800'
+                      }`}>
+                        {guest.side.charAt(0).toUpperCase() + guest.side.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        guest.rsvp_status === 'attending' ? 'bg-green-100 text-green-800' :
+                        guest.rsvp_status === 'declined' ? 'bg-red-100 text-red-800' :
+                        'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {guest.rsvp_status.charAt(0).toUpperCase() + guest.rsvp_status.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {guest.unique_invite_id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button
+                        onClick={() => handleCopyLink(guest.unique_invite_id)}
+                        className="text-indigo-600 hover:text-indigo-900 mr-3"
+                        title="Copy invitation link"
+                      >
+                        <FaCopy />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedGuest(guest);
+                          setIsEditModalOpen(true);
+                        }}
+                        className="text-blue-600 hover:text-blue-900 mr-3"
+                        title="Edit guest"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteGuest(guest.id)}
+                        className="text-red-600 hover:text-red-900"
+                        title="Delete guest"
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
@@ -508,6 +593,17 @@ export default function GuestList() {
           onUpdate={handleBulkEdit}
         />
       )}
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={confirmDialog.isOpen}
+        title={confirmDialog.title}
+        message={confirmDialog.message}
+        onConfirm={confirmDialog.onConfirm}
+        onCancel={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}
+        confirmText="Delete"
+        type="danger"
+      />
     </div>
   );
 }
