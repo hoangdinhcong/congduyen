@@ -8,11 +8,11 @@ type LoadingSpinnerProps = {
   className?: string;
 };
 
-export default function LoadingSpinner({
+const LoadingSpinner = ({
   size = 'medium',
   color = 'primary',
   className = '',
-}: LoadingSpinnerProps) {
+}: LoadingSpinnerProps) => {
   const sizeClasses = {
     small: 'h-4 w-4 border-2',
     medium: 'h-8 w-8 border-2',
@@ -35,10 +35,10 @@ export default function LoadingSpinner({
       </div>
     </div>
   );
-}
+};
 
 // Full-page loading overlay
-export function LoadingOverlay() {
+export const LoadingOverlay = () => {
   return (
     <div className="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
       <div className="text-center">
@@ -47,4 +47,6 @@ export function LoadingOverlay() {
       </div>
     </div>
   );
-}
+};
+
+export default LoadingSpinner;
