@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaUpload, FaSearch, FaFilter, FaCopy, FaEdit, FaTrash } from 'react-icons/fa';
-import { Guest, RSVPStatus } from '../../lib/types';
+import { FaPlus, FaUpload, FaSearch, FaFilter, FaCopy, FaEdit, FaTrash, FaUsers } from 'react-icons/fa';
+import { Guest, RSVPStatus, GuestSide } from '../../lib/types';
+import { showToast } from '@/components/ui/ToastProvider';
 import AddGuestModal from './AddGuestModal';
 import EditGuestModal from './EditGuestModal';
 import ImportGuestsModal from './ImportGuestsModal';
+import BulkEditModal from './BulkEditModal';
 
 export default function GuestList() {
   const [guests, setGuests] = useState<Guest[]>([]);
@@ -13,13 +15,18 @@ export default function GuestList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [sideFilter, setSideFilter] = useState<'all' | 'bride' | 'groom' | 'both'>('all');
+  const [sideFilter, setSideFilter] = useState<'all' | GuestSide>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | RSVPStatus>('all');
   
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [isBulkEditModalOpen, setIsBulkEditModalOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
+  
+  // New state for multi-select functionality
+  const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     fetchGuests();
@@ -88,9 +95,10 @@ export default function GuestList() {
       // Refresh the guest list
       fetchGuests();
       setIsAddModalOpen(false);
+      showToast.success('Guest added successfully');
     } catch (err: any) {
       console.error('Error adding guest:', err);
-      alert(err.message || 'An error occurred while adding the guest');
+      showToast.error(err.message || 'An error occurred while adding the guest');
     }
   };
 
@@ -114,9 +122,10 @@ export default function GuestList() {
       fetchGuests();
       setIsEditModalOpen(false);
       setSelectedGuest(null);
+      showToast.success('Guest updated successfully');
     } catch (err: any) {
       console.error('Error updating guest:', err);
-      alert(err.message || 'An error occurred while updating the guest');
+      showToast.error(err.message || 'An error occurred while updating the guest');
     }
   };
 
@@ -134,9 +143,10 @@ export default function GuestList() {
       
       // Refresh the guest list
       fetchGuests();
+      showToast.success('Guest deleted successfully');
     } catch (err: any) {
       console.error('Error deleting guest:', err);
-      alert(err.message || 'An error occurred while deleting the guest');
+      showToast.error(err.message || 'An error occurred while deleting the guest');
     }
   };
 
@@ -146,17 +156,103 @@ export default function GuestList() {
     
     navigator.clipboard.writeText(inviteUrl)
       .then(() => {
-        alert('Invitation link copied to clipboard!');
+        showToast.success('Invitation link copied to clipboard!');
       })
       .catch((err) => {
         console.error('Failed to copy link:', err);
-        alert('Failed to copy link. Please try again.');
+        showToast.error('Failed to copy link. Please try again.');
       });
   };
 
   const handleImportSuccess = () => {
     fetchGuests();
     setIsImportModalOpen(false);
+  };
+
+  // New handlers for bulk actions
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedGuests([]);
+    } else {
+      setSelectedGuests(filteredGuests.map(guest => guest.id));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const handleSelectGuest = (id: string) => {
+    if (selectedGuests.includes(id)) {
+      setSelectedGuests(selectedGuests.filter(guestId => guestId !== id));
+      setSelectAll(false);
+    } else {
+      setSelectedGuests([...selectedGuests, id]);
+      if (selectedGuests.length + 1 === filteredGuests.length) {
+        setSelectAll(true);
+      }
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedGuests.length === 0) {
+      showToast.error('No guests selected');
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to delete ${selectedGuests.length} selected guests?`)) return;
+    
+    try {
+      const response = await fetch('/api/guests/bulk-delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ids: selectedGuests }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete guests');
+      }
+      
+      // Refresh the guest list
+      fetchGuests();
+      setSelectedGuests([]);
+      setSelectAll(false);
+      showToast.success(`Successfully deleted ${selectedGuests.length} guests`);
+    } catch (err: any) {
+      console.error('Error deleting guests:', err);
+      showToast.error(err.message || 'An error occurred while deleting guests');
+    }
+  };
+
+  const handleBulkEdit = async (data: { side?: GuestSide; rsvp_status?: RSVPStatus }) => {
+    if (selectedGuests.length === 0) {
+      showToast.error('No guests selected');
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/guests/bulk-update', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ids: selectedGuests,
+          ...data
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update guests');
+      }
+      
+      // Refresh the guest list
+      fetchGuests();
+      setIsBulkEditModalOpen(false);
+      showToast.success(`Successfully updated ${selectedGuests.length} guests`);
+    } catch (err: any) {
+      console.error('Error updating guests:', err);
+      showToast.error(err.message || 'An error occurred while updating guests');
+    }
   };
 
   if (loading && guests.length === 0) {
@@ -197,6 +293,27 @@ export default function GuestList() {
             <FaUpload className="-ml-1 mr-2 h-4 w-4" />
             Import CSV
           </button>
+
+          {/* Bulk action buttons */}
+          {selectedGuests.length > 0 && (
+            <>
+              <button
+                onClick={() => setIsBulkEditModalOpen(true)}
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                <FaUsers className="-ml-1 mr-2 h-4 w-4" />
+                Edit Selected ({selectedGuests.length})
+              </button>
+              
+              <button
+                onClick={handleBulkDelete}
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                <FaTrash className="-ml-1 mr-2 h-4 w-4" />
+                Delete Selected ({selectedGuests.length})
+              </button>
+            </>
+          )}
         </div>
         
         {/* Search and filters */}
@@ -226,7 +343,6 @@ export default function GuestList() {
               <option value="all">All Sides</option>
               <option value="bride">Bride's Side</option>
               <option value="groom">Groom's Side</option>
-              <option value="both">Both Sides</option>
             </select>
           </div>
           
@@ -253,6 +369,16 @@ export default function GuestList() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+              <th scope="col" className="px-4 py-3">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                  />
+                </div>
+              </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name
               </th>
@@ -273,13 +399,23 @@ export default function GuestList() {
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredGuests.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500">
+                <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
                   No guests found. Add a new guest or adjust your filters.
                 </td>
               </tr>
             ) : (
               filteredGuests.map((guest) => (
-                <tr key={guest.id}>
+                <tr key={guest.id} className={selectedGuests.includes(guest.id) ? "bg-blue-50" : ""}>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedGuests.includes(guest.id)}
+                        onChange={() => handleSelectGuest(guest.id)}
+                        className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                      />
+                    </div>
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{guest.name}</div>
                   </td>
@@ -362,6 +498,14 @@ export default function GuestList() {
         <ImportGuestsModal
           onClose={() => setIsImportModalOpen(false)}
           onImportSuccess={handleImportSuccess}
+        />
+      )}
+
+      {isBulkEditModalOpen && (
+        <BulkEditModal
+          selectedCount={selectedGuests.length}
+          onClose={() => setIsBulkEditModalOpen(false)}
+          onUpdate={handleBulkEdit}
         />
       )}
     </div>

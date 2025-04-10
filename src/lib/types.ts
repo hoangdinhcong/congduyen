@@ -2,7 +2,7 @@
 export type RSVPStatus = 'pending' | 'attending' | 'declined';
 
 // Guest side options (bride's side or groom's side)
-export type GuestSide = 'bride' | 'groom' | 'both';
+export type GuestSide = 'bride' | 'groom';
 
 // Guest data structure
 export interface Guest {

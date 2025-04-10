@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
       if (!name || !side) continue;
       
       // Validate side value
-      if (!['bride', 'groom', 'both'].includes(side.toLowerCase())) {
+      if (!['bride', 'groom'].includes(side.toLowerCase())) {
         continue;
       }
       

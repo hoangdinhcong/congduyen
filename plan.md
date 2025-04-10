@@ -80,7 +80,23 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Ensure the QR code for gifts is displayed correctly if applicable.
     *   **Status:** Pending
 
-11. **Testing, Accessibility & Deployment:**
+11. **UI/UX Improvements:**
+    *   Remove the "both" option from GuestSide to simplify guest categorization.
+    *   Replace all alert() calls with elegant toast notifications for better user experience.
+    *   Ensure consistent feedback for user actions across the application.
+    *   **Status:** Done
+
+12. **Guest Management Enhancements:**
+    *   Implement bulk actions for guest list management:
+        *   Add multi-select functionality with checkboxes
+        *   Add bulk delete option for selected guests
+        *   Add bulk update for guest side and RSVP status
+    *   Improve toast notifications:
+        *   Use color-coded toasts based on status (red for errors, green for success)
+        *   Position toasts in the bottom-right corner for better visibility
+    *   **Status:** Done
+
+13. **Testing, Accessibility & Deployment:**
     *   Conduct thorough testing:
         *   Guest flow (receiving link, viewing info, RSVPing).
         *   Admin flow (login, dashboard stats, adding, importing, editing, filtering guests).

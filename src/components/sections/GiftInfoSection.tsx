@@ -3,6 +3,7 @@
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
 import { FaGift, FaQrcode, FaEnvelope } from 'react-icons/fa';
+import { showToast } from '@/components/ui/ToastProvider';
 
 export default function GiftInfoSection() {
   return (
@@ -91,7 +92,7 @@ export default function GiftInfoSection() {
                 className="btn-primary inline-block"
                 onClick={(e) => {
                   e.preventDefault();
-                  alert('Registry link will be added here');
+                  showToast.custom('Registry link will be added here');
                 }}
               >
                 View Registry

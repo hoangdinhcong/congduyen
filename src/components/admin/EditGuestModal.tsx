@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { Guest } from '../../lib/types';
+import { Guest, GuestSide } from '../../lib/types';
+import { showToast } from '@/components/ui/ToastProvider';
 
 type EditGuestModalProps = {
   guest: Guest;
@@ -12,7 +13,7 @@ type EditGuestModalProps = {
 
 export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestModalProps) {
   const [name, setName] = useState(guest.name);
-  const [side, setSide] = useState<'bride' | 'groom' | 'both'>(guest.side);
+  const [side, setSide] = useState<GuestSide>(guest.side);
   const [tags, setTags] = useState<string[]>(guest.tags || []);
   const [tagInput, setTagInput] = useState('');
   const [rsvpStatus, setRsvpStatus] = useState<'pending' | 'attending' | 'declined'>(guest.rsvp_status);
@@ -28,7 +29,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
     e.preventDefault();
     
     if (!name.trim()) {
-      alert('Please enter a name for the guest');
+      showToast.error('Please enter a name for the guest');
       return;
     }
     
@@ -95,12 +96,11 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
             <select
               id="side"
               value={side}
-              onChange={(e) => setSide(e.target.value as 'bride' | 'groom' | 'both')}
+              onChange={(e) => setSide(e.target.value as GuestSide)}
               className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
             >
               <option value="bride">Bride&apos;s Side</option>
               <option value="groom">Groom&apos;s Side</option>
-              <option value="both">Both Sides</option>
             </select>
           </div>
           
