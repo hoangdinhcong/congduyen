@@ -9,9 +9,9 @@ export async function POST(request: NextRequest) {
     const data: AnonymousRSVP = await request.json();
     
     // Validate required fields
-    if (!data.name || !data.side) {
+    if (!data.name || !data.rsvp_status) {
       return NextResponse.json(
-        { message: 'Vui lòng nhập tên và bên của bạn' },
+        { message: 'Vui lòng nhập tên và trạng thái tham dự của bạn' },
         { status: 400 }
       );
     }
@@ -20,22 +20,17 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
     
     // Generate a unique invitation ID for this anonymous RSVP
-    const uniqueInviteId = nanoid(10);
+    const uniqueInviteId = `anon-${nanoid(8)}`;
     
     // Insert the anonymous RSVP into the guests table
     const { data: insertedGuest, error } = await supabase
       .from('guests')
       .insert({
         name: data.name,
-        email: null,
-        phone: null,
-        side: data.side,
+        email: data.email || null,
+        side: data.side || 'bride', // Default to bride if not specified
         unique_invite_id: uniqueInviteId,
-        rsvp_status: 'attending', // Always set to attending for anonymous RSVPs
-        plus_one: false,
-        plus_one_name: null,
-        dietary_restrictions: null,
-        notes: null,
+        rsvp_status: data.rsvp_status,
         is_anonymous: true,
         tags: ['anonymous']
       })
@@ -58,9 +53,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Anonymous RSVP error:', error);
+    console.error('Error processing anonymous RSVP:', error);
     return NextResponse.json(
-      { message: 'Đã xảy ra lỗi khi xử lý yêu cầu của bạn' },
+      { message: 'Đã xảy ra lỗi khi xử lý phản hồi của bạn' },
       { status: 500 }
     );
   }

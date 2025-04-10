@@ -158,7 +158,9 @@ This document outlines the steps to build the elegant wedding invitation website
    *   Add anonymous RSVP option to the main invitation page
    *   Implement validation for anonymous RSVP submissions
    *   Update admin dashboard to display anonymous RSVPs separately
-   *   **Status:** Pending
+   *   Create dedicated page for anonymous RSVP submissions at /rsvp
+   *   Add functionality to convert anonymous RSVPs to regular guests
+   *   **Status:** Completed
 
 20. **Mobile-Optimized Gallery:**
    *   Implement horizontal scrolling for the gallery on mobile devices

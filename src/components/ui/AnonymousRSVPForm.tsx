@@ -1,73 +1,82 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { FaCheck, FaHeart, FaUser } from 'react-icons/fa';
-import { AnonymousRSVP } from '@/lib/types';
-import { showToast } from './ToastProvider';
+import { GuestSide, RSVPStatus } from '@/lib/types';
+import { useForm, validationRules } from '@/hooks/useForm';
+import { useGuestContext } from '@/contexts/GuestContext';
+import { useToastContext } from '@/contexts/ToastContext';
+import { FormInput } from './FormInput';
+import { FormSelect } from './FormSelect';
+import { Button } from './Button';
+import { Alert } from './Alert';
 
+/**
+ * Anonymous RSVP form component
+ * Allows guests to submit an RSVP without a unique invitation link
+ */
 export default function AnonymousRSVPForm() {
-  const [formData, setFormData] = useState<AnonymousRSVP>({
-    name: '',
-    side: undefined,
-    rsvp_status: 'attending', // Always set to attending since form submission means acceptance
-  });
-
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
+  const { submitAnonymousRSVP } = useGuestContext();
+  const { showSuccess, showError } = useToastContext();
+  
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    setIsSubmitting,
+    handleChange,
+    handleBlur,
+    validateForm,
+    resetForm,
+  } = useForm(
+    {
+      name: '',
+      email: '',
+      side: '' as GuestSide | '',
+      rsvp_status: 'attending' as RSVPStatus,
+    },
+    {
+      name: [validationRules.required('Vui lòng nhập tên của bạn')],
+      side: [validationRules.required('Vui lòng chọn bên của bạn')],
+    }
+  );
+  
+  const [success, setSuccess] = React.useState(false);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
-    if (!formData.name.trim()) {
-      setError('Vui lòng nhập tên của bạn');
+    if (!validateForm()) {
       return;
     }
-
-    setSubmitting(true);
-    setError('');
+    
+    setIsSubmitting(true);
     
     try {
-      const response = await fetch('/api/rsvp/anonymous', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const result = await submitAnonymousRSVP({
+        name: values.name,
+        email: values.email || undefined,
+        side: values.side as GuestSide,
+        rsvp_status: values.rsvp_status,
       });
       
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Không thể gửi phản hồi');
+      if (result) {
+        setSuccess(true);
+        showSuccess('Cảm ơn bạn! Phản hồi của bạn đã được ghi nhận.');
+        resetForm();
+      } else {
+        showError('Không thể gửi phản hồi. Vui lòng thử lại.');
       }
-      
-      setSuccess(true);
-      showToast.success('Cảm ơn bạn! Phản hồi của bạn đã được ghi nhận.');
-      
-      // Reset form after successful submission
-      setFormData({
-        name: '',
-        side: undefined,
-        rsvp_status: 'attending',
-      });
-    } catch (err: unknown) {
+    } catch (err) {
       console.error('Lỗi gửi RSVP:', err);
-      setError(err instanceof Error ? err.message : 'Đã xảy ra lỗi khi gửi phản hồi của bạn');
-      showToast.error('Đã xảy ra lỗi. Vui lòng thử lại.');
+      showError('Đã xảy ra lỗi khi gửi phản hồi của bạn');
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
   };
-
+  
   if (success) {
     return (
       <div className="text-center py-6">
@@ -89,7 +98,7 @@ export default function AnonymousRSVPForm() {
       </div>
     );
   }
-
+  
   return (
     <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-primary-light">
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -103,66 +112,69 @@ export default function AnonymousRSVPForm() {
           </p>
         </div>
         
-        {error && (
-          <div className="text-red-600 bg-red-50 p-3 rounded-md text-sm">
-            {error}
-          </div>
+        {Object.values(errors).some(error => error) && (
+          <Alert 
+            variant="error" 
+            title="Vui lòng kiểm tra lại thông tin"
+          >
+            Vui lòng điền đầy đủ các trường bắt buộc.
+          </Alert>
         )}
         
         <div className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Họ và tên <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Nhập họ và tên của bạn"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
+          <FormInput
+            label="Họ và tên"
+            id="name"
+            name="name"
+            value={values.name}
+            onChange={(e) => handleChange('name', e.target.value)}
+            onBlur={() => handleBlur('name')}
+            error={errors.name}
+            touched={touched.name}
+            placeholder="Nhập họ và tên của bạn"
+            required
+          />
           
-          <div>
-            <label htmlFor="side" className="block text-sm font-medium text-gray-700 mb-1">
-              Bạn là khách mời của <span className="text-red-500">*</span>
-            </label>
-            <select
-              id="side"
-              name="side"
-              value={formData.side || ''}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              required
-            >
-              <option value="" disabled>Chọn bên</option>
-              <option value="bride">Cô dâu (Mỹ Duyên)</option>
-              <option value="groom">Chú rể (Hoàng Công)</option>
-            </select>
-          </div>
+          <FormInput
+            label="Email (không bắt buộc)"
+            id="email"
+            name="email"
+            type="email"
+            value={values.email}
+            onChange={(e) => handleChange('email', e.target.value)}
+            onBlur={() => handleBlur('email')}
+            error={errors.email}
+            touched={touched.email}
+            placeholder="Nhập email của bạn"
+          />
+          
+          <FormSelect
+            label="Bạn là khách mời của"
+            id="side"
+            options={[
+              { value: '', label: 'Chọn bên' },
+              { value: 'bride', label: 'Cô dâu (Mỹ Duyên)' },
+              { value: 'groom', label: 'Chú rể (Hoàng Công)' },
+            ]}
+            value={values.side}
+            onChange={(value) => handleChange('side', value)}
+            onBlur={() => handleBlur('side')}
+            error={errors.side}
+            touched={touched.side}
+            required
+          />
         </div>
         
         <div className="pt-4">
-          <button
+          <Button
             type="submit"
-            disabled={submitting}
-            className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="primary"
+            isLoading={isSubmitting}
+            icon={<FaCheck />}
+            className="w-full"
           >
-            {submitting ? (
-              <>
-                <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
-                Đang gửi...
-              </>
-            ) : (
-              <>
-                <FaCheck className="text-sm" />
-                Xác nhận tham dự
-              </>
-            )}
-          </button>
+            Xác nhận tham dự
+          </Button>
         </div>
       </form>
     </div>
