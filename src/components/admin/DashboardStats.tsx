@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { FaUsers, FaCheck, FaTimes, FaClock } from 'react-icons/fa';
+import { FaUsers, FaCheck, FaTimes, FaClock, FaUserSecret } from 'react-icons/fa';
 import { RSVPStats } from '../../lib/types';
 
 export default function DashboardStats() {
@@ -10,6 +10,7 @@ export default function DashboardStats() {
     attending: 0,
     declined: 0,
     pending: 0,
+    anonymous: 0,
     bride: {
       total: 0,
       attending: 0,
@@ -30,11 +31,11 @@ export default function DashboardStats() {
     const fetchStats = async () => {
       try {
         const response = await fetch('/api/stats');
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch statistics');
         }
-        
+
         const data = await response.json();
         setStats(data);
       } catch (err: any) {
@@ -95,13 +96,20 @@ export default function DashboardStats() {
       color: 'bg-yellow-100 text-yellow-800',
       iconColor: 'text-yellow-500',
     },
+    {
+      title: 'Anonymous',
+      value: stats.anonymous || 0,
+      icon: FaUserSecret,
+      color: 'bg-purple-100 text-purple-800',
+      iconColor: 'text-purple-500',
+    },
   ];
 
   return (
     <div>
       <h2 className="text-lg font-medium text-gray-900 mb-4">RSVP Statistics</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {statCards.map((card) => (
           <div key={card.title} className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
@@ -122,12 +130,12 @@ export default function DashboardStats() {
           </div>
         ))}
       </div>
-      
+
       {/* Side-specific stats if available */}
       {(stats.bride || stats.groom) && (
         <div>
           <h2 className="text-lg font-medium text-gray-900 mb-4">Side-Specific Statistics</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Bride's Side */}
             {stats.bride && (
@@ -149,7 +157,7 @@ export default function DashboardStats() {
                 </div>
               </div>
             )}
-            
+
             {/* Groom's Side */}
             {stats.groom && (
               <div className="bg-white overflow-hidden shadow rounded-lg p-6">
@@ -173,6 +181,7 @@ export default function DashboardStats() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

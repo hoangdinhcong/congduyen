@@ -149,3 +149,65 @@ This document outlines the steps to build the elegant wedding invitation website
        *   Display only icons on small screens to save space
        *   Show icon and text on larger screens
    *   **Status:** Done
+
+19. **Anonymous RSVP Feature:**
+   *   Create a new component for anonymous RSVP submissions
+   *   Add form fields for guest name, email, and RSVP status
+   *   Implement backend API endpoint to handle anonymous RSVP submissions
+   *   Update database schema to flag anonymous submissions
+   *   Add anonymous RSVP option to the main invitation page
+   *   Implement validation for anonymous RSVP submissions
+   *   Update admin dashboard to display anonymous RSVPs separately
+   *   Create dedicated page for anonymous RSVP submissions at /rsvp
+   *   Add functionality to convert anonymous RSVPs to regular guests
+   *   **Status:** Completed
+
+20. **Mobile-Optimized Gallery:**
+   *   Implement horizontal scrolling for the gallery on mobile devices
+   *   Add swipe gestures for easier navigation
+   *   Optimize image loading with lazy loading and proper sizing
+   *   Add visual indicators for horizontal scrolling (arrows or dots)
+   *   Implement touch-friendly image viewing experience
+   *   Add smooth scrolling animations between images
+   *   **Status:** Done
+
+21. **Bride/Groom Specific Sections:**
+   *   Create conditional rendering for Gift Info section:
+       *   Show bride-specific gift information on /bride route
+       *   Show groom-specific gift information on /groom route
+   *   Create conditional rendering for Contact section:
+       *   Show bride contact details on /bride route
+       *   Show groom contact details on /groom route
+   *   Implement route-based content switching
+   *   Add visual indicators to show which perspective is being viewed
+   *   **Status:** Done
+
+22. **Google Calendar Integration:**
+   *   Create "Add to Calendar" button with Google Calendar link
+   *   Generate calendar event URL with wedding details (date, time, location)
+   *   Add event description with wedding details
+   *   Implement proper URL encoding for calendar parameters
+   *   Add visual calendar icon for the integration
+   *   Test calendar integration across different devices
+   *   **Status:** Done
+
+23. **Footer Removal and Layout Adjustments:**
+   *   Remove the existing footer component from all pages
+   *   Adjust bottom spacing on all pages to compensate for removed footer
+   *   Ensure floating buttons have proper positioning after footer removal
+   *   Update layout components to remove footer references
+   *   Test all pages to ensure proper layout after footer removal
+   *   **Status:** Done
+
+24. **UI Simplification and Mobile Optimization:**
+   *   Remove monogram from all pages for a cleaner interface
+   *   Optimize bride and groom name display for mobile:
+       *   Add line break between names in mobile view (e.g., "Công & Duyên" becomes "Công\n&\nDuyên")
+   *   Remove countdown timer functionality and related files to simplify UI
+   *   Streamline contact section:
+       *   Remove redundant "Note" section
+       *   Remove Zalo reference (since phone numbers already support Zalo)
+   *   Improve RSVP experience:
+       *   Display RSVP form directly without redirect button
+       *   Remove email input field for simpler form submission
+   *   **Status:** Completed

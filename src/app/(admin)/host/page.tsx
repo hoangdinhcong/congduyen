@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
-import AdminLayout from '../../../components/admin/AdminLayout';
-import DashboardStats from '../../../components/admin/DashboardStats';
+import AdminLayout from '@/components/admin/AdminLayout';
+import DashboardStats from '@/components/admin/DashboardStats';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard | Cong & Duyen Wedding',

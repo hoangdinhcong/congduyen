@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import CountdownTimer from '../ui/CountdownTimer';
 import { FaChevronDown } from 'react-icons/fa';
 
 type HeroSectionProps = {
@@ -62,26 +61,15 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
       {/* Content */}
       <div className="container-wedding relative z-20 text-center text-white">
         <div className="max-w-3xl mx-auto">
-          {/* Monogram */}
-          <div 
-            className={`flex items-center justify-center gap-4 mb-8 transition-all duration-1000 delay-300 ${
-              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <span className="text-5xl md:text-6xl font-heading">C</span>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white flex items-center justify-center bg-primary/20 backdrop-blur-sm">
-              <span className="text-2xl">&</span>
-            </div>
-            <span className="text-5xl md:text-6xl font-heading">D</span>
-          </div>
-          
           {/* Names */}
           <h1 
             className={`text-5xl md:text-6xl lg:text-7xl font-heading mb-6 transition-all duration-1000 delay-500 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Hoàng Công & Mỹ Duyên
+            <span className="md:inline block">Hoàng Công</span>
+            <span className="md:inline block my-2 md:my-0">&</span>
+            <span className="md:inline block">Mỹ Duyên</span>
           </h1>
           
           {/* Date */}
@@ -92,29 +80,19 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
           >
             {displayDate}
           </p>
-          
-          {/* Countdown Timer */}
-          <div 
-            className={`mt-16 transition-all duration-1000 delay-900 ${
-              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <p className="text-lg mb-4 font-light">Đếm ngược đến ngày trọng đại</p>
-            <CountdownTimer targetDate={weddingDate} />
-          </div>
-          
-          {/* Scroll down indicator */}
-          <div 
-            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-all duration-1000 delay-1200 ${
-              isLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onClick={scrollToNextSection}
-          >
-            <div className="animate-bounce flex flex-col items-center">
-              <span className="text-sm mb-2">Cuộn xuống</span>
-              <FaChevronDown />
-            </div>
-          </div>
+        </div>
+      </div>
+      
+      {/* Scroll down indicator - moved outside of the content container to avoid overlap */}
+      <div 
+        className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-all duration-1000 delay-1200 z-30 ${
+          isLoaded ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={scrollToNextSection}
+      >
+        <div className="animate-bounce flex flex-col items-center">
+          <span className="text-sm mb-2 text-white">Cuộn xuống</span>
+          <FaChevronDown className="text-white" />
         </div>
       </div>
     </section>

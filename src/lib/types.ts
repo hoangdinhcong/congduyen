@@ -8,18 +8,20 @@ export type GuestSide = 'bride' | 'groom';
 export interface Guest {
   id: string;
   name: string;
-  email?: string;
-  phone?: string;
   side: GuestSide;
   tags?: string[];
   unique_invite_id: string;
   rsvp_status: RSVPStatus;
-  plus_one?: boolean;
-  plus_one_name?: string;
-  dietary_restrictions?: string;
-  notes?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+// Anonymous RSVP submission data
+export interface AnonymousRSVP {
+  name: string;
+  email?: string;
+  side?: GuestSide;
+  rsvp_status: RSVPStatus;
 }
 
 // RSVP statistics structure
@@ -28,6 +30,7 @@ export interface RSVPStats {
   attending: number;
   declined: number;
   pending: number;
+  anonymous?: number; // Count of anonymous RSVPs
   bride?: {
     total: number;
     attending: number;

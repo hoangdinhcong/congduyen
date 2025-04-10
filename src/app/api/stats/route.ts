@@ -27,6 +27,12 @@ export async function GET() {
       .select('*', { count: 'exact', head: true })
       .eq('rsvp_status', 'pending');
     
+    // Get anonymous stats
+    const { count: anonymous } = await supabase
+      .from('guests')
+      .select('*', { count: 'exact', head: true })
+      .contains('tags', ['anonymous']);
+    
     // Get bride's side stats
     const { count: brideTotal } = await supabase
       .from('guests')
@@ -81,6 +87,7 @@ export async function GET() {
       attending: attending || 0,
       declined: declined || 0,
       pending: pending || 0,
+      anonymous: anonymous || 0,
       bride: {
         total: brideTotal || 0,
         attending: brideAttending || 0,
@@ -99,7 +106,7 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching stats:', error);
     return NextResponse.json(
-      { message: 'An error occurred while fetching statistics' },
+      { message: 'Failed to fetch statistics' },
       { status: 500 }
     );
   }

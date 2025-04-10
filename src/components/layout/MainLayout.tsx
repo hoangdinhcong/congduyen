@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Header from './Header';
-import Footer from './Footer';
 import FloatingActionButtons from '../ui/FloatingActionButtons';
 import { usePathname } from 'next/navigation';
 
@@ -22,7 +21,7 @@ export default function MainLayout({
   rsvpStatus = 'pending'
 }: MainLayoutProps) {
   const pathname = usePathname();
-  const isInvitePage = pathname?.includes('/invite/');
+  const isAdminPage = pathname?.includes('/host');
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -32,10 +31,12 @@ export default function MainLayout({
           {children}
         </div>
       </main>
-      <Footer />
       
-      {/* Only show floating action buttons on invite pages */}
-      {isInvitePage && (
+      {/* Add bottom padding to compensate for removed footer and floating buttons */}
+      <div className="pb-24 md:pb-16"></div>
+      
+      {/* Show floating action buttons on all pages except admin pages */}
+      {!isAdminPage && (
         <FloatingActionButtons 
           guestName={guestName}
           guestId={guestId}

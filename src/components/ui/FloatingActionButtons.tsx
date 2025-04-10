@@ -69,10 +69,10 @@ export default function FloatingActionButtons({
           ref={buttonRef}
           onClick={handleReactionClick}
           className="bg-primary hover:bg-primary-dark text-white rounded-full p-3 shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
-          aria-label="Gửi phản ứng"
+          aria-label="Chúc mừng"
         >
           <FaHeart className="text-sm" />
-          <span className="text-sm font-medium hidden sm:inline">Gửi phản ứng</span>
+          <span className="text-sm font-medium hidden sm:inline">Chúc mừng</span>
         </button>
       </div>
 

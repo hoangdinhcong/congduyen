@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaCheck, FaTimes, FaHeart, FaEnvelope } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaHeart } from 'react-icons/fa';
 import { RSVPStatus } from '../../lib/types';
+import AnonymousRSVPForm from '../ui/AnonymousRSVPForm';
 
 type RSVPSectionProps = {
   isPersonalized?: boolean;
@@ -91,7 +92,7 @@ export default function RSVPSection({
           title="Phản Hồi Tham Dự" 
           subtitle={isPersonalized 
             ? `${guestName}, vui lòng cho chúng tôi biết bạn có thể tham dự không` 
-            : "Vui lòng sử dụng đường dẫn cá nhân để phản hồi"}
+            : "Vui lòng điền thông tin của bạn để xác nhận tham dự"}
         />
         
         <div 
@@ -108,7 +109,7 @@ export default function RSVPSection({
               {status === 'pending' ? (
                 <>
                   <div className="mb-8">
-                    <FaEnvelope className="text-4xl text-primary mx-auto mb-4" />
+                    <FaHeart className="text-4xl text-primary mx-auto mb-4" />
                     <h3 className="text-2xl font-heading mb-4 text-secondary">
                       Bạn sẽ tham dự đám cưới của chúng tôi chứ?
                     </h3>
@@ -187,28 +188,9 @@ export default function RSVPSection({
               )}
             </div>
           ) : (
-            <div className="bg-white p-8 md:p-10 rounded-lg shadow-md border border-primary-light text-center relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-primary opacity-30"></div>
-              <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-primary opacity-30"></div>
-              
-              <FaEnvelope className="text-4xl text-primary mx-auto mb-6" />
-              
-              <h3 className="text-2xl font-heading mb-4 text-secondary">
-                Phản Hồi Tham Dự Cá Nhân
-              </h3>
-              
-              <p className="mb-6 text-gray-600">
-                Để phản hồi tham dự đám cưới, vui lòng sử dụng đường dẫn cá nhân đã được gửi cho bạn.
-              </p>
-              
-              <p className="text-gray-700 mb-6">
-                Nếu bạn chưa nhận được đường dẫn mời hoặc có bất kỳ câu hỏi nào, vui lòng liên hệ trực tiếp với chúng tôi.
-              </p>
-              
-              <button className="btn-primary flex items-center justify-center gap-2 mx-auto">
-                <FaEnvelope className="text-sm" />
-                Liên Hệ Chúng Tôi
-              </button>
+            // Anonymous RSVP form
+            <div className="bg-white p-8 md:p-10 rounded-lg shadow-md border border-primary-light">
+              <AnonymousRSVPForm />
             </div>
           )}
         </div>
