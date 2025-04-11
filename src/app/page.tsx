@@ -1,25 +1,24 @@
 import React from 'react';
-import MainLayout from '../components/layout/MainLayout';
-import HeroSection from '../components/sections/HeroSection';
-import InvitationSection from '../components/sections/InvitationSection';
-import EventDetailsSection from '../components/sections/EventDetailsSection';
-import ScheduleSection from '../components/sections/ScheduleSection';
-import GallerySection from '../components/sections/GallerySection';
-import GiftInfoSection from '../components/sections/GiftInfoSection';
-import ContactSection from '../components/sections/ContactSection';
-import RSVPSection from '../components/sections/RSVPSection';
+import Navbar from '../components/Navbar';
+import HeroSection from '../components/HeroSection';
+import LocationSection from '../components/LocationSection';
+import GallerySection from '../components/GallerySection';
+import GiftsSection from '../components/GiftsSection';
+import RsvpSection from '../components/RsvpSection';
 
 export default function Home() {
   return (
-    <MainLayout>
+    <div className="min-h-screen bg-white">
+      <Navbar />
       <HeroSection />
-      <InvitationSection />
-      <EventDetailsSection />
-      <ScheduleSection />
+      <LocationSection />
       <GallerySection />
-      <GiftInfoSection />
-      <ContactSection />
-      <RSVPSection />
-    </MainLayout>
+      <GiftsSection />
+      <RsvpSection />
+
+      <footer className="py-8 bg-white text-center text-gray-500 text-sm">
+        <p>&copy; {new Date().getFullYear()} Hoàng Công & Mỹ Duyên</p>
+      </footer>
+    </div>
   );
 }

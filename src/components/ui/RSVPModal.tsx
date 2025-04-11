@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Modal from './Modal';
-import { FaCheck, FaTimes, FaEnvelope } from 'react-icons/fa';
+import { Check, X, Mail } from 'lucide-react';
 import AnonymousRSVPForm from './AnonymousRSVPForm';
 
 type RSVPModalProps = {
@@ -34,11 +34,11 @@ export default function RSVPModal({
       setError('Không thể xác định thông tin khách mời. Vui lòng thử lại sau.');
       return;
     }
-    
+
     setSubmitting(true);
     setError('');
     setSuccess('');
-    
+
     try {
       const response = await fetch(`/api/rsvp/${uniqueInviteId}`, {
         method: 'PATCH',
@@ -47,12 +47,12 @@ export default function RSVPModal({
         },
         body: JSON.stringify({ rsvp_status: newStatus }),
       });
-      
+
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || 'Không thể cập nhật phản hồi');
       }
-      
+
       setStatus(newStatus);
       setSuccess(`Cảm ơn bạn! Phản hồi của bạn đã được ${newStatus === 'attending' ? 'xác nhận tham dự' : 'từ chối'}.`);
     } catch (err: unknown) {
@@ -64,8 +64,8 @@ export default function RSVPModal({
   };
 
   return (
-    <Modal 
-      isOpen={isOpen} 
+    <Modal
+      isOpen={isOpen}
       onClose={onClose}
       title="Phản Hồi Tham Dự"
     >
@@ -74,32 +74,32 @@ export default function RSVPModal({
         status === 'pending' ? (
           <>
             <div className="mb-6 text-center">
-              <FaEnvelope className="text-3xl text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-heading mb-3 text-secondary">
+              <Mail className="text-3xl text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-serif mb-3 text-secondary">
                 {guestName ? `${guestName}, bạn` : 'Bạn'} sẽ tham dự đám cưới của chúng tôi chứ?
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 font-sans">
                 Chúng tôi rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
                 Vui lòng cho chúng tôi biết bạn có thể tham dự không.
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
+              <button
                 onClick={() => handleRSVP('attending')}
                 disabled={submitting}
                 className="btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FaCheck className="text-sm" />
+                <Check className="text-sm" />
                 {submitting ? 'Đang gửi...' : 'Có, tôi sẽ tham dự'}
               </button>
-              
-              <button 
+
+              <button
                 onClick={() => handleRSVP('declined')}
                 disabled={submitting}
                 className="btn-outline flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FaTimes className="text-sm" />
+                <X className="text-sm" />
                 {submitting ? 'Đang gửi...' : 'Rất tiếc, tôi không thể tham dự'}
               </button>
             </div>
@@ -109,27 +109,27 @@ export default function RSVPModal({
             <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
               {status === 'attending' ? (
                 <div className="bg-green-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
-                  <FaCheck className="text-green-600 text-2xl animate-bounce" />
+                  <Check className="text-green-600 text-2xl animate-bounce" />
                 </div>
               ) : (
                 <div className="bg-red-100 w-full h-full rounded-full flex items-center justify-center shadow-md">
-                  <FaTimes className="text-red-600 text-2xl" />
+                  <X className="text-red-600 text-2xl" />
                 </div>
               )}
             </div>
-            
-            <h3 className="text-xl font-heading mb-4 text-secondary">
-              {status === 'attending' 
-                ? 'Bạn đã xác nhận tham dự!' 
+
+            <h3 className="text-xl font-serif mb-4 text-secondary">
+              {status === 'attending'
+                ? 'Bạn đã xác nhận tham dự!'
                 : 'Bạn đã từ chối lời mời.'}
             </h3>
-            
-            <p className="text-gray-600 mb-6">
+
+            <p className="text-gray-600 mb-6 font-sans">
               {status === 'attending'
                 ? 'Chúng tôi rất mong được gặp bạn! Cảm ơn bạn đã đồng hành cùng chúng tôi trong ngày đặc biệt này.'
                 : 'Chúng tôi sẽ nhớ bạn, nhưng cảm ơn bạn đã thông báo. Chúng tôi đánh giá cao phản hồi của bạn.'}
             </p>
-            
+
             <button
               onClick={() => setStatus('pending')}
               className="text-primary hover:text-primary-dark transition-colors duration-300 flex items-center gap-2 mx-auto"
@@ -142,13 +142,13 @@ export default function RSVPModal({
         // Anonymous RSVP - display form immediately
         <AnonymousRSVPForm />
       )}
-      
+
       {error && (
         <div className="mt-6 text-red-600 bg-red-50 p-3 rounded-md">
           {error}
         </div>
       )}
-      
+
       {success && (
         <div className="mt-6 text-green-600 bg-green-50 p-3 rounded-md">
           {success}

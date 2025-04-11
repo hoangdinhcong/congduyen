@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FaCheck, FaHeart, FaUser } from 'react-icons/fa';
+import { Check, Heart, User } from 'lucide-react';
 import { GuestSide, RSVPStatus } from '@/lib/types';
 import { useForm, validationRules } from '@/hooks/useForm';
 import { useGuestContext } from '@/contexts/GuestContext';
@@ -18,7 +18,7 @@ import { Alert } from './Alert';
 export default function AnonymousRSVPForm() {
   const { submitAnonymousRSVP } = useGuestContext();
   const { showSuccess, showError } = useToastContext();
-  
+
   const {
     values,
     errors,
@@ -40,26 +40,26 @@ export default function AnonymousRSVPForm() {
       side: [validationRules.required('Vui lòng chọn bên của bạn')],
     }
   );
-  
+
   const [success, setSuccess] = React.useState(false);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       const result = await submitAnonymousRSVP({
         name: values.name,
         side: values.side as GuestSide,
         rsvp_status: values.rsvp_status,
       });
-      
+
       if (result) {
         setSuccess(true);
         showSuccess('Cảm ơn bạn! Phản hồi của bạn đã được ghi nhận.');
@@ -74,51 +74,51 @@ export default function AnonymousRSVPForm() {
       setIsSubmitting(false);
     }
   };
-  
+
   if (success) {
     return (
       <div className="text-center py-6">
         <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-6 shadow-md">
-          <FaCheck className="text-green-600 text-2xl animate-bounce" />
+          <Check className="text-green-600 animate-bounce" size={24} />
         </div>
-        
-        <h3 className="text-xl font-heading mb-4 text-secondary">
+
+        <h3 className="text-xl font-serif mb-4 text-secondary">
           Cảm ơn bạn!
         </h3>
-        
-        <p className="text-gray-600 mb-6">
+
+        <p className="text-gray-600 mb-6 font-sans">
           Phản hồi của bạn đã được ghi nhận. Chúng tôi rất mong được gặp bạn trong ngày đặc biệt này!
         </p>
-        
+
         <div className="flex justify-center">
-          <FaHeart className="text-primary animate-heartbeat text-2xl" />
+          <Heart className="text-primary animate-heartbeat" size={24} />
         </div>
       </div>
     );
   }
-  
+
   return (
     <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-primary-light">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="text-center mb-6">
-          <FaUser className="text-3xl text-primary mx-auto mb-4" />
-          <h3 className="text-xl font-heading mb-2 text-secondary">
+          <User className="text-primary mx-auto mb-4" size={28} />
+          <h3 className="text-xl font-serif mb-2 text-secondary">
             Xác Nhận Tham Dự
           </h3>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm font-sans">
             Vui lòng điền thông tin của bạn để xác nhận tham dự đám cưới
           </p>
         </div>
-        
+
         {Object.values(errors).some(error => error) && (
-          <Alert 
-            variant="error" 
+          <Alert
+            variant="error"
             title="Vui lòng kiểm tra lại thông tin"
           >
             Vui lòng điền đầy đủ các trường bắt buộc.
           </Alert>
         )}
-        
+
         <div className="space-y-4">
           <FormInput
             label="Họ và tên"
@@ -132,7 +132,7 @@ export default function AnonymousRSVPForm() {
             placeholder="Nhập họ và tên của bạn"
             required
           />
-          
+
           <FormSelect
             label="Bạn là khách mời của"
             id="side"
@@ -149,7 +149,7 @@ export default function AnonymousRSVPForm() {
             required
           />
         </div>
-        
+
         <div className="pt-4">
           <Button
             type="submit"

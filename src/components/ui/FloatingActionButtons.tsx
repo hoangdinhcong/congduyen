@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { FaReply, FaGift, FaHeart } from 'react-icons/fa';
+import { Reply, Gift, Heart } from 'lucide-react';
 import RSVPModal from './RSVPModal';
 import GiftModal from './GiftModal';
 import confetti from 'canvas-confetti';
@@ -52,7 +52,7 @@ export default function FloatingActionButtons({
           className="bg-primary hover:bg-primary-dark text-white rounded-full p-3 shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
           aria-label="Phản hồi tham dự"
         >
-          <FaReply className="text-sm" />
+          <Reply size={16} />
           <span className="text-sm font-medium hidden sm:inline">Phản hồi</span>
         </button>
 
@@ -61,7 +61,7 @@ export default function FloatingActionButtons({
           className="bg-primary hover:bg-primary-dark text-white rounded-full p-3 shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
           aria-label="Gửi quà"
         >
-          <FaGift className="text-sm" />
+          <Gift size={16} />
           <span className="text-sm font-medium hidden sm:inline">Gửi quà</span>
         </button>
 
@@ -71,7 +71,7 @@ export default function FloatingActionButtons({
           className="bg-primary hover:bg-primary-dark text-white rounded-full p-3 shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
           aria-label="Chúc mừng"
         >
-          <FaHeart className="text-sm" />
+          <Heart size={16} />
           <span className="text-sm font-medium hidden sm:inline">Chúc mừng</span>
         </button>
       </div>

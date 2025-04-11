@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FaChevronDown } from 'react-icons/fa';
+import { ChevronDown } from 'lucide-react';
 import CountdownTimer from '../ui/CountdownTimer'; // Import CountdownTimer
 import weddingData from '@/data/data.json'; // Import wedding data
 
@@ -99,7 +99,7 @@ export default function HeroSection() {
       >
         <div className="animate-bounce flex flex-col items-center">
           <span className="text-sm mb-2 text-white">Cuộn xuống</span>
-          <FaChevronDown className="text-white" />
+          <ChevronDown className="text-white" />
         </div>
       </div>
     </section>

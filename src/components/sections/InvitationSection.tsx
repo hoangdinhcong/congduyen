@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaHeart } from 'react-icons/fa';
+import { Heart } from 'lucide-react';
 import weddingData from '@/data/data.json';
 
 export default function InvitationSection() {
@@ -56,11 +56,11 @@ export default function InvitationSection() {
   return (
     <section ref={sectionRef} id="invitation" className="py-20 bg-gradient-to-b from-white to-primary-light">
       <div className="container-wedding">
-        <SectionTitle 
-          title={weddingData.invitationTitle} 
-          subtitle={weddingData.invitationSubtitle} 
+        <SectionTitle
+          title={weddingData.invitationTitle}
+          subtitle={weddingData.invitationSubtitle}
         />
-        
+
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-lg mb-6 text-gray-700 section-fade-in">
             Được sự đồng ý của hai bên gia đình:
@@ -80,8 +80,8 @@ export default function InvitationSection() {
           <p className="text-lg mb-8 section-fade-in">
             {weddingData.invitationMessage}
           </p>
-          
-          <div 
+
+          <div
             ref={invitationRef}
             className="relative border-t border-b border-primary py-10 my-10 px-6 md:px-10 section-fade-in"
           >
@@ -90,27 +90,27 @@ export default function InvitationSection() {
             <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary translate-x-1 -translate-y-1"></div>
             <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-primary -translate-x-1 translate-y-1"></div>
             <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-primary translate-x-1 translate-y-1"></div>
-            
+
             {/* Decorative heart */}
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white p-2">
-              <FaHeart className="text-primary text-xl" />
+              <Heart className="text-primary" size={20} />
             </div>
-            
-            <h3 className="font-heading text-2xl md:text-3xl mb-3 text-secondary">
+
+            <h3 className="font-serif text-2xl md:text-3xl mb-3 text-secondary">
               {weddingData.groom.name} & {weddingData.bride.name}
             </h3>
-            <p className="text-xl mb-5 font-light">Trân trọng kính mời</p>
-            <p className="text-lg leading-relaxed">
+            <p className="text-xl mb-5 font-light font-sans">Trân trọng kính mời</p>
+            <p className="text-lg leading-relaxed font-sans">
               {displayTime}, {displayDate}<br />
               {weddingData.event.location.address}
             </p>
-            
+
             {/* Decorative heart at bottom */}
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white p-2">
-              <FaHeart className="text-primary text-xl" />
+              <Heart className="text-primary" size={20} />
             </div>
           </div>
-          
+
           <p className="italic text-gray-600 section-fade-in">
             &ldquo;{weddingData.invitationQuote}&rdquo;
           </p>

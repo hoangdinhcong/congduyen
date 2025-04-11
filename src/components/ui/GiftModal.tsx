@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Modal from './Modal';
-import { FaQrcode, FaCopy } from 'react-icons/fa';
+import { QrCode, Copy } from 'lucide-react';
 import { showToast } from '@/components/ui/ToastProvider';
 
 type GiftModalProps = {
@@ -32,7 +32,7 @@ export default function GiftModal({ isOpen, onClose }: GiftModalProps) {
       <div className="text-center">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
-            <FaQrcode className="text-primary text-2xl" />
+            <QrCode className="text-primary text-2xl" />
           </div>
         </div>
 
@@ -57,7 +57,7 @@ export default function GiftModal({ isOpen, onClose }: GiftModalProps) {
           className="btn-primary flex items-center justify-center gap-2 mx-auto"
           onClick={handleCopyAccountNumber}
         >
-          <FaCopy className="text-sm" />
+          <Copy className="text-sm" />
           Sao Chép Số Tài Khoản
         </button>
       </div>

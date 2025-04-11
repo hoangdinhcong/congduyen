@@ -5,7 +5,7 @@ import { Guest } from '@/lib/types';
 import { DataTable } from '../ui/DataTable';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
-import { FaUserSecret, FaTrash, FaUserPlus } from 'react-icons/fa';
+import { User, Trash2, UserPlus } from 'lucide-react';
 import { useGuests } from '@/hooks/useGuests';
 import { useToastContext } from '@/contexts/ToastContext';
 import { Card } from '../ui/Card';
@@ -85,7 +85,7 @@ export default function AnonymousRSVPList() {
       header: 'Name',
       render: (row: Guest) => (
         <div className="flex items-center">
-          <FaUserSecret className="text-purple-500 mr-2" />
+          <User className="text-purple-500 mr-2" />
           <span>{row.name}</span>
         </div>
       ),
@@ -137,7 +137,7 @@ export default function AnonymousRSVPList() {
           <Button
             variant="outline"
             size="sm"
-            icon={<FaUserPlus />}
+            icon={<UserPlus />}
             onClick={() => handleConvertToGuest(row)}
             title="Convert to regular guest"
           >
@@ -146,7 +146,7 @@ export default function AnonymousRSVPList() {
           <Button
             variant="danger"
             size="sm"
-            icon={<FaTrash />}
+            icon={<Trash2 />}
             onClick={() => handleDelete(row.id)}
             title="Delete anonymous RSVP"
           />
@@ -170,7 +170,7 @@ export default function AnonymousRSVPList() {
     return (
       <Card>
         <div className="text-center p-8">
-          <FaUserSecret className="text-purple-400 text-4xl mx-auto mb-4" />
+          <User className="text-purple-400 text-4xl mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No Anonymous RSVPs</h3>
           <p className="text-gray-500">
             When guests RSVP without an invitation link, they will appear here.
@@ -183,7 +183,7 @@ export default function AnonymousRSVPList() {
   return (
     <Card>
       <div className="flex items-center mb-4">
-        <FaUserSecret className="text-purple-500 mr-2" />
+        <User className="text-purple-500 mr-2" />
         <h2 className="text-lg font-medium">Anonymous RSVPs ({anonymousGuests.length})</h2>
       </div>
       

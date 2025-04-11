@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaPhone, FaInfoCircle } from 'react-icons/fa';
+import { Phone, Info } from 'lucide-react';
 import { useRoutePerspective } from '@/utils/routeUtils';
 import weddingData from '@/data/data.json';
 
@@ -39,7 +39,7 @@ export default function ContactSection() {
           {(isBride || isGroom) && (
             <div className="mb-6 flex justify-center">
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isBride ? 'bg-primary-light text-primary' : 'bg-blue-50 text-blue-600'}`}>
-                <FaInfoCircle />
+                <Info />
                 <span>Thông tin liên hệ {isBride ? 'nhà gái' : 'nhà trai'}</span>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function ContactSection() {
                   <div className="space-y-4">
                     <div className="flex items-start">
                       <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
-                        <FaPhone className="text-primary" />
+                        <Phone className="text-primary" />
                       </div>
                       <div className="ml-4">
                         <p className="text-sm font-medium text-gray-900">Điện thoại / Zalo</p>

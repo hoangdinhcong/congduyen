@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCalendarPlus } from 'react-icons/fa';
+import { MapPin, Calendar, Clock, CalendarPlus } from 'lucide-react';
 import { generateGoogleCalendarUrl } from '../../utils/calendarUtils';
 import weddingData from '@/data/data.json';
 
@@ -35,7 +35,7 @@ export default function EventDetailsSection() {
             <h3 className="text-2xl font-heading mb-4 text-center">Tiệc Cưới</h3>
             
             <div className="flex items-start gap-3 mb-4">
-              <FaMapMarkerAlt className="text-primary mt-1 flex-shrink-0" />
+              <MapPin className="text-primary mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium">{weddingData.event.location.name}</p>
                 <p className="text-gray-600">{weddingData.event.location.address}</p>
@@ -43,14 +43,14 @@ export default function EventDetailsSection() {
             </div>
             
             <div className="flex items-start gap-3 mb-4">
-              <FaCalendarAlt className="text-primary mt-1 flex-shrink-0" />
+              <Calendar className="text-primary mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium">{displayDate}</p>
               </div>
             </div>
             
             <div className="flex items-start gap-3 mb-6">
-              <FaClock className="text-primary mt-1 flex-shrink-0" />
+              <Clock className="text-primary mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium">{displayTime}</p>
               </div>
@@ -64,7 +64,7 @@ export default function EventDetailsSection() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition-colors"
               >
-                <FaCalendarPlus />
+                <CalendarPlus />
                 <span>Thêm vào Google Calendar</span>
               </a>
             </div>

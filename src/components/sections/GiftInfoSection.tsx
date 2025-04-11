@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
-import { FaQrcode, FaCopy, FaInfoCircle } from 'react-icons/fa';
+import { QrCode, Copy, Info } from 'lucide-react';
 import { showToast } from '@/components/ui/ToastProvider';
 import { useRoutePerspective } from '@/utils/routeUtils';
 import weddingData from '@/data/data.json'; // Import data
@@ -44,7 +44,7 @@ export default function GiftInfoSection() {
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
                 isBride ? 'bg-primary-light text-primary' : 'bg-blue-50 text-blue-600'
               }`}>
-                <FaInfoCircle />
+                <Info />
                 <span>
                   {isBride 
                     ? 'Bạn đang xem thông tin quà cưới cho nhà gái' 
@@ -57,7 +57,7 @@ export default function GiftInfoSection() {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 max-w-md mx-auto">
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
-                <FaQrcode className="text-primary text-2xl" />
+                <QrCode className="text-primary text-2xl" />
               </div>
             </div>
 
@@ -92,7 +92,7 @@ export default function GiftInfoSection() {
               className="btn-primary flex items-center justify-center gap-2 mx-auto"
               onClick={handleCopyAccountNumber}
             >
-              <FaCopy className="text-sm" />
+              <Copy className="text-sm" />
               Sao Chép Số Tài Khoản
             </button>
           </div>

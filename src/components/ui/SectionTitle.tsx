@@ -11,13 +11,13 @@ type SectionTitleProps = {
   subtitleClassName?: string;
 };
 
-export default function SectionTitle({ 
-  title, 
-  subtitle, 
-  centered = true, 
+export default function SectionTitle({
+  title,
+  subtitle,
+  centered = true,
   animationDelay = 0,
-  titleClassName = 'text-3xl md:text-4xl font-heading font-medium mb-3 text-secondary',
-  subtitleClassName = 'text-lg text-gray-600'
+  titleClassName = 'section-title',
+  subtitleClassName = 'text-lg text-gray-600 font-sans'
 }: SectionTitleProps) {
   const titleRef = useRef<HTMLDivElement>(null);
 
@@ -51,8 +51,8 @@ export default function SectionTitle({
   }, [animationDelay]);
 
   return (
-    <div 
-      ref={titleRef} 
+    <div
+      ref={titleRef}
       className={`mb-12 section-fade-in ${centered ? 'text-center' : ''}`}
     >
       <h2 className={`${titleClassName}`}>{title}</h2>

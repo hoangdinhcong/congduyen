@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaHome, FaUsers, FaChartBar, FaCog, FaSignOutAlt, FaUserSecret, FaBars, FaTimes } from 'react-icons/fa';
+import { Home, Users, BarChart, Settings, LogOut, UserRound, Menu, X } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface AdminLayoutProps {
@@ -35,10 +35,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   const navigation = [
-    { name: 'Dashboard', href: '/host', icon: FaChartBar },
-    { name: 'Guest List', href: '/host/guests', icon: FaUsers },
-    { name: 'Anonymous RSVPs', href: '/host/anonymous', icon: FaUserSecret },
-    { name: 'Settings', href: '/host/settings', icon: FaCog },
+    { name: 'Dashboard', href: '/host', icon: BarChart },
+    { name: 'Guest List', href: '/host/guests', icon: Users },
+    { name: 'Anonymous RSVPs', href: '/host/anonymous', icon: UserRound },
+    { name: 'Settings', href: '/host/settings', icon: Settings },
   ];
 
   if (isPageLoading) {
@@ -73,7 +73,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             className="p-1 text-gray-500 rounded-md lg:hidden hover:text-primary focus:outline-none"
             onClick={toggleSidebar}
           >
-            <FaTimes className="w-6 h-6" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -101,14 +101,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <div className="absolute bottom-0 w-full border-t border-gray-200">
           <Link href="/" className="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-            <FaHome className="w-5 h-5 mr-3 text-gray-400" />
+            <Home className="w-5 h-5 mr-3 text-gray-400" />
             Back to Website
           </Link>
           <button 
             onClick={logout}
             className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
           >
-            <FaSignOutAlt className="w-5 h-5 mr-3 text-gray-400" />
+            <LogOut className="w-5 h-5 mr-3 text-gray-400" />
             Sign out
           </button>
         </div>
@@ -122,7 +122,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             className="p-1 text-gray-500 rounded-md hover:text-primary focus:outline-none"
             onClick={toggleSidebar}
           >
-            <FaBars className="w-6 h-6" />
+            <Menu className="w-6 h-6" />
           </button>
           <span className="text-lg font-semibold text-primary">Admin Panel</span>
           <div className="w-6"></div> {/* Spacer for centering */}

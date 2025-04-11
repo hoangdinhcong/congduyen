@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaUpload, FaSearch, FaFilter, FaCopy, FaEdit, FaTrash, FaUsers, FaUserSecret } from 'react-icons/fa';
+import { Plus, Upload, Search, Filter, Copy, Edit2, Trash2, Users, User } from 'lucide-react';
 import { Guest, RSVPStatus, GuestSide } from '../../lib/types';
 import { showToast } from '@/components/ui/ToastProvider';
 import AddGuestModal from './AddGuestModal';
@@ -358,7 +358,7 @@ export default function GuestList() {
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
       <div className="p-4 border-b border-gray-200 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h2 className="text-lg font-medium text-gray-900 flex items-center">
-          <FaUsers className="mr-2 text-primary" />
+          <Users className="mr-2 text-primary" />
           Guest List
           <span className="ml-2 text-sm text-gray-500">
             ({filteredGuests.length} of {guests.length})
@@ -370,7 +370,7 @@ export default function GuestList() {
             onClick={() => setIsAddModalOpen(true)}
             className="btn-primary-sm flex items-center"
           >
-            <FaPlus className="mr-1" />
+            <Plus className="mr-1" />
             Add Guest
           </button>
           
@@ -378,7 +378,7 @@ export default function GuestList() {
             onClick={() => setIsImportModalOpen(true)}
             className="btn-outline-sm flex items-center"
           >
-            <FaUpload className="mr-1" />
+            <Upload className="mr-1" />
             Import
           </button>
           
@@ -388,7 +388,7 @@ export default function GuestList() {
                 onClick={() => setIsBulkEditModalOpen(true)}
                 className="btn-secondary-sm flex items-center"
               >
-                <FaEdit className="mr-1" />
+                <Edit2 className="mr-1" />
                 Bulk Edit ({selectedGuests.length})
               </button>
               
@@ -396,7 +396,7 @@ export default function GuestList() {
                 onClick={handleBulkDelete}
                 className="btn-danger-sm flex items-center"
               >
-                <FaTrash className="mr-1" />
+                <Trash2 className="mr-1" />
                 Delete ({selectedGuests.length})
               </button>
             </>
@@ -407,7 +407,7 @@ export default function GuestList() {
       <div className="p-4 border-b border-gray-200 bg-white flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FaSearch className="text-gray-400" />
+            <Search className="text-gray-400" />
           </div>
           <input
             type="text"
@@ -430,7 +430,7 @@ export default function GuestList() {
               <option value="groom">Groom's Side</option>
             </select>
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaFilter className="text-gray-400" />
+              <Filter className="text-gray-400" />
             </div>
           </div>
           
@@ -446,7 +446,7 @@ export default function GuestList() {
               <option value="pending">Pending</option>
             </select>
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaFilter className="text-gray-400" />
+              <Filter className="text-gray-400" />
             </div>
           </div>
           
@@ -461,7 +461,7 @@ export default function GuestList() {
               <option value="invited">Invited Guests</option>
             </select>
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaUserSecret className="text-gray-400" />
+              <User className="text-gray-400" />
             </div>
           </div>
         </div>
@@ -545,7 +545,7 @@ export default function GuestList() {
                           {guest.name}
                           {guest.tags?.includes('anonymous') && (
                             <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
-                              <FaUserSecret className="mr-1" />
+                              <User className="mr-1" />
                               Anonymous
                             </span>
                           )}
@@ -594,7 +594,7 @@ export default function GuestList() {
                         className="text-indigo-600 hover:text-indigo-900 mr-3"
                         title="Copy invitation link"
                       >
-                        <FaCopy />
+                        <Copy className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => {
@@ -604,14 +604,14 @@ export default function GuestList() {
                         className="text-blue-600 hover:text-blue-900 mr-3"
                         title="Edit guest"
                       >
-                        <FaEdit />
+                        <Edit2 className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteGuest(guest.id)}
                         className="text-red-600 hover:text-red-900"
                         title="Delete guest"
                       >
-                        <FaTrash />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     </td>
                   </tr>

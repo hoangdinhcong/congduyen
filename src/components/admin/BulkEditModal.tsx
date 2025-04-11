@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { X } from 'lucide-react';
 import { GuestSide, RSVPStatus } from '../../lib/types';
 
 type BulkEditModalProps = {
@@ -43,7 +43,7 @@ export default function BulkEditModal({ selectedCount, onClose, onUpdate }: Bulk
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
           >
-            <FaTimes />
+            <X />
           </button>
         </div>
         

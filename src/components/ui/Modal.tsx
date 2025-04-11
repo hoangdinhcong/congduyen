@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { X } from 'lucide-react';
 
 type ModalProps = {
   isOpen: boolean;
@@ -55,18 +55,18 @@ export default function Modal({ isOpen, onClose, title, children, className = ''
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-      <div 
+      <div
         ref={modalRef}
         className={`bg-white rounded-lg shadow-xl max-w-md w-full mx-4 md:mx-auto relative transform transition-all duration-300 ${className}`}
       >
         <div className="flex justify-between items-center p-4 border-b border-gray-100">
-          {title && <h3 className="text-xl font-heading text-secondary">{title}</h3>}
-          <button 
+          {title && <h3 className="text-xl font-serif text-secondary">{title}</h3>}
+          <button
             onClick={onClose}
             className="text-gray-500 hover:text-primary transition-colors"
             aria-label="Close"
           >
-            <FaTimes />
+            <X />
           </button>
         </div>
         <div className="p-6">

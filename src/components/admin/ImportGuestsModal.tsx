@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { FaTimes, FaDownload, FaUpload } from 'react-icons/fa';
+import { X, Download, Upload } from 'lucide-react';
 import { showToast } from '@/components/ui/ToastProvider';
 
 type ImportGuestsModalProps = {
@@ -132,7 +132,7 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
           >
-            <FaTimes />
+            <X />
           </button>
         </div>
         
@@ -153,7 +153,7 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
               onClick={handleDownloadTemplate}
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
-              <FaDownload className="-ml-1 mr-2 h-4 w-4" />
+              <Download className="-ml-1 mr-2 h-4 w-4" />
               Download Template
             </button>
           </div>
@@ -172,7 +172,7 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
                 onDrop={handleDrop}
               >
                 <div className="space-y-1 text-center">
-                  <FaUpload className="mx-auto h-12 w-12 text-gray-400" />
+                  <Upload className="mx-auto h-12 w-12 text-gray-400" />
                   <div className="flex text-sm text-gray-600">
                     <label
                       htmlFor="file-upload"
