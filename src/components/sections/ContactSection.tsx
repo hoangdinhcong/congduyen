@@ -4,47 +4,42 @@ import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
 import { FaPhone, FaInfoCircle } from 'react-icons/fa';
 import { useRoutePerspective } from '@/utils/routeUtils';
+import weddingData from '@/data/data.json';
 
 export default function ContactSection() {
   const { isBride, isGroom } = useRoutePerspective();
 
-  // Contact information
-  const contactInfo = {
-    bride: {
-      name: 'Mỹ Duyên',
-      phone: '+84 123 456 789',
-    },
-    groom: {
-      name: 'Hoàng Công',
-      phone: '+84 987 654 321',
-    }
-  };
+  const currentContactInfo = isBride
+    ? weddingData.contact.bride
+    : isGroom
+      ? weddingData.contact.groom
+      : weddingData.contact;
 
-  // Different section titles based on perspective
-  const sectionTitle = isBride 
-    ? "Liên Hệ - Nhà Gái" 
-    : isGroom 
-      ? "Liên Hệ - Nhà Trai" 
-      : "Liên Hệ";
+  const displayName = isBride
+    ? weddingData.contact.bride.name
+    : isGroom
+      ? weddingData.contact.groom.name
+      : 'Thông tin liên hệ chung';
 
-  const sectionSubtitle = isBride || isGroom
-    ? `Hãy liên hệ với ${isBride ? 'cô dâu' : 'chú rể'} nếu bạn có bất kỳ câu hỏi nào`
-    : "Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào";
+  const displayPhone = isBride
+    ? weddingData.contact.bride.phone
+    : isGroom
+      ? weddingData.contact.groom.phone
+      : weddingData.contact.generalPhone;
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container-wedding">
         <SectionTitle 
-          title={sectionTitle}
-          subtitle={sectionSubtitle}
+          title={currentContactInfo.title} 
+          subtitle={currentContactInfo.subtitle} 
         />
         
         <div className="max-w-3xl mx-auto">
-          {/* Perspective indicator for bride/groom pages */}
           {(isBride || isGroom) && (
             <div className="mb-6 flex justify-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary bg-opacity-10 text-primary">
-                <FaInfoCircle className="mr-2" />
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isBride ? 'bg-primary-light text-primary' : 'bg-blue-50 text-blue-600'}`}>
+                <FaInfoCircle />
                 <span>Thông tin liên hệ {isBride ? 'nhà gái' : 'nhà trai'}</span>
               </div>
             </div>
@@ -53,14 +48,12 @@ export default function ContactSection() {
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="p-6 md:p-8">
               <div className="grid grid-cols-1 gap-8">
-                {/* Contact info */}
                 <div className="space-y-6">
                   <h3 className="text-xl font-heading text-secondary">
-                    {isBride ? contactInfo.bride.name : isGroom ? contactInfo.groom.name : 'Thông tin liên hệ'}
+                    {displayName}
                   </h3>
                   
                   <div className="space-y-4">
-                    {/* Phone */}
                     <div className="flex items-start">
                       <div className="flex-shrink-0 h-10 w-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
                         <FaPhone className="text-primary" />
@@ -68,7 +61,7 @@ export default function ContactSection() {
                       <div className="ml-4">
                         <p className="text-sm font-medium text-gray-900">Điện thoại / Zalo</p>
                         <p className="text-sm text-gray-500">
-                          {isBride ? contactInfo.bride.phone : isGroom ? contactInfo.groom.phone : '+84 xxx xxx xxx'}
+                          {displayPhone}
                         </p>
                       </div>
                     </div>

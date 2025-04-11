@@ -3,16 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaChevronDown } from 'react-icons/fa';
+import CountdownTimer from '../ui/CountdownTimer'; // Import CountdownTimer
+import weddingData from '@/data/data.json'; // Import wedding data
 
-type HeroSectionProps = {
-  weddingDate: string; // ISO date string
-};
-
-export default function HeroSection({ weddingDate }: HeroSectionProps) {
+export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Format date for display in Vietnamese
-  const displayDate = new Date(weddingDate).toLocaleDateString('vi-VN', {
+  // Format date for display in Vietnamese using data from JSON
+  const displayDate = new Date(weddingData.event.date).toLocaleDateString('vi-VN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -48,8 +46,8 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" />
         <Image
-          src="/hero.jpg"
-          alt="Hoàng Công và Mỹ Duyên"
+          src={weddingData.hero.imagePath} // Use image path from data
+          alt={`${weddingData.groom.name} và ${weddingData.bride.name}`} // Use names in alt text
           fill
           className={`object-cover hero-image transition-opacity duration-1000 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
@@ -67,9 +65,9 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="md:inline block">Hoàng Công</span>
+            <span className="md:inline block">{weddingData.groom.name}</span>
             <span className="md:inline block my-2 md:my-0">&</span>
-            <span className="md:inline block">Mỹ Duyên</span>
+            <span className="md:inline block">{weddingData.bride.name}</span>
           </h1>
           
           {/* Date */}
@@ -80,6 +78,15 @@ export default function HeroSection({ weddingDate }: HeroSectionProps) {
           >
             {displayDate}
           </p>
+          
+          {/* Countdown Timer */}
+          <div 
+            className={`mt-8 mb-12 transition-all duration-1000 delay-900 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <CountdownTimer targetDate={weddingData.event.date} />
+          </div>
         </div>
       </div>
       

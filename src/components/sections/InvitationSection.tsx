@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import SectionTitle from '../ui/SectionTitle';
 import { FaHeart } from 'react-icons/fa';
+import weddingData from '@/data/data.json';
 
 export default function InvitationSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -41,18 +42,43 @@ export default function InvitationSection() {
     };
   }, []);
 
+  // Format event date and time for display
+  const eventDate = new Date(weddingData.event.date);
+  const displayDate = eventDate.toLocaleDateString('vi-VN', {
+    weekday: 'long', // e.g., Thứ Ba
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  // Assuming the time shown is the reception time
+  const displayTime = weddingData.event.reception.time;
+
   return (
     <section ref={sectionRef} id="invitation" className="py-20 bg-gradient-to-b from-white to-primary-light">
       <div className="container-wedding">
         <SectionTitle 
-          title="Thiệp Mời" 
-          subtitle="Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi"
+          title={weddingData.invitationTitle} 
+          subtitle={weddingData.invitationSubtitle} 
         />
         
         <div className="max-w-3xl mx-auto text-center">
+          <p className="text-lg mb-6 text-gray-700 section-fade-in">
+            Được sự đồng ý của hai bên gia đình:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-lg section-fade-in">
+            <div className="text-center md:text-right">
+              <p className="font-semibold">Nhà Trai:</p>
+              <p>Ông: {weddingData.groom.father}</p>
+              <p>Bà: {weddingData.groom.mother}</p>
+            </div>
+            <div className="text-center md:text-left">
+              <p className="font-semibold">Nhà Gái:</p>
+              <p>Ông: {weddingData.bride.father}</p>
+              <p>Bà: {weddingData.bride.mother}</p>
+            </div>
+          </div>
           <p className="text-lg mb-8 section-fade-in">
-            Với niềm hân hoan, chúng tôi trân trọng kính mời quý vị đến dự buổi lễ thành hôn.
-            Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng tôi trong ngày trọng đại này.
+            {weddingData.invitationMessage}
           </p>
           
           <div 
@@ -70,12 +96,13 @@ export default function InvitationSection() {
               <FaHeart className="text-primary text-xl" />
             </div>
             
-            <h3 className="font-heading text-2xl md:text-3xl mb-3 text-secondary">Hoàng Công & Mỹ Duyên</h3>
+            <h3 className="font-heading text-2xl md:text-3xl mb-3 text-secondary">
+              {weddingData.groom.name} & {weddingData.bride.name}
+            </h3>
             <p className="text-xl mb-5 font-light">Trân trọng kính mời</p>
             <p className="text-lg leading-relaxed">
-              17:00, ngày 01 tháng 05 năm 2025<br />
-              461 Đ. Trương Định, Tân Mai<br />
-              Hoàng Mai, Hà Nội
+              {displayTime}, {displayDate}<br />
+              {weddingData.event.location.address}
             </p>
             
             {/* Decorative heart at bottom */}
@@ -85,7 +112,7 @@ export default function InvitationSection() {
           </div>
           
           <p className="italic text-gray-600 section-fade-in">
-            &ldquo;Tình yêu là sự kiên nhẫn, tình yêu là lòng tốt. Tình yêu luôn bảo vệ, luôn tin tưởng, luôn hy vọng, luôn kiên trì.&rdquo;
+            &ldquo;{weddingData.invitationQuote}&rdquo;
           </p>
         </div>
       </div>

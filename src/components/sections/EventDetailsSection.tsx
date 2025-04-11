@@ -2,32 +2,31 @@ import React from 'react';
 import SectionTitle from '../ui/SectionTitle';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCalendarPlus } from 'react-icons/fa';
 import { generateGoogleCalendarUrl } from '../../utils/calendarUtils';
+import weddingData from '@/data/data.json';
 
 export default function EventDetailsSection() {
-  // Wedding event details
-  const eventDetails = {
-    title: 'Đám Cưới Công & Duyên',
-    description: 'Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi',
-    location: 'Trung Tâm Tiệc Cưới Nguyên Đình, 461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam',
-    startDate: '2025-05-01T17:00:00+07:00',
-    endDate: '2025-05-01T21:00:00+07:00',
-  };
-
-  // Generate Google Calendar URL
   const googleCalendarUrl = generateGoogleCalendarUrl(
-    eventDetails.title,
-    eventDetails.description,
-    eventDetails.location,
-    eventDetails.startDate,
-    eventDetails.endDate
+    weddingData.event.title,
+    weddingData.event.description,
+    weddingData.event.location.address,
+    weddingData.event.date,
+    weddingData.event.endDate
   );
+
+  const displayDate = new Date(weddingData.event.date).toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  
+  const displayTime = weddingData.event.reception.time;
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container-wedding">
         <SectionTitle 
-          title="Thông Tin Sự Kiện" 
-          subtitle="Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi"
+          title={weddingData.eventDetailsTitle} 
+          subtitle={weddingData.eventDetailsSubtitle} 
         />
         
         <div className="grid md:grid-cols-1 gap-8 max-w-6xl mx-auto">
@@ -38,22 +37,22 @@ export default function EventDetailsSection() {
             <div className="flex items-start gap-3 mb-4">
               <FaMapMarkerAlt className="text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="font-medium">Trung Tâm Tiệc Cưới Nguyên Đình</p>
-                <p className="text-gray-600">461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam</p>
+                <p className="font-medium">{weddingData.event.location.name}</p>
+                <p className="text-gray-600">{weddingData.event.location.address}</p>
               </div>
             </div>
             
             <div className="flex items-start gap-3 mb-4">
               <FaCalendarAlt className="text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="font-medium">Ngày 01 tháng 05 năm 2025</p>
+                <p className="font-medium">{displayDate}</p>
               </div>
             </div>
             
             <div className="flex items-start gap-3 mb-6">
               <FaClock className="text-primary mt-1 flex-shrink-0" />
               <div>
-                <p className="font-medium">17:00</p>
+                <p className="font-medium">{displayTime}</p>
               </div>
             </div>
             
@@ -73,7 +72,7 @@ export default function EventDetailsSection() {
             {/* Map */}
             <div className="aspect-video bg-gray-200 rounded-md overflow-hidden">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.9876068474984!2d105.84941947597658!3d20.98454898064339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1d0b1a6dc7%3A0x2b7d9d9d5a4cd0e9!2zNDYxIMSQLiBUcsaw4budbmcgxJDhu4tuaCwgVMOibiBNYWksIEhvw6BuZyBNYWksIEjDoCBO4buZaSAxMDAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1713765565000!5m2!1svi!2s" 
+                src={weddingData.event.location.mapLink}
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
@@ -86,7 +85,7 @@ export default function EventDetailsSection() {
             
             <div className="mt-4 text-center">
               <a 
-                href="https://maps.app.goo.gl/w75HLBwaPNAUzCXr7" 
+                href={weddingData.event.location.directionsLink}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:text-primary-dark transition-colors"

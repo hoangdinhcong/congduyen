@@ -8,12 +8,10 @@ import ContactSection from '../../components/sections/ContactSection';
 import RSVPSection from '../../components/sections/RSVPSection';
 
 export default function GroomPage() {
-  // Wedding date - May 1, 2025 at 17:00
-  const weddingDate = '2025-05-01T17:00:00';
   
   return (
     <MainLayout>
-      <HeroSection weddingDate={weddingDate} />
+      <HeroSection />
       <InvitationSection />
       <EventDetailsSection />
       <GiftInfoSection />

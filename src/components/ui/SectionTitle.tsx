@@ -7,13 +7,17 @@ type SectionTitleProps = {
   subtitle?: string;
   centered?: boolean;
   animationDelay?: number;
+  titleClassName?: string;
+  subtitleClassName?: string;
 };
 
 export default function SectionTitle({ 
   title, 
   subtitle, 
   centered = true, 
-  animationDelay = 0 
+  animationDelay = 0,
+  titleClassName = 'text-3xl md:text-4xl font-heading font-medium mb-3 text-secondary',
+  subtitleClassName = 'text-lg text-gray-600'
 }: SectionTitleProps) {
   const titleRef = useRef<HTMLDivElement>(null);
 
@@ -51,9 +55,9 @@ export default function SectionTitle({
       ref={titleRef} 
       className={`mb-12 section-fade-in ${centered ? 'text-center' : ''}`}
     >
-      <h2 className="text-3xl md:text-4xl font-heading font-medium mb-3 text-secondary">{title}</h2>
+      <h2 className={`${titleClassName}`}>{title}</h2>
       {subtitle && (
-        <p className="mt-2 text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+        <p className={`${subtitleClassName} max-w-2xl mx-auto`}>{subtitle}</p>
       )}
       <div className="section-title mt-4 inline-block">
         <span className="invisible">.</span>

@@ -5,41 +5,22 @@ import SectionTitle from '../ui/SectionTitle';
 import { FaQrcode, FaCopy, FaInfoCircle } from 'react-icons/fa';
 import { showToast } from '@/components/ui/ToastProvider';
 import { useRoutePerspective } from '@/utils/routeUtils';
+import weddingData from '@/data/data.json'; // Import data
+import Image from 'next/image'; // Import Image component
 
 export default function GiftInfoSection() {
   const { isBride, isGroom } = useRoutePerspective();
   
-  // Different account details based on bride/groom perspective
-  const accountDetails = {
-    bride: {
-      name: 'Mỹ Duyên',
-      accountNumber: '9876543210',
-      bank: 'Techcombank',
-      branch: 'Chi nhánh Hà Nội',
-    },
-    groom: {
-      name: 'Hoàng Công',
-      accountNumber: '1234567890',
-      bank: 'Vietcombank',
-      branch: 'Chi nhánh Hà Nội',
-    },
-    default: {
-      name: 'Hoàng Công & Mỹ Duyên',
-      accountNumber: '1234567890',
-      bank: 'Vietcombank',
-      branch: 'Chi nhánh Hà Nội',
-    }
-  };
-  
-  // Determine which account details to show
-  const currentAccount = isBride 
-    ? accountDetails.bride 
+  // Determine which gift info block to use based on perspective
+  const currentGiftInfo = isBride 
+    ? weddingData.giftInfo.bride 
     : isGroom 
-      ? accountDetails.groom 
-      : accountDetails.default;
+      ? weddingData.giftInfo.groom 
+      : weddingData.giftInfo; // Default uses top-level giftInfo
   
   const handleCopyAccountNumber = () => {
-    navigator.clipboard.writeText(currentAccount.accountNumber)
+    // Use account number from the selected bankInfo
+    navigator.clipboard.writeText(currentGiftInfo.bankInfo.accountNumber)
       .then(() => {
         showToast.success('Đã sao chép số tài khoản!');
       })
@@ -48,23 +29,12 @@ export default function GiftInfoSection() {
       });
   };
 
-  // Different section titles based on perspective
-  const sectionTitle = isBride 
-    ? "Thông Tin Quà Cưới - Nhà Gái" 
-    : isGroom 
-      ? "Thông Tin Quà Cưới - Nhà Trai" 
-      : "Thông Tin Quà Cưới";
-
-  const sectionSubtitle = isBride || isGroom
-    ? `Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho ${isBride ? 'nhà gái' : 'nhà trai'}, bạn có thể chuyển khoản qua thông tin dưới đây.`
-    : "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.";
-
   return (
     <section className="py-16">
       <div className="container-wedding">
         <SectionTitle
-          title={sectionTitle}
-          subtitle={sectionSubtitle}
+          title={currentGiftInfo.title} // Use title from data
+          subtitle={currentGiftInfo.subtitle} // Use subtitle from data
         />
 
         <div className="max-w-3xl mx-auto text-center">
@@ -96,18 +66,26 @@ export default function GiftInfoSection() {
               Quét mã QR bên dưới để chuyển tiền trực tiếp đến tài khoản {isBride ? 'cô dâu' : isGroom ? 'chú rể' : 'của chúng tôi'}:
             </p>
 
+            {/* Replace placeholder div with Image component */}
             <div className="flex justify-center mb-4">
-              <div className="w-40 h-40 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Mã QR sẽ hiển thị ở đây</span>
+              <div className="w-40 h-40 relative"> {/* Add relative positioning */}
+                <Image
+                  src={currentGiftInfo.bankInfo.qrCodePath} // Use QR code path from data
+                  alt={`QR Code for ${currentGiftInfo.bankInfo.accountName}`}
+                  fill // Use fill layout
+                  style={{ objectFit: 'contain' }} // Ensure QR code fits
+                  priority // Load QR code quickly
+                />
               </div>
             </div>
 
             <div className="space-y-2 text-left bg-gray-50 p-4 rounded-lg mb-4">
               <p><strong>Chuyển Khoản Ngân Hàng:</strong></p>
-              <p className="text-gray-600">Tên Tài Khoản: {currentAccount.name}</p>
-              <p className="text-gray-600">Số Tài Khoản: {currentAccount.accountNumber}</p>
-              <p className="text-gray-600">Ngân Hàng: {currentAccount.bank}</p>
-              <p className="text-gray-600">Chi Nhánh: {currentAccount.branch}</p>
+              {/* Use bankInfo from selected data */}
+              <p className="text-gray-600">Tên Tài Khoản: {currentGiftInfo.bankInfo.accountName}</p>
+              <p className="text-gray-600">Số Tài Khoản: {currentGiftInfo.bankInfo.accountNumber}</p>
+              <p className="text-gray-600">Ngân Hàng: {currentGiftInfo.bankInfo.bankName}</p>
+              <p className="text-gray-600">Chi Nhánh: {currentGiftInfo.bankInfo.branch}</p>
             </div>
 
             <button

@@ -75,10 +75,10 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Ensure mobile-first responsiveness across all pages and components.
     *   Add subtle animations (e.g., fade-ins on scroll) and interaction feedback (hover/active states).
     *   Optimize all images (format, size).
-    *   Implement the countdown timer.
+    *   Implement the countdown timer. - **Done** (via HeroSection integration)
     *   Embed interactive maps.
     *   Ensure the QR code for gifts is displayed correctly if applicable.
-    *   **Status:** Pending
+    *   **Status:** In Progress
 
 11. **UI/UX Improvements:**
     *   Remove the "both" option from GuestSide to simplify guest categorization.
@@ -129,7 +129,9 @@ This document outlines the steps to build the elegant wedding invitation website
     *   Update gallery section with images from /public/gallery folder
     *   Replace frontpage hero image with hero.jpg
     *   Add floating RSVP button for quick response without scrolling
-    *   **Status:** Done
+    *   Add a schedule/timeline section. - **Done**
+    *   Add a photo gallery section. - **Done**
+    *   **Status:** In Progress
 
 17. **UI/UX Enhancements & Responsive Design:**
    *   Set max-width for popular screen sizes while maintaining mobile-first approach
@@ -169,7 +171,7 @@ This document outlines the steps to build the elegant wedding invitation website
    *   Add visual indicators for horizontal scrolling (arrows or dots)
    *   Implement touch-friendly image viewing experience
    *   Add smooth scrolling animations between images
-   *   **Status:** Done
+   *   **Status:** In Progress
 
 21. **Bride/Groom Specific Sections:**
    *   Create conditional rendering for Gift Info section:
@@ -211,3 +213,17 @@ This document outlines the steps to build the elegant wedding invitation website
        *   Display RSVP form directly without redirect button
        *   Remove email input field for simpler form submission
    *   **Status:** Completed
+
+25. **Centralized Data Integration:**
+    *   Create `data.json` to store all configuration and content. - **Done**
+    *   Refactor components to dynamically load data from `data.json`:
+        *   `HeroSection`: Names, Date Display, Background Image, Countdown Timer - **Done**
+        *   `InvitationSection`: Titles, Messages, Names, Parents' Names, Event Details - **Done**
+        *   `EventDetailsSection`: Date, Time, Location, Calendar Link - **Done**
+        *   `GiftInfoSection`: Titles, Subtitles, Bank Info (Perspective-based), QR Code - **Done**
+        *   `ContactSection`: Titles, Subtitles, Name, Phone (Perspective-based) - **Done**
+        *   `CountdownTimer`: (Indirectly via `HeroSection`) - **Done**
+        *   `GallerySection`: Title, Subtitle, Image Grid - **Done**
+        *   `ScheduleSection`: Title, Subtitle, Timeline - **Done**
+        *   Other components - **Pending**
+    *   **Status:** In Progress

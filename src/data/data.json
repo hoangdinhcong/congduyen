@@ -1,0 +1,114 @@
+{
+  "bride": {
+    "name": "Duyen",
+    "father": "Father's Name",
+    "mother": "Mother's Name"
+  },
+  "groom": {
+    "name": "Cong",
+    "father": "Father's Name",
+    "mother": "Mother's Name"
+  },
+  "event": {
+    "date": "2025-05-01T17:00:00+07:00",
+    "endDate": "2025-05-01T21:00:00+07:00",
+    "title": "Đám Cưới Công & Duyên",
+    "description": "Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi",
+    "location": {
+      "name": "Trung Tâm Tiệc Cưới Nguyên Đình",
+      "address": "461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam",
+      "mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.9876068474984!2d105.84941947597658!3d20.98454898064339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1d0b1a6dc7%3A0x2b7d9d9d5a4cd0e9!2zNDYxIMSQLiBUcsaw4budbmcgxJDhu4tuaCwgVMOibiBNYWksIEhvw6BuZyBNYWksIEjDoCBO4buZaSAxMDAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1713765565000!5m2!1svi!2s",
+      "directionsLink": "https://maps.app.goo.gl/w75HLBwaPNAUzCXr7"
+    },
+    "ceremony": {
+      "time": "17:00",
+      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
+    },
+    "reception": {
+      "time": "17:00",
+      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
+    }
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "subtitle": "Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào",
+    "generalPhone": "+84 xxx xxx xxx",
+    "generalEmail": "wedding@example.com",
+    "bride": {
+      "title": "Liên Hệ - Nhà Gái",
+      "subtitle": "Hãy liên hệ với cô dâu nếu bạn có bất kỳ câu hỏi nào",
+      "name": "Mỹ Duyên",
+      "phone": "+84 123 456 789"
+    },
+    "groom": {
+      "title": "Liên Hệ - Nhà Trai",
+      "subtitle": "Hãy liên hệ với chú rể nếu bạn có bất kỳ câu hỏi nào",
+      "name": "Hoàng Công",
+      "phone": "+84 987 654 321"
+    }
+  },
+  "giftInfo": {
+    "registryLink": "Optional: Link to gift registry",
+    "message": "Sự hiện diện của bạn là món quà lớn nhất!",
+    "title": "Thông Tin Quà Cưới",
+    "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.",
+    "bankInfo": {
+      "accountName": "Hoàng Công & Mỹ Duyên",
+      "accountNumber": "1234567890",
+      "bankName": "Vietcombank",
+      "branch": "Chi nhánh Hà Nội",
+      "qrCodePath": "/images/qr-code-default.png"
+    },
+    "bride": {
+      "title": "Thông Tin Quà Cưới - Nhà Gái",
+      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà gái, bạn có thể chuyển khoản qua thông tin dưới đây.",
+      "bankInfo": {
+        "accountName": "Mỹ Duyên",
+        "accountNumber": "9876543210",
+        "bankName": "Techcombank",
+        "branch": "Chi nhánh Hà Nội",
+        "qrCodePath": "/images/qr-code-bride.png"
+      }
+    },
+    "groom": {
+      "title": "Thông Tin Quà Cưới - Nhà Trai",
+      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà trai, bạn có thể chuyển khoản qua thông tin dưới đây.",
+      "bankInfo": {
+        "accountName": "Hoàng Công",
+        "accountNumber": "1234567890",
+        "bankName": "Vietcombank",
+        "branch": "Chi nhánh Hà Nội",
+        "qrCodePath": "/images/qr-code-groom.png"
+      }
+    }
+  },
+  "galleryTitle": "Khoảnh Khắc Đáng Nhớ",
+  "gallerySubtitle": "Cùng nhìn lại những hình ảnh đẹp của chúng tôi",
+  "gallery": [
+    { "src": "/images/gallery/photo1.jpg", "alt": "Our first date" },
+    { "src": "/images/gallery/photo2.jpg", "alt": "Vacation memories" },
+    { "src": "/images/gallery/photo3.jpg", "alt": "Proposal moment" },
+    { "src": "/images/gallery/photo4.jpg", "alt": "Engagement photos" },
+    { "src": "/images/gallery/photo5.jpg", "alt": "Family gathering" },
+    { "src": "/images/gallery/photo6.jpg", "alt": "Fun times together" }
+  ],
+  "scheduleTitle": "Chương Trình",
+  "scheduleSubtitle": "Lịch trình dự kiến trong ngày vui",
+  "schedule": [
+    { "time": "16:00", "title": "Đón Khách", "description": "Cô dâu chú rể chào đón khách mời.", "icon": "FaUsers" },
+    { "time": "17:00", "title": "Lễ Thành Hôn", "description": "Nghi thức lễ cưới chính thức diễn ra.", "icon": "FaRing" },
+    { "time": "18:00", "title": "Tiệc Tối", "description": "Khách mời dùng bữa tối thân mật.", "icon": "FaUtensils" },
+    { "time": "20:00", "title": "Chương Trình Văn Nghệ", "description": "Giao lưu và các tiết mục giải trí.", "icon": "FaMusic" },
+    { "time": "21:30", "title": "Kết Thúc", "description": "Chào tạm biệt và cảm ơn khách mời.", "icon": "FaDoorOpen" }
+  ],
+  "hero": {
+    "monogram": "C&D",
+    "imagePath": "/images/hero-photo.jpg"
+  },
+  "invitationMessage": "Với niềm hân hoan, chúng tôi trân trọng kính mời quý vị đến dự buổi lễ thành hôn. Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng tôi trong ngày trọng đại này.",
+  "invitationTitle": "Thiệp Mời",
+  "invitationSubtitle": "Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi",
+  "invitationQuote": "Tình yêu là sự kiên nhẫn, tình yêu là lòng tốt. Tình yêu luôn bảo vệ, luôn tin tưởng, luôn hy vọng, luôn kiên trì.",
+  "eventDetailsTitle": "Thông Tin Sự Kiện", 
+  "eventDetailsSubtitle": "Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi"
+}
