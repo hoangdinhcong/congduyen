@@ -5,27 +5,31 @@ import { cn } from "@/lib/utils";
 import { Home, MapPin, Images, Gift, Heart } from "lucide-react";
 import Link from "next/link";
 
+const MOBILE_BREAKPOINT = 768
+
 // Custom hook for mobile detection
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  // Initialize with null instead of undefined
+  const [isMobile, setIsMobile] = React.useState<boolean | null>(null)
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  React.useEffect(() => {
+    // Set initial value immediately
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
 
-    // Initial check
-    checkMobile();
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
 
-    // Add event listener
-    window.addEventListener("resize", checkMobile);
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
 
-    // Cleanup
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  // Return null during SSR
+  if (typeof window === 'undefined') return null
 
-  return isMobile;
-};
+  return isMobile
+}
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -39,6 +43,39 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Don't render anything until we know which navbar to show
+  if (isMobile === null) {
+    return null;
+  }
+
+  // Mobile floating bottom navigation
+  const MobileNavbar = () => (
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-50 rounded-full bg-white/90 shadow-lg backdrop-blur-md py-3 px-6">
+      <div className="flex items-center justify-between">
+        <Link href="/#home" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
+          <Home size={20} />
+          <span className="text-xs mt-1">Trang Chủ</span>
+        </Link>
+        <Link href="/#location" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
+          <MapPin size={20} />
+          <span className="text-xs mt-1">Địa Điểm</span>
+        </Link>
+        <Link href="/#gallery" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
+          <Images size={20} />
+          <span className="text-xs mt-1">Hình Ảnh</span>
+        </Link>
+        <Link href="/#gifts" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
+          <Gift size={20} />
+          <span className="text-xs mt-1">Quà Tặng</span>
+        </Link>
+        <Link href="/#rsvp" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
+          <Heart size={20} />
+          <span className="text-xs mt-1">Xác Nhận</span>
+        </Link>
+      </div>
+    </nav>
+  );
 
   // Desktop navigation bar
   const DesktopNavbar = () => (
@@ -75,35 +112,6 @@ const Navbar = () => {
     </nav>
   );
 
-  // Mobile floating bottom navigation
-  const MobileNavbar = () => (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-50 rounded-full bg-white/90 shadow-lg backdrop-blur-md py-3 px-6">
-      <div className="flex items-center justify-between">
-        <Link href="/#home" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
-          <Home size={20} />
-          <span className="text-xs mt-1">Trang Chủ</span>
-        </Link>
-        <Link href="/#location" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
-          <MapPin size={20} />
-          <span className="text-xs mt-1">Địa Điểm</span>
-        </Link>
-        <Link href="/#gallery" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
-          <Images size={20} />
-          <span className="text-xs mt-1">Hình Ảnh</span>
-        </Link>
-        <Link href="/#gifts" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
-          <Gift size={20} />
-          <span className="text-xs mt-1">Quà Tặng</span>
-        </Link>
-        <Link href="/#rsvp" className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors">
-          <Heart size={20} />
-          <span className="text-xs mt-1">Xác Nhận</span>
-        </Link>
-      </div>
-    </nav>
-  );
-
-  // Render the appropriate navbar based on screen size
   return isMobile ? <MobileNavbar /> : <DesktopNavbar />;
 };
 

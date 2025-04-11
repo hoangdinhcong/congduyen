@@ -37,7 +37,7 @@ const LocationSection = () => {
               <div className="flex items-start">
                 <Calendar className="mr-4 text-gray-600 flex-shrink-0" />
                 <div>
-                  <h3 className="font-medium text-lg mb-1 font-serif text-gray-900">Ngày & Giờ</h3>
+                  <h3 className="font-medium text-lg mb-1 text-gray-900">Ngày & Giờ</h3>
                   <p className="text-gray-600">Ngày 1 tháng 5, 2025</p>
                   <p className="text-gray-600">17:00</p>
                 </div>
@@ -46,7 +46,7 @@ const LocationSection = () => {
               <div className="flex items-start">
                 <MapPin className="mr-4 text-gray-600 flex-shrink-0" />
                 <div>
-                  <h3 className="font-medium text-lg mb-1 font-serif text-gray-900">Địa Điểm</h3>
+                  <h3 className="font-medium text-lg mb-1 text-gray-900">Địa Điểm</h3>
                   <p className="text-gray-600">Trung Tâm Tiệc Cưới Nguyên Đình</p>
                   <p className="text-gray-600">Tầng 4, 461 Đ. Trương Định</p>
                   <p className="text-gray-600">Tân Mai, Hoàng Mai, Hà Nội</p>
@@ -56,7 +56,7 @@ const LocationSection = () => {
               <div className="flex items-start">
                 <Clock className="mr-4 text-gray-600 flex-shrink-0" />
                 <div>
-                  <h3 className="font-medium text-lg mb-1 font-serif text-gray-900">Lịch Trình</h3>
+                  <h3 className="font-medium text-lg mb-1 text-gray-900">Lịch Trình</h3>
                   <p className="text-gray-600">17:00 - Đón khách</p>
                   <p className="text-gray-600">17:30 - Lễ cưới</p>
                   <p className="text-gray-600">18:30 - Tiệc cưới</p>

@@ -26,7 +26,11 @@ const HeroSection = () => {
         <p className="font-serif text-xl mb-4 text-gray-700">Chúng tôi sắp kết hôn</p>
 
         <h1 className="font-serif text-5xl md:text-7xl font-medium mb-6 text-gray-800">
-          Hoàng Công & Mỹ Duyên
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+            <span>Hoàng Công</span>
+            <span className="text-4xl md:text-6xl">&</span>
+            <span>Mỹ Duyên</span>
+          </div>
         </h1>
 
         <div className="flex items-center justify-center mb-8">
