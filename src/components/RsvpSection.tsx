@@ -4,13 +4,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { Check, X, Heart } from "lucide-react";
 import { Guest, RSVPStatus, GuestSide } from "@/lib/types";
 import { showToast } from "@/components/ui/ToastProvider";
-import { useGuestContext } from "@/contexts/GuestContext";
 import { FormInput } from "./ui/FormInput";
 import { Button } from "./ui/Button";
 import { Alert } from "./ui/Alert";
 import { useForm, validationRules } from "@/hooks/useForm";
 import weddingData from '@/data/data.json';
 import { useRoutePerspective } from '@/utils/routeUtils';
+import { useAnonymousRSVP } from '@/hooks/useAnonymousRSVP';
 
 type RsvpSectionProps = {
   guest?: Guest;
@@ -104,7 +104,7 @@ const RsvpSection = ({
   };
 
   // Non-personalized RSVP form state and handlers
-  const { submitAnonymousRSVP } = useGuestContext();
+  const { submitAnonymousRSVP } = useAnonymousRSVP();
 
   const {
     values,

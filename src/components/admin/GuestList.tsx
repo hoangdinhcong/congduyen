@@ -10,12 +10,11 @@ import ImportGuestsModal from './ImportGuestsModal';
 import BulkEditModal from './BulkEditModal';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import LoadingSpinner from '../ui/LoadingSpinner';
+import { useAdminGuests } from '@/hooks/useAdminGuests';
 
 export default function GuestList() {
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const { guests, isLoading: loading, error, fetchGuests, setGuests } = useAdminGuests();
   const [filteredGuests, setFilteredGuests] = useState<Guest[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [sideFilter, setSideFilter] = useState<'all' | GuestSide>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | RSVPStatus>('all');
@@ -41,10 +40,6 @@ export default function GuestList() {
 
   // New state for table animations
   const [animatedRows, setAnimatedRows] = useState<{id: string, action: 'add' | 'update' | 'delete'}[]>([]);
-
-  useEffect(() => {
-    fetchGuests();
-  }, []);
 
   useEffect(() => {
     // Apply filters and search
@@ -79,27 +74,7 @@ export default function GuestList() {
     }
     
     setFilteredGuests(result);
-  }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter]);
-
-  const fetchGuests = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/guests');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch guests');
-      }
-      
-      const data = await response.json();
-      setGuests(data);
-      setFilteredGuests(data);
-    } catch (err: any) {
-      console.error('Error fetching guests:', err);
-      setError(err.message || 'An error occurred while fetching guests');
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter, confirmDialog, animatedRows]);
 
   const handleAddGuest = async (newGuest: Omit<Guest, 'id' | 'unique_invite_id' | 'created_at' | 'updated_at'>) => {
     try {

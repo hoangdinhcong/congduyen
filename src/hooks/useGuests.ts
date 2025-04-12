@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Guest, RSVPStatus, GuestSide } from '@/lib/types';
 import { GuestAPI } from '@/lib/api-client';
 import { showToast } from '@/components/ui/ToastProvider';
@@ -12,7 +12,7 @@ import { generateUniqueInviteId } from '@/lib/utils';
  */
 export function useGuests() {
   const [guests, setGuests] = useState<Guest[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
 
   /**
@@ -296,9 +296,9 @@ export function useGuests() {
   }, [guests]);
 
   // Fetch guests on mount
-  useEffect(() => {
-    fetchGuests();
-  }, [fetchGuests]);
+  // useEffect(() => {
+  //   fetchGuests();
+  // }, [fetchGuests]);
 
   return {
     guests,
