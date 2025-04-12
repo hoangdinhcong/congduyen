@@ -15,47 +15,24 @@
       "address": "Tầng 4, 461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam",
       "mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.9876068474984!2d105.84941947597658!3d20.98454898064339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1d0b1a6dc7%3A0x2b7d9d9d5a4cd0e9!2zNDYxIMSQLiBUcsaw4budbmcgxJDhu4tuaCwgVMOibiBNYWksIEhvw6BuZyBNYWksIEjDoCBO4buZaSAxMDAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1713765565000!5m2!1svi!2s",
       "directionsLink": "https://maps.app.goo.gl/w75HLBwaPNAUzCXr7"
-    },
-    "ceremony": {
-      "time": "17:00",
-      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
-    },
-    "reception": {
-      "time": "17:00",
-      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
     }
   },
   "contact": {
-    "title": "Liên Hệ",
-    "subtitle": "Hãy liên hệ với chúng mình nếu bạn có bất kỳ câu hỏi nào",
-    "generalPhone": "+84 xxx xxx xxx",
-    "generalEmail": "wedding@example.com",
     "bride": {
       "title": "Liên Hệ - Nhà Gái",
-      "subtitle": "Hãy liên hệ với cô dâu nếu bạn có bất kỳ câu hỏi nào",
       "name": "Mỹ Duyên",
       "phone": "+84 355 009 122"
     },
     "groom": {
       "title": "Liên Hệ - Nhà Trai",
-      "subtitle": "Hãy liên hệ với chú rể nếu bạn có bất kỳ câu hỏi nào",
       "name": "Hoàng Công",
       "phone": "+84 395 736 655"
     }
   },
   "giftInfo": {
-    "message": "Sự hiện diện của bạn là món quà lớn nhất!",
     "title": "Quà Cưới",
     "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng mình là món quà lớn nhất. Nếu bạn không thể tham dự được thì thật đáng tiếc, hãy hẹn nhau một dịp khác nhé. Nếu bạn muốn gửi tình cảm từ xa, chúng mình có thể nhận được nó qua đây",
-    "bankInfo": {
-      "accountName": "Hoàng Đình Công",
-      "accountNumber": "1234567890",
-      "bankName": "Techcombank",
-      "qrCodePath": "/images/qr-code-groom.jpg"
-    },
     "bride": {
-      "title": "Quà Cưới - Nhà Gái",
-      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng mình là món quà lớn nhất. Nếu bạn không thể tham dự được thì thật đáng tiếc, hãy hẹn nhau một dịp khác nhé. Nếu bạn muốn gửi tình cảm từ xa, chúng mình có thể nhận được nó qua đây",
       "bankInfo": {
         "accountName": "Bùi Thị Mỹ Duyên",
         "accountNumber": "19034490857012",
@@ -64,8 +41,6 @@
       }
     },
     "groom": {
-      "title": "Quà Cưới - Nhà Trai",
-      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng mình là món quà lớn nhất. Nếu bạn không thể tham dự được thì thật đáng tiếc, hãy hẹn nhau một dịp khác nhé. Nếu bạn muốn gửi tình cảm từ xa, chúng mình có thể nhận được nó qua đây",
       "bankInfo": {
         "accountName": "Hoàng Đình Công",
         "accountNumber": "19035753478018",
@@ -74,8 +49,7 @@
       }
     }
   },
-  "galleryTitle": "Ảnh Cưới Chúng Mình Nè",
-  "gallerySubtitle": "",
+  "galleryTitle": "Ảnh Cưới Chúng Mình",
   "gallery": [
     { "src": "/images/gallery/1.jpg", "alt": "Ảnh cưới 1" },
     { "src": "/images/gallery/3.jpg", "alt": "Ảnh cưới 3" },
@@ -88,11 +62,5 @@
   ],
   "hero": {
     "imagePath": "/images/hero.jpg"
-  },
-  "invitationMessage": "Với niềm hân hoan, chúng mình trân trọng kính mời quý vị đến dự buổi lễ thành hôn. Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng mình trong ngày trọng đại này.",
-  "invitationTitle": "Thiệp Mời",
-  "invitationSubtitle": "Trân trọng kính mời quý vị đến dự lễ cưới của chúng mình",
-  "invitationQuote": "Tình yêu là sự kiên nhẫn, tình yêu là lòng tốt. Tình yêu luôn bảo vệ, luôn tin tưởng, luôn hy vọng, luôn kiên trì.",
-  "eventDetailsTitle": "Thông Tin Sự Kiện", 
-  "eventDetailsSubtitle": "Hân hạnh được đón tiếp quý vị trong ngày vui của chúng mình"
+  }
 }

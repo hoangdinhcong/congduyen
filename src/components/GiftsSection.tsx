@@ -34,7 +34,7 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
   return (
     <section id="gifts" className="bg-accent/20">
       <div className="section-container">
-        <h2 className="section-title">Quà Cưới</h2>
+        <h2 className="section-title">{weddingData.giftInfo.title}</h2>
 
         <div className="max-w-3xl mx-auto">
           <p className="text-center text-gray-600 mb-10">

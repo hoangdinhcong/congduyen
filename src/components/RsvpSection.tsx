@@ -195,7 +195,7 @@ const RsvpSection = ({
                       Bạn sẽ tham dự đám cưới của chúng mình chứ?
                     </h3>
                     <p className="text-gray-600 max-w-md mx-auto font-sans">
-                      chúng mình rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
+                      Chúng mình rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
                     </p>
                   </div>
 
@@ -235,7 +235,7 @@ const RsvpSection = ({
 
                   <h3 className="text-2xl font-serif mb-4">
                     {status === "attending"
-                      ? `Yay! ${guestName} sẽ tham dự!`
+                      ? `${guestName} sẽ tham dự 😍`
                       : `${guestName} đã không thể sắp xếp được.`}
                   </h3>
 
@@ -364,8 +364,8 @@ const RsvpSection = ({
         </div>
 
         <div className="text-center mt-12 text-gray-600 fade-in font-sans" style={{ animationDelay: "0.4s" }}>
-          <p className="font-sans">Xác nhận giúp chúng mình trước ngày 24 tháng 4, 2025 nhé, để chúng mình chuẩn bị và đón tiếp bạn tốt nhất</p>
-          <p className="mt-2 font-sans">Nếu bạn cần hỗ trợ, cứ nhắn chúng mình nhé</p>
+          <p className="font-sans">Xác nhận giúp chúng mình trước ngày 24 tháng 4, 2025 nha, để chúng mình chuẩn bị và đón tiếp bạn tốt nhất</p>
+          <p className="mt-2 font-sans">Nếu bạn cần hỗ trợ, cứ nhắn chúng mình 🥂</p>
 
           <div className="flex justify-center gap-4 mt-4">
             {(isBride || isHome) && (
@@ -376,7 +376,7 @@ const RsvpSection = ({
                 onClick={() => window.open(`tel:${weddingData.contact.bride.phone}`, '_blank')}
               >
                 <Phone size={16} />
-                <span>Cô dâu</span>
+                <span>Liên hệ Cô dâu</span>
               </ButtonShadcn>
             )}
             {(isGroom || isHome) && (
@@ -387,7 +387,7 @@ const RsvpSection = ({
                 onClick={() => window.open(`tel:${weddingData.contact.groom.phone}`, '_blank')}
               >
                 <Phone size={16} />
-                <span>Chú rể</span>
+                <span>Liên hệ Chú rể</span>
               </ButtonShadcn>
             )}
           </div>

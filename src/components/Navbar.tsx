@@ -4,7 +4,7 @@ import React from "react";
 import { Home, MapPin, Images, Gift, Heart } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-const SMALL_SCREEN_BREAKPOINT = 380;
+const SMALL_SCREEN_BREAKPOINT = 414;
 
 // Custom hook for small screen detection
 const useIsSmallScreen = () => {

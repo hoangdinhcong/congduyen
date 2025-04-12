@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart } from 'lucide-react';
 import { Guest } from '@/lib/types';
+import { Button } from './ui/Button';
 
 interface PersonalizedGreetingProps {
   guest: Guest;
@@ -28,7 +29,7 @@ const PersonalizedGreeting = ({ guest }: PersonalizedGreetingProps) => {
 
   return (
     <div className="fixed inset-0 bg-white flex items-center justify-center z-50 transition-all duration-500">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 text-center">
+      <div className="max-w-lg w-full p-6 text-center">
         <div className="mb-4">
           <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
             <Heart className="text-primary" size={24} />
@@ -38,16 +39,19 @@ const PersonalizedGreeting = ({ guest }: PersonalizedGreetingProps) => {
         <h2 className="text-2xl font-serif mb-4">Chào {guest.name}!</h2>
 
         <p className="text-gray-600 mb-6 font-sans">
-          Chúng mình rất vui khi bạn đến tham dự đám cưới của chúng mình. 
           Đây là lời mời riêng biệt dành cho bạn yêu.
+          <br />
+          Chúng mình rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
         </p>
 
-        <button
+        <Button
+          variant="primary"
+          className="flex items-center gap-2"
           onClick={() => setShowModal(false)}
-          className="button-primary"
         >
           Xem Lời Mời
-        </button>
+        </Button>
+
       </div>
     </div>
   );

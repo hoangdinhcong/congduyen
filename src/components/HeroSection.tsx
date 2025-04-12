@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import Image from "next/image";
+import weddingData from '@/data/data.json';
 
 const HeroSection = () => {
   const [showCard, setShowCard] = useState(false);
@@ -56,9 +57,9 @@ const HeroSection = () => {
 
         <h1 className="font-serif text-5xl md:text-7xl font-medium mb-6 text-gray-800">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
-            <span>Hoàng Công</span>
+            <span>{weddingData.groom.name}</span>
             <span className="text-4xl md:text-6xl">&</span>
-            <span>Mỹ Duyên</span>
+            <span>{weddingData.bride.name}</span>
           </div>
         </h1>
 
