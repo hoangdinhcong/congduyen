@@ -1,15 +1,15 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Navbar from '../../../components/Navbar';
-import HeroSection from '../../../components/HeroSection';
-import LocationSection from '../../../components/LocationSection';
-import GallerySection from '../../../components/GallerySection';
-import GiftsSection from '../../../components/GiftsSection';
-import RsvpSection from '../../../components/RsvpSection';
-import PersonalizedGreeting from '../../../components/PersonalizedGreeting';
-import { supabase } from '../../../lib/supabase';
-import { Guest } from '../../../lib/types';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import LocationSection from '@/components/LocationSection';
+import GallerySection from '@/components/GallerySection';
+import GiftsSection from '@/components/GiftsSection';
+import RsvpSection from '@/components/RsvpSection';
+import PersonalizedGreeting from '@/components/PersonalizedGreeting';
+import { supabase } from '@/lib/supabase';
+import { Guest } from '@/lib/types';
 
 // Generate dynamic metadata for each page
 export async function generateMetadata({

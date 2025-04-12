@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabase';
-import { RSVPStatus } from '../../../../lib/types';
+import { supabase } from '@/lib/supabase';
+import { RSVPStatus } from '@/lib/types';
 
 type RouteParams = {
     uniqueInviteId: string;

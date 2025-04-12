@@ -38,13 +38,13 @@
       "title": "Liên Hệ - Nhà Gái",
       "subtitle": "Hãy liên hệ với cô dâu nếu bạn có bất kỳ câu hỏi nào",
       "name": "Mỹ Duyên",
-      "phone": "+84 123 456 789"
+      "phone": "+84 355 009 122"
     },
     "groom": {
       "title": "Liên Hệ - Nhà Trai",
       "subtitle": "Hãy liên hệ với chú rể nếu bạn có bất kỳ câu hỏi nào",
       "name": "Hoàng Công",
-      "phone": "+84 987 654 321"
+      "phone": "+84 395 736 655"
     }
   },
   "giftInfo": {
@@ -52,20 +52,18 @@
     "title": "Thông Tin Quà Cưới",
     "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.",
     "bankInfo": {
-      "accountName": "Hoàng Công & Mỹ Duyên",
+      "accountName": "Hoàng Đình Công",
       "accountNumber": "1234567890",
-      "bankName": "Vietcombank",
-      "branch": "Chi nhánh Hà Nội",
+      "bankName": "Techcombank",
       "qrCodePath": "/images/qr-code-groom.jpg"
     },
     "bride": {
       "title": "Thông Tin Quà Cưới - Nhà Gái",
       "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà gái, bạn có thể chuyển khoản qua thông tin dưới đây.",
       "bankInfo": {
-        "accountName": "Mỹ Duyên",
+        "accountName": "Bùi Thị Mỹ Duyên",
         "accountNumber": "9876543210",
         "bankName": "Techcombank",
-        "branch": "Chi nhánh Hà Nội",
         "qrCodePath": "/images/qr-code-bride.jpg"
       }
     },
@@ -73,10 +71,9 @@
       "title": "Thông Tin Quà Cưới - Nhà Trai",
       "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà trai, bạn có thể chuyển khoản qua thông tin dưới đây.",
       "bankInfo": {
-        "accountName": "Hoàng Công",
+        "accountName": "Hoàng Đình Công",
         "accountNumber": "1234567890",
-        "bankName": "Vietcombank",
-        "branch": "Chi nhánh Hà Nội",
+        "bankName": "Techcombank",
         "qrCodePath": "/images/qr-code-groom.jpg"
       }
     }

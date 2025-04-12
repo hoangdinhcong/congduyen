@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import HeroSection from '../../components/HeroSection';
-import LocationSection from '../../components/LocationSection';
-import GallerySection from '../../components/GallerySection';
-import GiftsSection from '../../components/GiftsSection';
-import RsvpSection from '../../components/RsvpSection';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import LocationSection from '@/components/LocationSection';
+import GallerySection from '@/components/GallerySection';
+import GiftsSection from '@/components/GiftsSection';
+import RsvpSection from '@/components/RsvpSection';
 
 export default function BridePage() {
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import weddingData from "@/data/data.json";
 
 const RsvpSection = () => {
   const [name, setName] = useState("");
@@ -89,8 +90,8 @@ const RsvpSection = () => {
         </div>
 
         <div className="text-center mt-12 text-gray-600 fade-in font-sans" style={{ animationDelay: "0.4s" }}>
-          <p className="font-sans">Vui lòng xác nhận trước ngày 1 tháng 4, 2025</p>
-          <p className="mt-2 font-sans">Nếu bạn có câu hỏi, vui lòng liên hệ với chúng tôi qua email: <a href="mailto:contact@example.com" className="text-primary hover:underline">contact@example.com</a></p>
+          <p className="font-sans">Vui lòng xác nhận trước ngày 24 tháng 4, 2025</p>
+          <p className="mt-2 font-sans">Nếu bạn có câu hỏi, vui lòng liên hệ với chúng tôi qua số điện thoại: <a href={`tel:${weddingData.contact.groom.phone}`} className="text-primary hover:underline">{weddingData.contact.groom.phone}</a></p>
         </div>
       </div>
     </section>
