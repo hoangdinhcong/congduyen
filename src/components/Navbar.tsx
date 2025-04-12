@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Home, MapPin, Images, Gift, Heart } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const SMALL_SCREEN_BREAKPOINT = 380;
 
@@ -31,19 +31,12 @@ const useIsSmallScreen = () => {
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const isSmallScreen = useIsSmallScreen();
 
   // Handle navigation with hash
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, section: string) => {
     e.preventDefault();
-    
-    // Special case for home section
-    if (section === 'home') {
-      router.push('/');
-      return;
-    }
-    
+
     // For other sections, navigate to the section on the current page
     if (pathname === '/') {
       // If on home page, just scroll to the section
