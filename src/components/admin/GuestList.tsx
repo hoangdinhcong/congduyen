@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Upload, Search, Filter, Copy, Edit2, Trash2, Users, User } from 'lucide-react';
+import { Plus, Upload, Search, Filter, Copy, Edit2, Trash2, Users, User, RefreshCw } from 'lucide-react';
 import { Guest, RSVPStatus, GuestSide } from '../../lib/types';
 import { showToast } from '@/components/ui/ToastProvider';
 import AddGuestModal from './AddGuestModal';
@@ -19,6 +19,7 @@ export default function GuestList() {
   const [sideFilter, setSideFilter] = useState<'all' | GuestSide>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | RSVPStatus>('all');
   const [anonymousFilter, setAnonymousFilter] = useState<'all' | 'anonymous' | 'invited'>('all');
+  const [isRefreshing, setIsRefreshing] = useState(false);
   
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -348,6 +349,31 @@ export default function GuestList() {
           >
             <Plus className="mr-1" />
             Add Guest
+          </button>
+          
+          <button
+            onClick={() => {
+              setIsRefreshing(true);
+              fetchGuests()
+                .then(() => {
+                  showToast.success('Guest list refreshed successfully');
+                })
+                .catch(() => {
+                  // Error is already handled in the hook
+                })
+                .finally(() => {
+                  setIsRefreshing(false);
+                });
+            }}
+            className={`btn-outline-sm flex items-center transition-all duration-200 ${
+              isRefreshing ? 'bg-gray-100' : ''
+            }`}
+            disabled={isRefreshing}
+            aria-label="Refresh guest list"
+            title="Refresh guest list"
+          >
+            <RefreshCw className={`mr-1 h-4 w-4 ${isRefreshing ? 'animate-spin text-primary' : ''}`} />
+            {isRefreshing ? 'Refreshing...' : 'Refresh'}
           </button>
           
           <button

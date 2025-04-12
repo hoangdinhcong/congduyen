@@ -30,10 +30,12 @@ export function useAdminGuests() {
       
       const data = await response.json();
       setGuests(data);
+      return data;
     } catch (error) {
       console.error('Error fetching guests:', error);
       setError(error instanceof Error ? error.message : 'Failed to load guests');
       showToast.error('Failed to load guests');
+      throw error;
     } finally {
       setIsLoading(false);
     }
