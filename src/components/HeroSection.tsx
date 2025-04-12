@@ -22,8 +22,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      <div className="text-center px-6 fade-in z-10 bg-white/80 py-10 rounded-lg backdrop-blur-sm max-w-2xl" style={{ animationDelay: "0.2s" }}>
-        <p className="font-serif text-xl mb-4 text-gray-700">Chúng tôi sắp kết hôn</p>
+      <div className="text-center px-6 fade-in z-10 bg-white/80 py-10 rounded-lg backdrop-blur-sm max-w-4xl" style={{ animationDelay: "0.2s" }}>
+        <p className="font-serif text-xl mb-4 text-gray-700">Chúng mình sắp kết hôn</p>
 
         <h1 className="font-serif text-5xl md:text-7xl font-medium mb-6 text-gray-800">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
@@ -39,16 +39,20 @@ const HeroSection = () => {
           <div className="h-px w-12 bg-gray-300"></div>
         </div>
 
-        <p className="font-sans uppercase tracking-widest text-lg mb-8">
+        <p className="font-sans uppercase tracking-widest text-lg mb-2">
           NGÀY 1 THÁNG 5, 2025
         </p>
 
-        <Link
+        <p className="font-sans text-md text-gray-600 mb-8">
+          (NGÀY 4 THÁNG 4, Ất Tỵ)
+        </p>
+
+        {/* <Link
           href="#rsvp"
           className="button-primary inline-block"
         >
           Xác nhận tham dự
-        </Link>
+        </Link> */}
       </div>
     </section>
   );

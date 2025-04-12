@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
-import { Copy } from "lucide-react";
-import { Button } from "@/components/ui/shadcn/button";
-import { copyToClipboard } from "@/lib/utils";
-import Image from "next/image";
+import { Gift } from 'lucide-react';
+import Image from 'next/image';
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/Dialog';
 import weddingData from '@/data/data.json';
-import { useRoutePerspective } from "@/utils/routeUtils";
-import { Guest } from "@/lib/types";
-import { showToast } from "./ui/ToastProvider";
+import { Guest } from '@/lib/types';
+
+import { Button } from './ui/Button';
 
 type GiftsSectionProps = {
   guest?: Guest;
@@ -16,84 +15,71 @@ type GiftsSectionProps = {
 
 const GiftsSection = ({ guest }: GiftsSectionProps) => {
 
-  const handleCopyToClipboard = (text: string, label: string) => {
-    copyToClipboard(text).then(() => {
-      // You can use your preferred toast notification here
-      showToast.success(`${label} đã được sao chép.`);
-    });
-  };
-
-  let { isBride, isGroom } = useRoutePerspective();
-
-  if (!!guest) {
-    isBride = guest.side === 'bride';
-    isGroom = guest.side === 'groom';
-  }
-
-  // Determine which gift info block to use based on perspective
-  const currentGiftInfo = isBride
-    ? weddingData.giftInfo.bride
-    : isGroom
-      ? weddingData.giftInfo.groom
-      : weddingData.giftInfo; // Default uses top-level giftInfo
-
   return (
     <section id="gifts" className="bg-accent/20">
       <div className="section-container">
-        <h2 className="section-title">{currentGiftInfo.title}</h2>
+        <h2 className="section-title">Quà Cưới</h2>
 
         <div className="max-w-3xl mx-auto">
           <p className="text-center text-gray-600 mb-10">
-            {currentGiftInfo.subtitle}
+            Sự hiện diện của bạn trong ngày cưới của chúng mình là món quà lớn nhất. 
+            <br /> Nếu bạn không thể tham dự được thì thật đáng tiếc, hãy hẹn nhau một dịp khác nhé. Nếu bạn muốn gửi tình cảm từ xa, chúng mình có thể nhận được nó qua đây
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div className="flex justify-center">
-              <div className="bg-white p-4 rounded-lg shadow-md max-w-xs">
-                <Image
-                  src={currentGiftInfo.bankInfo.qrCodePath}
-                  alt="QR Code"
-                  className="w-full rounded"
-                  width={200}
-                  height={200}
-                  loading="lazy"
-                  style={{ objectFit: "contain" }}
-                />
-                {/* <p className="text-center text-sm text-gray-500 mt-2">Scan to send a gift</p> */}
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              {/* <h3 className="font-serif text-xl mb-4 text-center">{weddingData.giftInfo.bankInfo.title}</h3> */}
-
-              <div className="space-y-4">
-
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium">{currentGiftInfo.bankInfo.bankName}</p>
-                  </div>
+          <div className="flex justify-center gap-4 mb-10">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="primary"
+                  className="flex items-center gap-2"
+                  icon={<Gift size={16} />}
+                >
+                  Cô Dâu
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center">Đến Cô Dâu</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-4">
+                  <Image
+                    src={weddingData.giftInfo.bride.bankInfo.qrCodePath}
+                    alt="QR Code Cô Dâu"
+                    className="w-full max-w-[400px] rounded"
+                    loading="lazy"
+                    width={400}
+                    height={400}
+                  />
                 </div>
+              </DialogContent>
+            </Dialog>
 
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium">{currentGiftInfo.bankInfo.accountName}</p>
-                  </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="primary"
+                  className="flex items-center gap-2"
+                  icon={<Gift size={16} />}
+                >
+                  Chú Rể
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center">Đến Chú Rể</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-4">
+                  <Image
+                    src={weddingData.giftInfo.groom.bankInfo.qrCodePath}
+                    alt="QR Code Chú Rể"
+                    className="w-full max-w-[400px] rounded"
+                    loading="lazy"
+                    width={400}
+                    height={400}
+                  />
                 </div>
-
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium">{currentGiftInfo.bankInfo.accountNumber}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleCopyToClipboard(currentGiftInfo.bankInfo.accountNumber, "Số tài khoản")}
-                  >
-                    <Copy size={16} />
-                  </Button>
-                </div>
-              </div>
-            </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

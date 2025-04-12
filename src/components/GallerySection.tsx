@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +13,12 @@ import Image from "next/image";
 
 const GallerySection = () => {
   const images = weddingData.gallery;
+  const [galleryImages, setGalleryImages] = useState(images);
+
+  // Use useEffect to shuffle images on the client side only
+  useEffect(() => {
+    setGalleryImages([...images].sort(() => Math.random() - 0.5));
+  }, [images]);
 
   return (
     <section id="gallery" className="bg-secondary/20">
@@ -28,7 +34,7 @@ const GallerySection = () => {
             className="w-full"
           >
             <CarouselContent>
-              {images.map((image, index) => (
+              {galleryImages.map((image, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div
                     className="aspect-square overflow-hidden rounded-lg shadow-md fade-in"

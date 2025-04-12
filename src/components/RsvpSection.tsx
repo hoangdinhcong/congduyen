@@ -186,10 +186,10 @@ const RsvpSection = ({
                   <div className="mb-8">
                     <Heart className="text-primary mx-auto mb-4" size={32} />
                     <h3 className="text-2xl font-serif mb-4">
-                      Bạn sẽ tham dự đám cưới của chúng tôi chứ?
+                      Bạn sẽ tham dự đám cưới của chúng mình chứ?
                     </h3>
                     <p className="text-gray-600 max-w-md mx-auto font-sans">
-                      Chúng tôi rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
+                      chúng mình rất vinh dự nếu bạn có thể đến chung vui trong ngày trọng đại này.
                     </p>
                   </div>
 
@@ -235,8 +235,8 @@ const RsvpSection = ({
 
                   <p className="text-gray-600 mb-8 max-w-md mx-auto font-sans">
                     {status === "attending"
-                      ? `Rất mong được gặp ${guestName}! Cảm ơn bạn đã đồng hành cùng chúng tôi trong ngày đặc biệt này.`
-                      : `Chúng tôi sẽ nhớ ${guestName}, nhưng cảm ơn bạn đã thông báo.`}
+                      ? `Rất mong được gặp ${guestName}! Cảm ơn bạn đã đồng hành cùng chúng mình trong ngày đặc biệt này.`
+                      : `chúng mình sẽ nhớ ${guestName}, nhưng cảm ơn bạn đã thông báo.`}
                   </p>
 
                   <button
@@ -270,7 +270,7 @@ const RsvpSection = ({
                   </h3>
 
                   <p className="text-gray-600 mb-6 font-sans">
-                    Phản hồi của bạn đã được ghi nhận. Chúng tôi rất mong được gặp bạn trong ngày đặc biệt này!
+                    Phản hồi của bạn đã được ghi nhận. chúng mình rất mong được gặp bạn trong ngày đặc biệt này!
                   </p>
 
                   <div className="flex justify-center">
@@ -291,7 +291,7 @@ const RsvpSection = ({
 
                   <div className="space-y-4">
                     <FormInput
-                      label=""
+                      label="Họ tên"
                       id="name"
                       name="name"
                       value={values.name}
@@ -358,8 +358,8 @@ const RsvpSection = ({
         </div>
 
         <div className="text-center mt-12 text-gray-600 fade-in font-sans" style={{ animationDelay: "0.4s" }}>
-          <p className="font-sans">Vui lòng xác nhận trước ngày 24 tháng 4, 2025</p>
-          <p className="mt-2 font-sans">Nếu bạn có câu hỏi, vui lòng liên hệ với chúng tôi qua số điện thoại:</p>
+          <p className="font-sans">Xác nhận giúp chúng mình trước ngày 24 tháng 4, 2025 nhé, để chúng mình chuẩn bị và đón tiếp bạn tốt nhất</p>
+          <p className="mt-2 font-sans">Nếu bạn cần hỗ trợ, cứ nhắn chúng mình nhé</p>
           <p className="mt-2 font-sans"><a href={`tel:${weddingData.contact.groom.phone}`} className="font-medium hover:underline">{weddingData.contact.groom.phone}</a></p>
         </div>
       </div>

@@ -38,7 +38,7 @@ const PersonalizedGreeting = ({ guest }: PersonalizedGreetingProps) => {
         <h2 className="text-2xl font-serif mb-4">Chào {guest.name}!</h2>
 
         <p className="text-gray-600 mb-6 font-sans">
-          Chúng tôi rất vui khi bạn đến tham dự đám cưới của chúng tôi. 
+          chúng mình rất vui khi bạn đến tham dự đám cưới của chúng mình. 
           Đây là lời mời riêng biệt dành cho bạn yêu.
         </p>
 
