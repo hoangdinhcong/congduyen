@@ -11,7 +11,7 @@ import { Guest } from "@/lib/types";
 import { showToast } from "./ui/ToastProvider";
 
 type GiftsSectionProps = {
-  guest: Guest;
+  guest?: Guest;
 };
 
 const GiftsSection = ({ guest }: GiftsSectionProps) => {

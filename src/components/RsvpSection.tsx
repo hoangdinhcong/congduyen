@@ -13,7 +13,7 @@ import weddingData from '@/data/data.json';
 import { useRoutePerspective } from '@/utils/routeUtils';
 
 type RsvpSectionProps = {
-  guest: Guest;
+  guest?: Guest;
   uniqueInviteId?: string;
   rsvpStatus?: RSVPStatus;
 };
