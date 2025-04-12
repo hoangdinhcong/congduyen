@@ -48,7 +48,6 @@
     }
   },
   "giftInfo": {
-    "registryLink": "Optional: Link to gift registry",
     "message": "Sự hiện diện của bạn là món quà lớn nhất!",
     "title": "Thông Tin Quà Cưới",
     "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.",
@@ -57,7 +56,7 @@
       "accountNumber": "1234567890",
       "bankName": "Vietcombank",
       "branch": "Chi nhánh Hà Nội",
-      "qrCodePath": "/images/qr-code-default.png"
+      "qrCodePath": "/images/qr-code-groom.jpg"
     },
     "bride": {
       "title": "Thông Tin Quà Cưới - Nhà Gái",
@@ -67,7 +66,7 @@
         "accountNumber": "9876543210",
         "bankName": "Techcombank",
         "branch": "Chi nhánh Hà Nội",
-        "qrCodePath": "/images/qr-code-bride.png"
+        "qrCodePath": "/images/qr-code-bride.jpg"
       }
     },
     "groom": {
@@ -78,32 +77,31 @@
         "accountNumber": "1234567890",
         "bankName": "Vietcombank",
         "branch": "Chi nhánh Hà Nội",
-        "qrCodePath": "/images/qr-code-groom.png"
+        "qrCodePath": "/images/qr-code-groom.jpg"
       }
     }
   },
-  "galleryTitle": "Khoảnh Khắc Đáng Nhớ",
+  "galleryTitle": "Album",
   "gallerySubtitle": "Cùng nhìn lại những hình ảnh đẹp của chúng tôi",
   "gallery": [
-    { "src": "/images/gallery/photo1.jpg", "alt": "Our first date" },
-    { "src": "/images/gallery/photo2.jpg", "alt": "Vacation memories" },
-    { "src": "/images/gallery/photo3.jpg", "alt": "Proposal moment" },
-    { "src": "/images/gallery/photo4.jpg", "alt": "Engagement photos" },
-    { "src": "/images/gallery/photo5.jpg", "alt": "Family gathering" },
-    { "src": "/images/gallery/photo6.jpg", "alt": "Fun times together" }
-  ],
-  "scheduleTitle": "Chương Trình",
-  "scheduleSubtitle": "Lịch trình dự kiến trong ngày vui",
-  "schedule": [
-    { "time": "16:00", "title": "Đón Khách", "description": "Cô dâu chú rể chào đón khách mời.", "icon": "FaUsers" },
-    { "time": "17:00", "title": "Lễ Thành Hôn", "description": "Nghi thức lễ cưới chính thức diễn ra.", "icon": "FaRing" },
-    { "time": "18:00", "title": "Tiệc Tối", "description": "Khách mời dùng bữa tối thân mật.", "icon": "FaUtensils" },
-    { "time": "20:00", "title": "Chương Trình Văn Nghệ", "description": "Giao lưu và các tiết mục giải trí.", "icon": "FaMusic" },
-    { "time": "21:30", "title": "Kết Thúc", "description": "Chào tạm biệt và cảm ơn khách mời.", "icon": "FaDoorOpen" }
+    { "src": "/images/gallery/1.jpg", "alt": "Ảnh cưới 1" },
+    { "src": "/images/gallery/2.jpg", "alt": "Ảnh cưới 2" },
+    { "src": "/images/gallery/3.jpg", "alt": "Ảnh cưới 3" },
+    { "src": "/images/gallery/4.jpg", "alt": "Ảnh cưới 4" },
+    { "src": "/images/gallery/5.jpg", "alt": "Ảnh cưới 5" },
+    { "src": "/images/gallery/6.jpg", "alt": "Ảnh cưới 6" },
+    { "src": "/images/gallery/7.jpg", "alt": "Ảnh cưới 7" },
+    { "src": "/images/gallery/8.jpg", "alt": "Ảnh cưới 8" },
+    { "src": "/images/gallery/9.jpg", "alt": "Ảnh cưới 9" },
+    { "src": "/images/gallery/10.jpg", "alt": "Ảnh cưới 10" },
+    { "src": "/images/gallery/11.jpg", "alt": "Ảnh cưới 11" },
+    { "src": "/images/gallery/12.jpg", "alt": "Ảnh cưới 12" },
+    { "src": "/images/gallery/13.jpg", "alt": "Ảnh cưới 13" },
+    { "src": "/images/gallery/14.jpg", "alt": "Ảnh cưới 14" },
+    { "src": "/images/gallery/15.jpg", "alt": "Ảnh cưới 15" }
   ],
   "hero": {
-    "monogram": "C&D",
-    "imagePath": "/images/hero-photo.jpg"
+    "imagePath": "/images/hero.jpg"
   },
   "invitationMessage": "Với niềm hân hoan, chúng tôi trân trọng kính mời quý vị đến dự buổi lễ thành hôn. Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng tôi trong ngày trọng đại này.",
   "invitationTitle": "Thiệp Mời",
