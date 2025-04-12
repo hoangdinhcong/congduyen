@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Guest, RSVPStatus, GuestSide } from '@/lib/types';
 import { GuestAPI } from '@/lib/api-client';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 import { generateUniqueInviteId } from '@/lib/utils';
 
 /**
@@ -14,7 +14,6 @@ export function useGuests() {
   const [guests, setGuests] = useState<Guest[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
-  const { showSuccess, showError } = useToastContext();
 
   /**
    * Fetch all guests
@@ -26,11 +25,11 @@ export function useGuests() {
       setGuests(data);
     } catch (error) {
       console.error('Error fetching guests:', error);
-      showError('Failed to load guests');
+      showToast.error('Failed to load guests');
     } finally {
       setIsLoading(false);
     }
-  }, [showError]);
+  }, []);
 
   /**
    * Add a new guest
@@ -51,16 +50,16 @@ export function useGuests() {
       // Update local state
       setGuests(prev => [newGuest, ...prev]);
       
-      showSuccess('Guest added successfully');
+      showToast.success('Guest added successfully');
       return newGuest;
     } catch (error) {
       console.error('Error adding guest:', error);
-      showError('Failed to add guest');
+      showToast.error('Failed to add guest');
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, [showSuccess, showError]);
+  }, []);
 
   /**
    * Update a guest
@@ -77,16 +76,16 @@ export function useGuests() {
         guest.id === id ? updatedGuest : guest
       ));
       
-      showSuccess('Guest updated successfully');
+      showToast.success('Guest updated successfully');
       return updatedGuest;
     } catch (error) {
       console.error('Error updating guest:', error);
-      showError('Failed to update guest');
+      showToast.error('Failed to update guest');
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, [showSuccess, showError]);
+  }, []);
 
   /**
    * Update RSVP status
@@ -103,16 +102,16 @@ export function useGuests() {
         guest.unique_invite_id === uniqueInviteId ? updatedGuest : guest
       ));
       
-      showSuccess('RSVP updated successfully');
+      showToast.success('RSVP updated successfully');
       return updatedGuest;
     } catch (error) {
       console.error('Error updating RSVP:', error);
-      showError('Failed to update RSVP');
+      showToast.error('Failed to update RSVP');
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, [showSuccess, showError]);
+  }, []);
 
   /**
    * Delete a guest
@@ -131,23 +130,23 @@ export function useGuests() {
         setSelectedGuests(prev => prev.filter(guestId => guestId !== id));
       }
       
-      showSuccess('Guest deleted successfully');
+      showToast.success('Guest deleted successfully');
       return true;
     } catch (error) {
       console.error('Error deleting guest:', error);
-      showError('Failed to delete guest');
+      showToast.error('Failed to delete guest');
       return false;
     } finally {
       setIsLoading(false);
     }
-  }, [selectedGuests, showSuccess, showError]);
+  }, [selectedGuests]);
 
   /**
    * Bulk delete selected guests
    */
   const bulkDeleteGuests = useCallback(async () => {
     if (selectedGuests.length === 0) {
-      showError('No guests selected');
+      showToast.error('No guests selected');
       return false;
     }
     
@@ -161,16 +160,16 @@ export function useGuests() {
       // Clear selection
       setSelectedGuests([]);
       
-      showSuccess(`${selectedGuests.length} guests deleted successfully`);
+      showToast.success(`${selectedGuests.length} guests deleted successfully`);
       return true;
     } catch (error) {
       console.error('Error bulk deleting guests:', error);
-      showError('Failed to delete selected guests');
+      showToast.error('Failed to delete selected guests');
       return false;
     } finally {
       setIsLoading(false);
     }
-  }, [selectedGuests, showSuccess, showError]);
+  }, [selectedGuests]);
 
   /**
    * Bulk update selected guests
@@ -178,7 +177,7 @@ export function useGuests() {
    */
   const bulkUpdateGuests = useCallback(async (updates: Partial<Guest>) => {
     if (selectedGuests.length === 0) {
-      showError('No guests selected');
+      showToast.error('No guests selected');
       return false;
     }
     
@@ -193,16 +192,16 @@ export function useGuests() {
           : guest
       ));
       
-      showSuccess(`${selectedGuests.length} guests updated successfully`);
+      showToast.success(`${selectedGuests.length} guests updated successfully`);
       return true;
     } catch (error) {
       console.error('Error bulk updating guests:', error);
-      showError('Failed to update selected guests');
+      showToast.error('Failed to update selected guests');
       return false;
     } finally {
       setIsLoading(false);
     }
-  }, [selectedGuests, showSuccess, showError]);
+  }, [selectedGuests]);
 
   /**
    * Toggle guest selection
@@ -247,16 +246,16 @@ export function useGuests() {
       // Update local state
       setGuests(prev => [newGuest, ...prev]);
       
-      showSuccess('RSVP submitted successfully');
+      showToast.success('RSVP submitted successfully');
       return newGuest;
     } catch (error) {
       console.error('Error submitting anonymous RSVP:', error);
-      showError('Failed to submit RSVP');
+      showToast.error('Failed to submit RSVP');
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, [showSuccess, showError]);
+  }, []);
 
   /**
    * Convert an anonymous RSVP to a regular guest
@@ -285,16 +284,16 @@ export function useGuests() {
         guest.id === id ? updatedGuest : guest
       ));
       
-      showSuccess('Anonymous RSVP converted to guest successfully');
+      showToast.success('Anonymous RSVP converted to guest successfully');
       return updatedGuest;
     } catch (error) {
       console.error('Error converting anonymous RSVP to guest:', error);
-      showError('Failed to convert anonymous RSVP');
+      showToast.error('Failed to convert anonymous RSVP');
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, [guests, showSuccess, showError]);
+  }, [guests]);
 
   // Fetch guests on mount
   useEffect(() => {

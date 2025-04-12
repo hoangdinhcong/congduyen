@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { RSVPStats } from '@/lib/types';
 import { GuestAPI } from '@/lib/api-client';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 
 /**
  * Custom hook for managing RSVP statistics
@@ -12,7 +12,6 @@ import { useToastContext } from '@/contexts/ToastContext';
 export function useRSVPStats() {
   const [stats, setStats] = useState<RSVPStats | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { showError } = useToastContext();
 
   /**
    * Fetch RSVP statistics
@@ -24,11 +23,11 @@ export function useRSVPStats() {
       setStats(data);
     } catch (error) {
       console.error('Error fetching RSVP stats:', error);
-      showError('Failed to load RSVP statistics');
+      showToast.error('Failed to load RSVP statistics');
     } finally {
       setIsLoading(false);
     }
-  }, [showError]);
+  }, []);
 
   // Fetch stats on mount
   useEffect(() => {

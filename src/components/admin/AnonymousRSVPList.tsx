@@ -7,7 +7,7 @@ import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { User, Trash2, UserPlus } from 'lucide-react';
 import { useGuests } from '@/hooks/useGuests';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 import { Card } from '../ui/Card';
 import { Pagination } from '../ui/Pagination';
 
@@ -20,7 +20,6 @@ export default function AnonymousRSVPList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
   const { deleteGuest, convertAnonymousToGuest, fetchGuests } = useGuests();
-  const { showSuccess, showError } = useToastContext();
 
   useEffect(() => {
     const loadAnonymousGuests = async () => {
@@ -36,24 +35,24 @@ export default function AnonymousRSVPList() {
         setAnonymousGuests(data);
       } catch (error) {
         console.error('Error loading anonymous RSVPs:', error);
-        showError('Failed to load anonymous RSVPs');
+        showToast.error('Failed to load anonymous RSVPs');
       } finally {
         setLoading(false);
       }
     };
 
     loadAnonymousGuests();
-  }, [showError]);
+  }, []);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this anonymous RSVP?')) {
       try {
         await deleteGuest(id);
         setAnonymousGuests(prev => prev.filter(guest => guest.id !== id));
-        showSuccess('Anonymous RSVP deleted successfully');
+        showToast.success('Anonymous RSVP deleted successfully');
       } catch (error) {
         console.error('Error deleting anonymous RSVP:', error);
-        showError('Failed to delete anonymous RSVP');
+        showToast.error('Failed to delete anonymous RSVP');
       }
     }
   };
@@ -62,12 +61,12 @@ export default function AnonymousRSVPList() {
     try {
       await convertAnonymousToGuest(anonymousGuest.id);
       setAnonymousGuests(prev => prev.filter(guest => guest.id !== anonymousGuest.id));
-      showSuccess('Anonymous RSVP converted to guest successfully');
+      showToast.success('Anonymous RSVP converted to guest successfully');
       // Refresh the guest list
       fetchGuests();
     } catch (error) {
       console.error('Error converting anonymous RSVP to guest:', error);
-      showError('Failed to convert anonymous RSVP to guest');
+      showToast.error('Failed to convert anonymous RSVP to guest');
     }
   };
 

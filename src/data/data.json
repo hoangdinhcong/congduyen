@@ -49,7 +49,7 @@
   },
   "giftInfo": {
     "message": "Sự hiện diện của bạn là món quà lớn nhất!",
-    "title": "Thông Tin Quà Cưới",
+    "title": "Quà Cưới",
     "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.",
     "bankInfo": {
       "accountName": "Hoàng Đình Công",
@@ -58,7 +58,7 @@
       "qrCodePath": "/images/qr-code-groom.jpg"
     },
     "bride": {
-      "title": "Thông Tin Quà Cưới - Nhà Gái",
+      "title": "Quà Cưới - Nhà Gái",
       "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà gái, bạn có thể chuyển khoản qua thông tin dưới đây.",
       "bankInfo": {
         "accountName": "Bùi Thị Mỹ Duyên",
@@ -68,7 +68,7 @@
       }
     },
     "groom": {
-      "title": "Thông Tin Quà Cưới - Nhà Trai",
+      "title": "Quà Cưới - Nhà Trai",
       "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà trai, bạn có thể chuyển khoản qua thông tin dưới đây.",
       "bankInfo": {
         "accountName": "Hoàng Đình Công",

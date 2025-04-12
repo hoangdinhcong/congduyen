@@ -5,7 +5,7 @@ import { Check, Heart, User } from 'lucide-react';
 import { GuestSide, RSVPStatus } from '@/lib/types';
 import { useForm, validationRules } from '@/hooks/useForm';
 import { useGuestContext } from '@/contexts/GuestContext';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 import { FormInput } from './FormInput';
 import { FormSelect } from './FormSelect';
 import { Button } from './Button';
@@ -17,7 +17,6 @@ import { Alert } from './Alert';
  */
 export default function AnonymousRSVPForm() {
   const { submitAnonymousRSVP } = useGuestContext();
-  const { showSuccess, showError } = useToastContext();
 
   const {
     values,
@@ -62,14 +61,14 @@ export default function AnonymousRSVPForm() {
 
       if (result) {
         setSuccess(true);
-        showSuccess('Cảm ơn bạn! Phản hồi của bạn đã được ghi nhận.');
+        showToast.success('Cảm ơn bạn! Phản hồi của bạn đã được ghi nhận.');
         resetForm();
       } else {
-        showError('Không thể gửi phản hồi. Vui lòng thử lại.');
+        showToast.error('Không thể gửi phản hồi. Vui lòng thử lại.');
       }
     } catch (err) {
       console.error('Lỗi gửi RSVP:', err);
-      showError('Đã xảy ra lỗi khi gửi phản hồi của bạn');
+      showToast.error('Đã xảy ra lỗi khi gửi phản hồi của bạn');
     } finally {
       setIsSubmitting(false);
     }
@@ -155,7 +154,7 @@ export default function AnonymousRSVPForm() {
             type="submit"
             variant="primary"
             isLoading={isSubmitting}
-            icon={<FaCheck />}
+            icon={<Check />}
             className="w-full"
           >
             Xác nhận tham dự

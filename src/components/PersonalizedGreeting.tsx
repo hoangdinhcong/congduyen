@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart } from 'lucide-react';
 import { Guest } from '@/lib/types';
 
@@ -11,10 +11,23 @@ interface PersonalizedGreetingProps {
 const PersonalizedGreeting = ({ guest }: PersonalizedGreetingProps) => {
   const [showModal, setShowModal] = useState(true);
 
+  useEffect(() => {
+    // Add body class to prevent scrolling
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
+
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-white flex items-center justify-center z-50 transition-all duration-500">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 text-center">
         <div className="mb-4">
           <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
@@ -22,17 +35,18 @@ const PersonalizedGreeting = ({ guest }: PersonalizedGreetingProps) => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-serif mb-4">Welcome, {guest.name}!</h2>
+        <h2 className="text-2xl font-serif mb-4">Chào {guest.name}!</h2>
 
         <p className="text-gray-600 mb-6 font-sans">
-          We're delighted that you're here. This is your personal invitation to our wedding.
+          Chúng tôi rất vui khi bạn đến tham dự đám cưới của chúng tôi. 
+          Đây là lời mời riêng biệt dành cho bạn yêu.
         </p>
 
         <button
           onClick={() => setShowModal(false)}
           className="button-primary"
         >
-          View Invitation
+          Xem Lời Mời
         </button>
       </div>
     </div>

@@ -6,8 +6,15 @@ import { Button } from "@/components/ui/shadcn/button";
 import { copyToClipboard } from "@/lib/utils";
 import Image from "next/image";
 import weddingData from '@/data/data.json';
+import { useRoutePerspective } from "@/utils/routeUtils";
+import { Guest } from "@/lib/types";
 
-const GiftsSection = () => {
+type GiftsSectionProps = {
+  guest: Guest;
+};
+
+const GiftsSection = ({ guest }: GiftsSectionProps) => {
+
   const handleCopyToClipboard = (text: string, label: string) => {
     copyToClipboard(text).then(() => {
       // You can use your preferred toast notification here
@@ -15,21 +22,35 @@ const GiftsSection = () => {
     });
   };
 
+  let { isBride, isGroom } = useRoutePerspective();
+
+  if (!!guest) {
+    isBride = guest.side === 'bride';
+    isGroom = guest.side === 'groom';
+  }
+
+  // Determine which gift info block to use based on perspective
+  const currentGiftInfo = isBride
+    ? weddingData.giftInfo.bride
+    : isGroom
+      ? weddingData.giftInfo.groom
+      : weddingData.giftInfo; // Default uses top-level giftInfo
+
   return (
     <section id="gifts" className="bg-accent/20">
       <div className="section-container">
-        <h2 className="section-title">{weddingData.giftInfo.title}</h2>
+        <h2 className="section-title">{currentGiftInfo.title}</h2>
 
         <div className="max-w-3xl mx-auto">
           <p className="text-center text-gray-600 mb-10">
-            {weddingData.giftInfo.subtitle}
+            {currentGiftInfo.subtitle}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="flex justify-center">
               <div className="bg-white p-4 rounded-lg shadow-md max-w-xs">
                 <Image
-                  src={weddingData.giftInfo.bankInfo.qrCodePath}
+                  src={currentGiftInfo.bankInfo.qrCodePath}
                   alt="QR Code"
                   className="w-full rounded"
                   width={200}
@@ -48,24 +69,24 @@ const GiftsSection = () => {
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-medium">{weddingData.giftInfo.bankInfo.bankName}</p>
+                    <p className="font-medium">{currentGiftInfo.bankInfo.bankName}</p>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-medium">{weddingData.giftInfo.bankInfo.accountName}</p>
+                    <p className="font-medium">{currentGiftInfo.bankInfo.accountName}</p>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-medium">{weddingData.giftInfo.bankInfo.accountNumber}</p>
+                    <p className="font-medium">{currentGiftInfo.bankInfo.accountNumber}</p>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleCopyToClipboard(weddingData.giftInfo.bankInfo.accountNumber, "Account Number")}
+                    onClick={() => handleCopyToClipboard(currentGiftInfo.bankInfo.accountNumber, "Account Number")}
                   >
                     <Copy size={16} />
                   </Button>

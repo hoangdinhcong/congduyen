@@ -76,7 +76,7 @@ export default async function PersonalizedInvitationPage({
       <LocationSection />
       <GallerySection />
       <GiftsSection />
-      <RsvpSection />
+      <RsvpSection guest={guest} />
 
       <footer className="py-8 bg-white text-center text-gray-500 text-sm">
         <p>&copy; {new Date().getFullYear()} Hoàng Công & Mỹ Duyên</p>

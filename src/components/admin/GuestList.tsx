@@ -221,6 +221,7 @@ export default function GuestList() {
   const handleImportSuccess = () => {
     fetchGuests();
     setIsImportModalOpen(false);
+    showToast.success('Guests imported successfully');
   };
 
   // New handlers for bulk actions
