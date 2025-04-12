@@ -1,11 +1,34 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 const HeroSection = () => {
+  const [showCard, setShowCard] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show card when scrolled down a bit (e.g., 100px), hide when at top
+      if (window.scrollY > 10) {
+        setShowCard(true);
+      } else {
+        setShowCard(false);
+      }
+    };
+
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
+    
+    // Initial check (card should be hidden on first load)
+    handleScroll();
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <section
       id="home"
@@ -22,7 +45,13 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      <div className="text-center px-6 fade-in z-10 bg-white/80 py-10 rounded-lg backdrop-blur-sm max-w-4xl" style={{ animationDelay: "0.2s" }}>
+      <div 
+        className={`text-center px-6 z-10 bg-white/80 py-10 rounded-lg backdrop-blur-sm max-w-4xl transition-all duration-500 ${
+          showCard 
+            ? "opacity-100 translate-y-0" 
+            : "opacity-0 translate-y-10 pointer-events-none"
+        }`}
+      >
         <p className="font-serif text-xl mb-4 text-gray-700">Chúng mình sắp kết hôn</p>
 
         <h1 className="font-serif text-5xl md:text-7xl font-medium mb-6 text-gray-800">
