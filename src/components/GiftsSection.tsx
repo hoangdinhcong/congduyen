@@ -8,6 +8,7 @@ import Image from "next/image";
 import weddingData from '@/data/data.json';
 import { useRoutePerspective } from "@/utils/routeUtils";
 import { Guest } from "@/lib/types";
+import { showToast } from "./ui/ToastProvider";
 
 type GiftsSectionProps = {
   guest: Guest;
@@ -18,7 +19,7 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
   const handleCopyToClipboard = (text: string, label: string) => {
     copyToClipboard(text).then(() => {
       // You can use your preferred toast notification here
-      alert(`${label} has been copied to clipboard.`);
+      showToast.success(`${label} đã được sao chép.`);
     });
   };
 
@@ -86,7 +87,7 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleCopyToClipboard(currentGiftInfo.bankInfo.accountNumber, "Account Number")}
+                    onClick={() => handleCopyToClipboard(currentGiftInfo.bankInfo.accountNumber, "Số tài khoản")}
                   >
                     <Copy size={16} />
                   </Button>
