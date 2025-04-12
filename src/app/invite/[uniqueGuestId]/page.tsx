@@ -73,7 +73,7 @@ export default async function PersonalizedInvitationPage({
       <Navbar />
       <PersonalizedGreeting guest={guest} />
       <HeroSection />
-      <LocationSection />
+      <LocationSection guest={guest} />
       <GallerySection />
       <GiftsSection />
       <RsvpSection guest={guest} />

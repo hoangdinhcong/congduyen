@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Check, X, Heart } from "lucide-react";
+import { Check, X, Heart, Phone } from "lucide-react";
 import { Guest, RSVPStatus, GuestSide } from "@/lib/types";
 import { showToast } from "@/components/ui/ToastProvider";
 import { FormInput } from "./ui/FormInput";
 import { Button } from "./ui/Button";
+import { Button as ButtonShadcn } from "./ui/shadcn/button";
+
 import { Alert } from "./ui/Alert";
 import { useForm, validationRules } from "@/hooks/useForm";
 import weddingData from '@/data/data.json';
@@ -28,7 +30,11 @@ const RsvpSection = ({
   const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
-  const { isBride, isGroom } = useRoutePerspective();
+  let { isBride, isGroom, isHome } = useRoutePerspective();
+  if(!!guest) {
+    isBride = guest.side === 'bride';
+    isGroom = guest.side === 'groom';
+  }
 
   const isPersonalized = !!guest;
   const guestId = guest?.id;
@@ -230,13 +236,13 @@ const RsvpSection = ({
                   <h3 className="text-2xl font-serif mb-4">
                     {status === "attending"
                       ? `Yay! ${guestName} sẽ tham dự!`
-                      : "Bạn đã từ chối lời mời."}
+                      : `${guestName} đã không thể sắp xếp được.`}
                   </h3>
 
                   <p className="text-gray-600 mb-8 max-w-md mx-auto font-sans">
                     {status === "attending"
                       ? `Rất mong được gặp ${guestName}! Cảm ơn bạn đã đồng hành cùng chúng mình trong ngày đặc biệt này.`
-                      : `chúng mình sẽ nhớ ${guestName}, nhưng cảm ơn bạn đã thông báo.`}
+                      : `Cám ơn đã cho chúng mình biết, Hẹn gặp ${guestName} một dịp khác sớm nhé.`}
                   </p>
 
                   <button
@@ -348,7 +354,7 @@ const RsvpSection = ({
                       icon={<Check />}
                       className="w-full"
                     >
-                      Xác nhận tham dự
+                      {isSubmitting ? "Đang xử lý..." : "Xác nhận tham dự"}
                     </Button>
                   </div>
                 </form>
@@ -360,7 +366,31 @@ const RsvpSection = ({
         <div className="text-center mt-12 text-gray-600 fade-in font-sans" style={{ animationDelay: "0.4s" }}>
           <p className="font-sans">Xác nhận giúp chúng mình trước ngày 24 tháng 4, 2025 nhé, để chúng mình chuẩn bị và đón tiếp bạn tốt nhất</p>
           <p className="mt-2 font-sans">Nếu bạn cần hỗ trợ, cứ nhắn chúng mình nhé</p>
-          <p className="mt-2 font-sans"><a href={`tel:${weddingData.contact.groom.phone}`} className="font-medium hover:underline">{weddingData.contact.groom.phone}</a></p>
+
+          <div className="flex justify-center gap-4 mt-4">
+            {(isBride || isHome) && (
+              <ButtonShadcn
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-gray-900"
+                onClick={() => window.open(`tel:${weddingData.contact.bride.phone}`, '_blank')}
+              >
+                <Phone size={16} />
+                <span>Cô dâu</span>
+              </ButtonShadcn>
+            )}
+            {(isGroom || isHome) && (
+              <ButtonShadcn
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-gray-900"
+                onClick={() => window.open(`tel:${weddingData.contact.groom.phone}`, '_blank')}
+              >
+                <Phone size={16} />
+                <span>Chú rể</span>
+              </ButtonShadcn>
+            )}
+          </div>
         </div>
       </div>
     </section >
