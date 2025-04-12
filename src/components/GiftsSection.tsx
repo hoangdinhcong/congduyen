@@ -1,6 +1,6 @@
 "use client";
 
-import { Gift } from 'lucide-react';
+import { Gift, Download } from 'lucide-react';
 import Image from 'next/image';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/Dialog';
@@ -14,6 +14,14 @@ type GiftsSectionProps = {
 };
 
 const GiftsSection = ({ guest }: GiftsSectionProps) => {
+  const handleDownload = (imagePath: string, fileName: string) => {
+    const link = document.createElement('a');
+    link.href = imagePath;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <section id="gifts" className="bg-accent/20">
@@ -41,7 +49,7 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
                 <DialogHeader>
                   <DialogTitle className="text-center">Đến Cô Dâu</DialogTitle>
                 </DialogHeader>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-4">
+                <div className="flex flex-col items-center justify-center gap-4 p-4">
                   <Image
                     src={weddingData.giftInfo.bride.bankInfo.qrCodePath}
                     alt="QR Code Cô Dâu"
@@ -50,6 +58,14 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
                     width={400}
                     height={400}
                   />
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2"
+                    onClick={() => handleDownload(weddingData.giftInfo.bride.bankInfo.qrCodePath, 'qr-code-co-dau.png')}
+                    icon={<Download size={16} />}
+                  >
+                    Tải QR Code
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
@@ -68,7 +84,7 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
                 <DialogHeader>
                   <DialogTitle className="text-center">Đến Chú Rể</DialogTitle>
                 </DialogHeader>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 p-4">
+                <div className="flex flex-col items-center justify-center gap-4 p-4">
                   <Image
                     src={weddingData.giftInfo.groom.bankInfo.qrCodePath}
                     alt="QR Code Chú Rể"
@@ -77,6 +93,14 @@ const GiftsSection = ({ guest }: GiftsSectionProps) => {
                     width={400}
                     height={400}
                   />
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2"
+                    onClick={() => handleDownload(weddingData.giftInfo.groom.bankInfo.qrCodePath, 'qr-code-chu-re.png')}
+                    icon={<Download size={16} />}
+                  >
+                    Tải QR Code
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
