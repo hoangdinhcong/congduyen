@@ -75,7 +75,7 @@ export default async function PersonalizedInvitationPage({
       <HeroSection />
       <LocationSection guest={guest} />
       <GallerySection />
-      <GiftsSection />
+      <GiftsSection guest={guest} />
       <RsvpSection guest={guest} />
 
       <footer className="py-8 bg-white text-center text-gray-500 text-sm">
