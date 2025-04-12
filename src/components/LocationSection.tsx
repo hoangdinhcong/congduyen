@@ -23,7 +23,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
     const startDate = "20250501T170000";
     const endDate = "20250501T190000";
     const location = "Trung Tâm Tiệc Cưới Nguyên Đình, Tầng 4, 461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam";
-    const details = "chúng mình rất vui mừng được chào đón bạn đến dự ngày đặc biệt của chúng mình!";
+    const details = "Rất vui mừng được chào đón bạn đến dự ngày đặc biệt của chúng mình!";
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}&sf=true&output=xml`;
 
@@ -40,7 +40,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
     const startDate = "20250501T100000";
     const endDate = "20250501T120000";
     const location = "Tư Gia Nhà Gái, Xóm 1, Xuân Kiên - Xuân Phúc, Xuân Trường, Nam Định";
-    const details = "chúng mình rất vui mừng được chào đón bạn đến dự ngày đặc biệt của chúng mình!";
+    const details = "Rất vui mừng được chào đón bạn đến dự ngày đặc biệt của chúng mình!";
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}&sf=true&output=xml`;
 

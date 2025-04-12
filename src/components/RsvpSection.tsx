@@ -276,7 +276,7 @@ const RsvpSection = ({
                   </h3>
 
                   <p className="text-gray-600 mb-6 font-sans">
-                    Phản hồi của bạn đã được ghi nhận. chúng mình rất mong được gặp bạn trong ngày đặc biệt này!
+                    Phản hồi của bạn đã được ghi nhận. Chúng mình rất mong được gặp bạn trong ngày đặc biệt này!
                   </p>
 
                   <div className="flex justify-center">
