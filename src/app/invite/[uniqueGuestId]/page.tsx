@@ -1,22 +1,21 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import MainLayout from '../../../components/layout/MainLayout';
-import HeroSection from '../../../components/sections/HeroSection';
-import InvitationSection from '../../../components/sections/InvitationSection';
-import EventDetailsSection from '../../../components/sections/EventDetailsSection';
-import GiftInfoSection from '../../../components/sections/GiftInfoSection';
-import ContactSection from '../../../components/sections/ContactSection';
-import RSVPSection from '../../../components/sections/RSVPSection';
-import PersonalizedGreeting from '../../../components/sections/PersonalizedGreeting';
-import { supabase } from '../../../lib/supabase';
-import { Guest } from '../../../lib/types';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import LocationSection from '@/components/LocationSection';
+import GallerySection from '@/components/GallerySection';
+import GiftsSection from '@/components/GiftsSection';
+import RsvpSection from '@/components/RsvpSection';
+import PersonalizedGreeting from '@/components/PersonalizedGreeting';
+import { supabase } from '@/lib/supabase';
+import { Guest } from '@/lib/types';
 
 // Generate dynamic metadata for each page
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ uniqueGuestId: string }> 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ uniqueGuestId: string }>
 }): Promise<Metadata> {
   // Fetch guest data
   const { uniqueGuestId } = await params;
@@ -25,14 +24,14 @@ export async function generateMetadata({
     .select('*')
     .eq('unique_invite_id', uniqueGuestId)
     .single();
-  
+
   if (!guest) {
     return {
       title: 'Invitation Not Found | Hoàng Công & Mỹ Duyên Wedding',
       description: 'The invitation you are looking for could not be found.',
     };
   }
-  
+
   return {
     title: `${guest.name}'s Invitation | Hoàng Công & Mỹ Duyên Wedding`,
     description: `${guest.name}, you are cordially invited to Hoàng Công & Mỹ Duyên's wedding.`,
@@ -46,52 +45,42 @@ async function getGuest(uniqueGuestId: string): Promise<Guest | null> {
     .select('*')
     .eq('unique_invite_id', uniqueGuestId)
     .single();
-  
+
   if (error || !data) {
     return null;
   }
-  
+
   return data as Guest;
 }
 
-export default async function PersonalizedInvitationPage({ 
-  params 
-}: { 
-  params: Promise<{ uniqueGuestId: string }> 
+export default async function PersonalizedInvitationPage({
+  params
+}: {
+  params: Promise<{ uniqueGuestId: string }>
 }) {
   // Await the params if it's a promise (Next.js 15 compatibility)
   const { uniqueGuestId } = await params;
-  
+
   const guest = await getGuest(uniqueGuestId);
-  
+
   // If guest not found, show 404 page
   if (!guest) {
     return notFound();
   }
-  
-  // Wedding date - May 1, 2025 at 17:00
-  const weddingDate = '2025-05-01T17:00:00';
-  
+
   return (
-    <MainLayout
-      guestName={guest.name}
-      guestId={guest.id}
-      uniqueInviteId={guest.unique_invite_id}
-      rsvpStatus={guest.rsvp_status}
-    >
+    <div className="min-h-screen bg-white">
+      <Navbar />
       <PersonalizedGreeting guest={guest} />
-      <HeroSection weddingDate={weddingDate} />
-      <InvitationSection />
-      <EventDetailsSection />
-      <GiftInfoSection />
-      <ContactSection />
-      <RSVPSection 
-        isPersonalized={true}
-        guestName={guest.name}
-        guestId={guest.id}
-        uniqueInviteId={guest.unique_invite_id}
-        rsvpStatus={guest.rsvp_status}
-      />
-    </MainLayout>
+      <HeroSection />
+      <LocationSection />
+      <GallerySection />
+      <GiftsSection />
+      <RsvpSection guest={guest} />
+
+      <footer className="py-8 bg-white text-center text-gray-500 text-sm">
+        <p>&copy; {new Date().getFullYear()} Hoàng Công & Mỹ Duyên</p>
+      </footer>
+    </div>
   );
 }

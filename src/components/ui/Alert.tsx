@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FaInfoCircle, FaCheckCircle, FaExclamationTriangle, FaExclamationCircle, FaTimes } from 'react-icons/fa';
+import { Info, CheckCircle, AlertTriangle, AlertCircle, X } from 'lucide-react';
 
 type AlertVariant = 'info' | 'success' | 'warning' | 'error';
 
@@ -35,10 +35,10 @@ export function Alert({
   
   // Variant icons
   const variantIcons = {
-    info: <FaInfoCircle className="h-5 w-5 text-blue-500" />,
-    success: <FaCheckCircle className="h-5 w-5 text-green-500" />,
-    warning: <FaExclamationTriangle className="h-5 w-5 text-yellow-500" />,
-    error: <FaExclamationCircle className="h-5 w-5 text-red-500" />,
+    info: <Info className="h-5 w-5 text-blue-500" />,
+    success: <CheckCircle className="h-5 w-5 text-green-500" />,
+    warning: <AlertTriangle className="h-5 w-5 text-yellow-500" />,
+    error: <AlertCircle className="h-5 w-5 text-red-500" />,
   };
   
   return (
@@ -70,7 +70,7 @@ export function Alert({
                 aria-label="Dismiss"
               >
                 <span className="sr-only">Dismiss</span>
-                <FaTimes className="h-4 w-4" />
+                <X className="h-4 w-4" />
               </button>
             </div>
           </div>

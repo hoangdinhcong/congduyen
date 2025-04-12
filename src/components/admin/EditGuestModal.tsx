@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { X } from 'lucide-react';
 import { Guest, GuestSide } from '../../lib/types';
 import { showToast } from '@/components/ui/ToastProvider';
 
@@ -69,7 +69,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
           >
-            <FaTimes />
+            <X />
           </button>
         </div>
         
@@ -141,7 +141,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
                       className="ml-1.5 inline-flex items-center justify-center h-4 w-4 rounded-full text-primary-light bg-primary hover:bg-primary-dark"
                     >
                       <span className="sr-only">Remove tag</span>
-                      <FaTimes className="h-2 w-2" />
+                      <X className="h-2 w-2" />
                     </button>
                   </span>
                 ))}

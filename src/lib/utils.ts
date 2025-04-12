@@ -4,6 +4,15 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { GuestSide, RSVPStatus } from './types';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+/**
+ * Combines multiple class names using clsx and tailwind-merge
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 /**
  * Generate a unique invitation ID
@@ -21,7 +30,7 @@ export function generateUniqueInviteId(): string {
  */
 export function formatDate(date: Date | string, format: 'long' | 'short' = 'long'): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  
+
   if (format === 'long') {
     return dateObj.toLocaleDateString('vi-VN', {
       weekday: 'long',
@@ -30,7 +39,7 @@ export function formatDate(date: Date | string, format: 'long' | 'short' = 'long
       day: 'numeric'
     });
   }
-  
+
   return dateObj.toLocaleDateString('vi-VN', {
     year: 'numeric',
     month: '2-digit',
@@ -123,13 +132,13 @@ export async function copyToClipboard(text: string): Promise<void> {
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
       document.execCommand('copy');
     } catch (err) {
       console.error('Fallback: Failed to copy text: ', err);
     }
-    
+
     document.body.removeChild(textArea);
   }
 }
@@ -147,20 +156,20 @@ export function generateGoogleCalendarUrl(params: {
   endDate: Date;
 }): string {
   const { title, description, location, startDate, endDate } = params;
-  
+
   // Format dates for Google Calendar (YYYYMMDDTHHMMSSZ)
   const formatDateForGCal = (date: Date) => {
     return date.toISOString().replace(/-|:|\.\d+/g, '');
   };
-  
+
   const startDateStr = formatDateForGCal(startDate);
   const endDateStr = formatDateForGCal(endDate);
-  
+
   // Encode parameters
   const encodedTitle = encodeURIComponent(title);
   const encodedDescription = encodeURIComponent(description);
   const encodedLocation = encodeURIComponent(location);
-  
+
   // Build URL
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodedTitle}&dates=${startDateStr}/${endDateStr}&details=${encodedDescription}&location=${encodedLocation}&sf=true&output=xml`;
 }
@@ -173,29 +182,29 @@ export function generateGoogleCalendarUrl(params: {
 export function parseCSV<T>(csvText: string): T[] {
   // Split by lines
   const lines = csvText.split('\n').filter(line => line.trim() !== '');
-  
+
   if (lines.length < 2) {
     return [];
   }
-  
+
   // Extract headers
   const headers = lines[0].split(',').map(header => header.trim());
-  
+
   // Parse data rows
   const results: T[] = [];
-  
+
   for (let i = 1; i < lines.length; i++) {
     const values = lines[i].split(',').map(value => value.trim());
     const obj: Record<string, any> = {};
-    
+
     // Map values to headers
     for (let j = 0; j < headers.length; j++) {
       obj[headers[j]] = values[j] || '';
     }
-    
+
     results.push(obj as T);
   }
-  
+
   return results;
 }
 

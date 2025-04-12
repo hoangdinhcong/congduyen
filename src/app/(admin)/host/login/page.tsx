@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import LoginForm from '../../../../components/admin/LoginForm';
+import LoginForm from '@/components/admin/LoginForm';
 
 export const metadata: Metadata = {
   title: 'Admin Login | Cong & Duyen Wedding',

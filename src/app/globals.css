@@ -2,40 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #f9a8d4;
-  --primary-light: #fce7f3;
-  --primary-dark: #db2777;
-  --secondary: #171717;
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Montserrat', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap');
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body);
-  scroll-behavior: smooth;
-}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 350 100% 94%;
+    --primary-foreground: 355 6% 25%;
+
+    --secondary: 45 100% 90%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 30 70% 91%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: var(--font-poppins), 'Poppins', sans-serif;
+  }
+
+  html {
+    scroll-padding-top: 80px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans;
+  }
+
+  .font-sans {
+    font-family: var(--font-poppins), 'Poppins', sans-serif;
+  }
 }
 
 @layer components {
+  .section-container {
+    @apply max-w-6xl mx-auto px-6 py-20 md:py-28;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl font-medium mb-8 text-center;
+  }
+
+  .button {
+    @apply px-6 py-3 rounded-md transition-all duration-300 font-medium text-sm;
+  }
+
+  .button-primary {
+    @apply button bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .button-secondary {
+    @apply button bg-secondary text-secondary-foreground hover:bg-secondary/90;
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  /* Legacy classes for compatibility */
   .container-wedding {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
     max-width: min(100%, 1280px); /* Limit max width to 1280px for popular screens */
   }
-  
+
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white font-medium py-2 px-6 rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:translate-y-[-2px];
+    @apply button-primary;
   }
-  
+
   .btn-outline {
-    @apply border border-primary text-secondary hover:bg-primary-light font-medium py-2 px-6 rounded-full transition-all duration-300 hover:shadow-sm hover:translate-y-[-2px];
+    @apply border border-primary text-secondary hover:bg-primary/20 font-medium py-2 px-6 rounded-md transition-all duration-300 hover:shadow-sm font-sans;
   }
 
   .section-fade-in {
@@ -59,20 +121,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .tag {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-light text-primary-dark mr-2 mb-2;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary-foreground mr-2 mb-2;
   }
 
   .input-field {
-    @apply w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-300;
-  }
-
-  .section-title {
-    @apply relative inline-block pb-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-primary after:rounded-full;
+    @apply w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all duration-300;
   }
 }
 
-/* Animation for fade-in on scroll */
-@keyframes fadeInUp {
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -135,10 +192,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: heartbeat 2s infinite;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
+/* Animation delay utilities */
 .delay-100 {
   animation-delay: 0.1s;
 }
@@ -161,71 +215,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
+  background: hsl(var(--primary) / 0.5);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
-/* Decorative elements */
-.decorative-line {
-  position: relative;
-}
-
-.decorative-line::before,
-.decorative-line::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  height: 1px;
-  width: 60px;
-  background-color: var(--primary);
-}
-
-.decorative-line::before {
-  right: calc(100% + 15px);
-}
-
-.decorative-line::after {
-  left: calc(100% + 15px);
-}
-
-/* Additional styling for section titles */
-.section-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.section-title::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: -20px;
-  height: 1px;
-  width: 20px;
-  background-color: var(--primary);
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: -20px;
-  height: 1px;
-  width: 20px;
-  background-color: var(--primary);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  background: hsl(var(--primary));
 }

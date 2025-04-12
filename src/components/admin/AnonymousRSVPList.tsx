@@ -5,9 +5,9 @@ import { Guest } from '@/lib/types';
 import { DataTable } from '../ui/DataTable';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
-import { FaUserSecret, FaTrash, FaUserPlus } from 'react-icons/fa';
+import { User, Trash2, UserPlus } from 'lucide-react';
 import { useGuests } from '@/hooks/useGuests';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 import { Card } from '../ui/Card';
 import { Pagination } from '../ui/Pagination';
 
@@ -20,7 +20,6 @@ export default function AnonymousRSVPList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
   const { deleteGuest, convertAnonymousToGuest, fetchGuests } = useGuests();
-  const { showSuccess, showError } = useToastContext();
 
   useEffect(() => {
     const loadAnonymousGuests = async () => {
@@ -36,24 +35,24 @@ export default function AnonymousRSVPList() {
         setAnonymousGuests(data);
       } catch (error) {
         console.error('Error loading anonymous RSVPs:', error);
-        showError('Failed to load anonymous RSVPs');
+        showToast.error('Failed to load anonymous RSVPs');
       } finally {
         setLoading(false);
       }
     };
 
     loadAnonymousGuests();
-  }, [showError]);
+  }, []);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this anonymous RSVP?')) {
       try {
         await deleteGuest(id);
         setAnonymousGuests(prev => prev.filter(guest => guest.id !== id));
-        showSuccess('Anonymous RSVP deleted successfully');
+        showToast.success('Anonymous RSVP deleted successfully');
       } catch (error) {
         console.error('Error deleting anonymous RSVP:', error);
-        showError('Failed to delete anonymous RSVP');
+        showToast.error('Failed to delete anonymous RSVP');
       }
     }
   };
@@ -62,12 +61,12 @@ export default function AnonymousRSVPList() {
     try {
       await convertAnonymousToGuest(anonymousGuest.id);
       setAnonymousGuests(prev => prev.filter(guest => guest.id !== anonymousGuest.id));
-      showSuccess('Anonymous RSVP converted to guest successfully');
+      showToast.success('Anonymous RSVP converted to guest successfully');
       // Refresh the guest list
       fetchGuests();
     } catch (error) {
       console.error('Error converting anonymous RSVP to guest:', error);
-      showError('Failed to convert anonymous RSVP to guest');
+      showToast.error('Failed to convert anonymous RSVP to guest');
     }
   };
 
@@ -85,7 +84,7 @@ export default function AnonymousRSVPList() {
       header: 'Name',
       render: (row: Guest) => (
         <div className="flex items-center">
-          <FaUserSecret className="text-purple-500 mr-2" />
+          <User className="text-purple-500 mr-2" />
           <span>{row.name}</span>
         </div>
       ),
@@ -137,7 +136,7 @@ export default function AnonymousRSVPList() {
           <Button
             variant="outline"
             size="sm"
-            icon={<FaUserPlus />}
+            icon={<UserPlus />}
             onClick={() => handleConvertToGuest(row)}
             title="Convert to regular guest"
           >
@@ -146,7 +145,7 @@ export default function AnonymousRSVPList() {
           <Button
             variant="danger"
             size="sm"
-            icon={<FaTrash />}
+            icon={<Trash2 />}
             onClick={() => handleDelete(row.id)}
             title="Delete anonymous RSVP"
           />
@@ -170,7 +169,7 @@ export default function AnonymousRSVPList() {
     return (
       <Card>
         <div className="text-center p-8">
-          <FaUserSecret className="text-purple-400 text-4xl mx-auto mb-4" />
+          <User className="text-purple-400 text-4xl mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No Anonymous RSVPs</h3>
           <p className="text-gray-500">
             When guests RSVP without an invitation link, they will appear here.
@@ -183,7 +182,7 @@ export default function AnonymousRSVPList() {
   return (
     <Card>
       <div className="flex items-center mb-4">
-        <FaUserSecret className="text-purple-500 mr-2" />
+        <User className="text-purple-500 mr-2" />
         <h2 className="text-lg font-medium">Anonymous RSVPs ({anonymousGuests.length})</h2>
       </div>
       

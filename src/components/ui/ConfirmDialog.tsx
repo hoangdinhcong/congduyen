@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { X, AlertTriangle } from 'lucide-react';
 
 type ConfirmDialogProps = {
   isOpen: boolean;
@@ -30,18 +30,18 @@ export default function ConfirmDialog({
     switch (type) {
       case 'danger':
         return {
-          icon: <FaExclamationTriangle className="h-6 w-6 text-red-600" />,
+          icon: <AlertTriangle className="h-6 w-6 text-red-600" />,
           confirmButton: 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
         };
       case 'warning':
         return {
-          icon: <FaExclamationTriangle className="h-6 w-6 text-yellow-600" />,
+          icon: <AlertTriangle className="h-6 w-6 text-yellow-600" />,
           confirmButton: 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500',
         };
       case 'info':
       default:
         return {
-          icon: <FaExclamationTriangle className="h-6 w-6 text-primary" />,
+          icon: <AlertTriangle className="h-6 w-6 text-primary" />,
           confirmButton: 'bg-primary hover:bg-primary-dark focus:ring-primary',
         };
     }
@@ -61,7 +61,7 @@ export default function ConfirmDialog({
             onClick={onCancel}
             className="text-gray-400 hover:text-gray-500"
           >
-            <FaTimes />
+            <X />
           </button>
         </div>
         

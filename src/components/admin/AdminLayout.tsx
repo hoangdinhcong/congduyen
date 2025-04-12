@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
-  FaTachometerAlt, 
-  FaUsers, 
-  FaSignOutAlt, 
-  FaBars, 
-  FaTimes,
-  FaHeart
-} from 'react-icons/fa';
+  Gauge, 
+  Users, 
+  LogOut, 
+  Menu, 
+  X,
+  Heart
+} from 'lucide-react';
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -37,8 +37,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   const navigation = [
-    { name: 'Dashboard', href: '/host', icon: FaTachometerAlt },
-    { name: 'Guest List', href: '/host/guests', icon: FaUsers },
+    { name: 'Dashboard', href: '/host', icon: Gauge },
+    { name: 'Guest List', href: '/host/guests', icon: Users },
   ];
 
   return (
@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close sidebar</span>
-              <FaTimes className="h-6 w-6 text-white" aria-hidden="true" />
+              <X className="h-6 w-6 text-white" aria-hidden="true" />
             </button>
           </div>
           
@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="flex-shrink-0 flex items-center px-4">
               <Link href="/host" className="text-xl font-semibold flex items-center gap-2">
                 <span>Wedding Admin</span>
-                <FaHeart className="text-primary text-sm" />
+                <Heart className="text-primary text-sm" />
               </Link>
             </div>
             <nav className="mt-5 px-2 space-y-1">
@@ -99,7 +99,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               onClick={handleLogout}
               className="flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
             >
-              <FaSignOutAlt className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
+              <LogOut className="mr-4 h-6 w-6 text-gray-400" aria-hidden="true" />
               Logout
             </button>
           </div>
@@ -114,7 +114,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <div className="flex items-center flex-shrink-0 px-4">
                 <Link href="/host" className="text-xl font-semibold flex items-center gap-2">
                   <span>Wedding Admin</span>
-                  <FaHeart className="text-primary text-sm" />
+                  <Heart className="text-primary text-sm" />
                 </Link>
               </div>
               <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
@@ -146,7 +146,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 onClick={handleLogout}
                 className="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
               >
-                <FaSignOutAlt className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                <LogOut className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
                 Logout
               </button>
             </div>
@@ -163,7 +163,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <FaBars className="h-6 w-6" aria-hidden="true" />
+            <Menu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         

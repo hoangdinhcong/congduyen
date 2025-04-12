@@ -1,0 +1,109 @@
+{
+  "bride": {
+    "name": "Mỹ Duyên",
+    "father": "Father's Name",
+    "mother": "Mother's Name"
+  },
+  "groom": {
+    "name": "Hoàng Công",
+    "father": "Father's Name",
+    "mother": "Mother's Name"
+  },
+  "event": {
+    "date": "2025-05-01T17:00:00+07:00",
+    "endDate": "2025-05-01T21:00:00+07:00",
+    "title": "Đám Cưới Công & Duyên",
+    "description": "Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi",
+    "location": {
+      "name": "Trung Tâm Tiệc Cưới Nguyên Đình",
+      "address": "Tầng 4, 461 Đ. Trương Định, Tân Mai, Hoàng Mai, Hà Nội 100000, Việt Nam",
+      "mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.9876068474984!2d105.84941947597658!3d20.98454898064339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1d0b1a6dc7%3A0x2b7d9d9d5a4cd0e9!2zNDYxIMSQLiBUcsaw4budbmcgxJDhu4tuaCwgVMOibiBNYWksIEhvw6BuZyBNYWksIEjDoCBO4buZaSAxMDAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1713765565000!5m2!1svi!2s",
+      "directionsLink": "https://maps.app.goo.gl/w75HLBwaPNAUzCXr7"
+    },
+    "ceremony": {
+      "time": "17:00",
+      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
+    },
+    "reception": {
+      "time": "17:00",
+      "location": "Trung Tâm Tiệc Cưới Nguyên Đình"
+    }
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "subtitle": "Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào",
+    "generalPhone": "+84 xxx xxx xxx",
+    "generalEmail": "wedding@example.com",
+    "bride": {
+      "title": "Liên Hệ - Nhà Gái",
+      "subtitle": "Hãy liên hệ với cô dâu nếu bạn có bất kỳ câu hỏi nào",
+      "name": "Mỹ Duyên",
+      "phone": "+84 355 009 122"
+    },
+    "groom": {
+      "title": "Liên Hệ - Nhà Trai",
+      "subtitle": "Hãy liên hệ với chú rể nếu bạn có bất kỳ câu hỏi nào",
+      "name": "Hoàng Công",
+      "phone": "+84 395 736 655"
+    }
+  },
+  "giftInfo": {
+    "message": "Sự hiện diện của bạn là món quà lớn nhất!",
+    "title": "Quà Cưới",
+    "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà, bạn có thể chuyển khoản qua thông tin dưới đây.",
+    "bankInfo": {
+      "accountName": "Hoàng Đình Công",
+      "accountNumber": "1234567890",
+      "bankName": "Techcombank",
+      "qrCodePath": "/images/qr-code-groom.jpg"
+    },
+    "bride": {
+      "title": "Quà Cưới - Nhà Gái",
+      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà gái, bạn có thể chuyển khoản qua thông tin dưới đây.",
+      "bankInfo": {
+        "accountName": "Bùi Thị Mỹ Duyên",
+        "accountNumber": "19034490857012",
+        "bankName": "Techcombank",
+        "qrCodePath": "/images/qr-code-bride.jpg"
+      }
+    },
+    "groom": {
+      "title": "Quà Cưới - Nhà Trai",
+      "subtitle": "Sự hiện diện của bạn trong ngày cưới của chúng tôi là món quà lớn nhất. Nếu bạn muốn gửi tặng quà cho nhà trai, bạn có thể chuyển khoản qua thông tin dưới đây.",
+      "bankInfo": {
+        "accountName": "Hoàng Đình Công",
+        "accountNumber": "19035753478018",
+        "bankName": "Techcombank",
+        "qrCodePath": "/images/qr-code-groom.jpg"
+      }
+    }
+  },
+  "galleryTitle": "Album",
+  "gallerySubtitle": "Cùng nhìn lại những hình ảnh đẹp của chúng tôi",
+  "gallery": [
+    { "src": "/images/gallery/1.jpg", "alt": "Ảnh cưới 1" },
+    { "src": "/images/gallery/2.jpg", "alt": "Ảnh cưới 2" },
+    { "src": "/images/gallery/3.jpg", "alt": "Ảnh cưới 3" },
+    { "src": "/images/gallery/4.jpg", "alt": "Ảnh cưới 4" },
+    { "src": "/images/gallery/5.jpg", "alt": "Ảnh cưới 5" },
+    { "src": "/images/gallery/6.jpg", "alt": "Ảnh cưới 6" },
+    { "src": "/images/gallery/7.jpg", "alt": "Ảnh cưới 7" },
+    { "src": "/images/gallery/8.jpg", "alt": "Ảnh cưới 8" },
+    { "src": "/images/gallery/9.jpg", "alt": "Ảnh cưới 9" },
+    { "src": "/images/gallery/10.jpg", "alt": "Ảnh cưới 10" },
+    { "src": "/images/gallery/11.jpg", "alt": "Ảnh cưới 11" },
+    { "src": "/images/gallery/12.jpg", "alt": "Ảnh cưới 12" },
+    { "src": "/images/gallery/13.jpg", "alt": "Ảnh cưới 13" },
+    { "src": "/images/gallery/14.jpg", "alt": "Ảnh cưới 14" },
+    { "src": "/images/gallery/15.jpg", "alt": "Ảnh cưới 15" }
+  ],
+  "hero": {
+    "imagePath": "/images/hero.jpg"
+  },
+  "invitationMessage": "Với niềm hân hoan, chúng tôi trân trọng kính mời quý vị đến dự buổi lễ thành hôn. Sự hiện diện của quý vị sẽ là niềm vinh hạnh cho gia đình chúng tôi trong ngày trọng đại này.",
+  "invitationTitle": "Thiệp Mời",
+  "invitationSubtitle": "Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi",
+  "invitationQuote": "Tình yêu là sự kiên nhẫn, tình yêu là lòng tốt. Tình yêu luôn bảo vệ, luôn tin tưởng, luôn hy vọng, luôn kiên trì.",
+  "eventDetailsTitle": "Thông Tin Sự Kiện", 
+  "eventDetailsSubtitle": "Hân hạnh được đón tiếp quý vị trong ngày vui của chúng tôi"
+}

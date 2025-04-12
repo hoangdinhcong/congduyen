@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthAPI } from '@/lib/api-client';
 import { ROUTES } from '@/lib/config';
-import { useToastContext } from '@/contexts/ToastContext';
+import { showToast } from '@/components/ui/ToastProvider';
 
 /**
  * Custom hook for authentication management
@@ -14,7 +14,6 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
-  const { showSuccess, showError } = useToastContext();
 
   /**
    * Check if the user is authenticated
@@ -45,21 +44,21 @@ export function useAuth() {
       
       if (success) {
         setIsAuthenticated(true);
-        showSuccess('Login successful');
+        showToast.success('Login successful');
         router.push(ROUTES.ADMIN.DASHBOARD);
         return true;
       } else {
-        showError('Invalid password');
+        showToast.error('Invalid password');
         return false;
       }
     } catch (error) {
       console.error('Login error:', error);
-      showError('An error occurred during login');
+      showToast.error('An error occurred during login');
       return false;
     } finally {
       setIsLoading(false);
     }
-  }, [router, showSuccess, showError]);
+  }, [router]);
 
   /**
    * Logout the current user
@@ -69,15 +68,15 @@ export function useAuth() {
       setIsLoading(true);
       await AuthAPI.logout();
       setIsAuthenticated(false);
-      showSuccess('Logged out successfully');
+      showToast.success('Logged out successfully');
       router.push(ROUTES.ADMIN.LOGIN);
     } catch (error) {
       console.error('Logout error:', error);
-      showError('An error occurred during logout');
+      showToast.error('An error occurred during logout');
     } finally {
       setIsLoading(false);
     }
-  }, [router, showSuccess, showError]);
+  }, [router]);
 
   // Check authentication status on mount
   useEffect(() => {

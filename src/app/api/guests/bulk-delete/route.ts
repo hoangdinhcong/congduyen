@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 // DELETE /api/guests/bulk-delete - Delete multiple guests by IDs
 export async function DELETE(request: NextRequest) {

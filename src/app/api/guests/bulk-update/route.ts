@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabase';
-import { GuestSide, RSVPStatus } from '../../../../lib/types';
+import { supabase } from '@/lib/supabase';
+import { GuestSide, RSVPStatus } from '@/lib/types';
 
 // PATCH /api/guests/bulk-update - Update multiple guests by IDs
 export async function PATCH(request: NextRequest) {

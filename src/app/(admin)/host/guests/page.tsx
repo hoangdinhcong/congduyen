@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
-import AdminLayout from '../../../../components/admin/AdminLayout';
-import GuestList from '../../../../components/admin/GuestList';
+import AdminLayout from '@/components/admin/AdminLayout';
+import GuestList from '@/components/admin/GuestList';
 
 export const metadata: Metadata = {
   title: 'Guest Management | Cong & Duyen Wedding',

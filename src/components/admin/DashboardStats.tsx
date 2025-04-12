@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { FaUsers, FaCheck, FaTimes, FaClock, FaUserSecret } from 'react-icons/fa';
+import { Users, Check, X, Clock, User } from 'lucide-react';
 import { RSVPStats } from '../../lib/types';
 
 export default function DashboardStats() {
@@ -71,35 +71,35 @@ export default function DashboardStats() {
     {
       title: 'Total Guests',
       value: stats.total,
-      icon: FaUsers,
+      icon: Users,
       color: 'bg-blue-100 text-blue-800',
       iconColor: 'text-blue-500',
     },
     {
       title: 'Attending',
       value: stats.attending,
-      icon: FaCheck,
+      icon: Check,
       color: 'bg-green-100 text-green-800',
       iconColor: 'text-green-500',
     },
     {
       title: 'Declined',
       value: stats.declined,
-      icon: FaTimes,
+      icon: X,
       color: 'bg-red-100 text-red-800',
       iconColor: 'text-red-500',
     },
     {
       title: 'Pending',
       value: stats.pending,
-      icon: FaClock,
+      icon: Clock,
       color: 'bg-yellow-100 text-yellow-800',
       iconColor: 'text-yellow-500',
     },
     {
       title: 'Anonymous',
       value: stats.anonymous || 0,
-      icon: FaUserSecret,
+      icon: User,
       color: 'bg-purple-100 text-purple-800',
       iconColor: 'text-purple-500',
     },
