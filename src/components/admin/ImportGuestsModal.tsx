@@ -108,11 +108,15 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
   };
 
   const handleDownloadTemplate = () => {
-    // Create CSV content
-    const csvContent = 'name,side,tags,rsvp_status\nJohn Doe,bride,"family,friend",pending\nJane Smith,groom,"colleague",pending\n';
+    // Create CSV content with UTF-8 BOM (Byte Order Mark) to ensure UTF-8 encoding is recognized
+    // Including Vietnamese examples to demonstrate support
+    const csvContent = '\ufeff' + 'name,side,tags,rsvp_status\n' + 
+      'Nguyễn Văn Anh,bride,"family,friend",pending\n' + 
+      'Trần Thị Bình,groom,"colleague",pending\n' + 
+      'Phạm Xuân Cường,bride,"family",pending\n';
     
-    // Create a blob and download link
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    // Create a blob with UTF-8 encoding specified
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

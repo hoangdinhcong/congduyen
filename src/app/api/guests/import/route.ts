@@ -23,8 +23,11 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Read the file content
-    const fileContent = await file.text();
+    // Read the file content as a buffer first to properly handle encoding
+    const arrayBuffer = await file.arrayBuffer();
+    const decoder = new TextDecoder('utf-8');
+    const fileContent = decoder.decode(arrayBuffer);
+    
     const rows = fileContent.split('\n');
     
     // Detect the separator (comma or semicolon)
@@ -74,8 +77,8 @@ export async function POST(request: NextRequest) {
       // Add the last column
       columns.push(currentValue.trim());
       
-      // Extract values
-      const name = columns[nameIndex];
+      // Extract values - properly decode Vietnamese characters
+      const name = columns[nameIndex].replace(/^"(.*)"$/, '$1'); // Remove surrounding quotes
       const side = columns[sideIndex];
       
       // Validate required values
