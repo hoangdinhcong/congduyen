@@ -54,7 +54,7 @@ export function FormSelect({
       <select
         id={selectId}
         className={`
-          w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary
+          w-full px-3 py-2 border rounded-md shadow-sm focus:outline-hidden focus:ring-2 focus:ring-primary
           ${showError 
             ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
             : 'border-gray-300 focus:border-primary'

@@ -44,7 +44,7 @@ export function Alert({
   return (
     <div className={`p-4 rounded-md border ${variantStyles[variant]} ${className}`} role="alert">
       <div className="flex">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           {variantIcons[variant]}
         </div>
         <div className="ml-3 flex-1">
@@ -60,7 +60,7 @@ export function Alert({
             <div className="-mx-1.5 -my-1.5">
               <button
                 type="button"
-                className={`inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2
+                className={`inline-flex rounded-md p-1.5 focus:outline-hidden focus:ring-2 focus:ring-offset-2
                   ${variant === 'info' ? 'text-blue-500 hover:bg-blue-100 focus:ring-blue-500' : ''}
                   ${variant === 'success' ? 'text-green-500 hover:bg-green-100 focus:ring-green-500' : ''}
                   ${variant === 'warning' ? 'text-yellow-500 hover:bg-yellow-100 focus:ring-yellow-500' : ''}

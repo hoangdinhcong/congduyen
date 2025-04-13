@@ -47,7 +47,7 @@ const HeroSection = () => {
       </div>
 
       <div 
-        className={`text-center px-6 z-10 bg-white/80 py-10 rounded-lg backdrop-blur-sm max-w-4xl transition-all duration-500 ${
+        className={`text-center px-6 z-10 bg-white/80 py-10 rounded-lg backdrop-blur-xs max-w-4xl transition-all duration-500 ${
           showCard 
             ? "opacity-100 translate-y-0" 
             : "opacity-0 translate-y-10 pointer-events-none"

@@ -67,7 +67,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
               ? (
                 <div className="flex flex-col space-y-6">
                   <div className="flex items-start">
-                    <Calendar className="mr-4 text-gray-600 flex-shrink-0" />
+                    <Calendar className="mr-4 text-gray-600 shrink-0" />
                     <div>
                       <h3 className="font-medium text-lg mb-1 text-gray-900">Bữa Cơm Thân Mật</h3>
                       <p className="text-gray-600">10:00, ngày 1/5</p>
@@ -95,7 +95,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
                   </div>
 
                   <div className="flex items-start">
-                    <Calendar className="mr-4 text-gray-600 flex-shrink-0" />
+                    <Calendar className="mr-4 text-gray-600 shrink-0" />
                     <div>
                       <h3 className="font-medium text-lg mb-1 text-gray-900">Lễ Cưới</h3>
                       <p className="text-gray-600">17:00, ngày 1/5</p>
@@ -127,7 +127,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
               : (
                 <div className="flex flex-col space-y-6">
                   <div className="flex items-start">
-                    <Calendar className="mr-4 text-gray-600 flex-shrink-0" />
+                    <Calendar className="mr-4 text-gray-600 shrink-0" />
                     <div>
                       <h3 className="font-medium text-lg mb-1 text-gray-900">17:00, ngày 1 tháng 5, 2025</h3>
                       <p className="text-gray-600">Tức ngày 4 tháng 4, Ất Tỵ</p>
@@ -135,7 +135,7 @@ const LocationSection = ({ guest }: LocationSectionProps) => {
                   </div>
 
                   <div className="flex items-start">
-                    <MapPin className="mr-4 text-gray-600 flex-shrink-0" />
+                    <MapPin className="mr-4 text-gray-600 shrink-0" />
                     <div>
                       <h3 className="font-medium text-lg mb-1 text-gray-900">Trung Tâm Tiệc Cưới Nguyên Đình</h3>
                       <p className="text-gray-600">Tầng 4 - TTTM Trương Định Plaza,</p>

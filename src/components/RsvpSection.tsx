@@ -262,7 +262,7 @@ const RsvpSection = ({
             </div>
           ) : (
             <div
-              className="bg-white p-8 rounded-lg shadow-sm fade-in"
+              className="bg-white p-8 rounded-lg shadow-xs fade-in"
               style={{ animationDelay: "0.3s" }}
             >
               {formSuccess ? (

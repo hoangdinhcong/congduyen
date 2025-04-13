@@ -61,7 +61,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gray-600/75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center px-6 py-4 border-b">
           <h2 className="text-lg font-medium text-gray-900">Edit Guest</h2>
@@ -83,7 +83,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
               placeholder="Enter guest name"
               required
             />
@@ -97,7 +97,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
               id="side"
               value={side}
               onChange={(e) => setSide(e.target.value as GuestSide)}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
             >
               <option value="bride">Bride&apos;s Side</option>
               <option value="groom">Groom&apos;s Side</option>
@@ -115,13 +115,13 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
                 placeholder="Add a tag (e.g., family, friend)"
               />
               <button
                 type="button"
                 onClick={handleAddTag}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-r-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-r-md shadow-xs text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
               >
                 Add
               </button>
@@ -157,7 +157,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
               id="rsvp_status"
               value={rsvpStatus}
               onChange={(e) => setRsvpStatus(e.target.value as 'pending' | 'attending' | 'declined')}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
             >
               <option value="pending">Pending</option>
               <option value="attending">Attending</option>
@@ -169,13 +169,13 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
             <button
               type="button"
               onClick={onClose}
-              className="mr-3 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="mr-3 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-xs text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-xs text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               Update Guest
             </button>

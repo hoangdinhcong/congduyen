@@ -28,7 +28,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   // Base styles
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2';
 
   // Variant styles
   const variantStyles = {
