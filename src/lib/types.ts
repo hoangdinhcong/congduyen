@@ -12,6 +12,7 @@ export interface Guest {
   tags?: string[];
   unique_invite_id: string;
   rsvp_status: RSVPStatus;
+  is_invited?: boolean; // Track if invitation link has been sent
   created_at?: string;
   updated_at?: string;
 }

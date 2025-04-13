@@ -19,6 +19,7 @@ export default function GuestList() {
   const [sideFilter, setSideFilter] = useState<'all' | GuestSide>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | RSVPStatus>('all');
   const [anonymousFilter, setAnonymousFilter] = useState<'all' | 'anonymous' | 'invited'>('all');
+  const [invitedFilter, setInvitedFilter] = useState<'all' | 'invited' | 'not-invited'>('all');
   const [isRefreshing, setIsRefreshing] = useState(false);
   
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -64,6 +65,15 @@ export default function GuestList() {
         result = result.filter(guest => !guest.tags?.includes('anonymous'));
       }
     }
+
+    // Apply invited filter
+    if (invitedFilter !== 'all') {
+      if (invitedFilter === 'invited') {
+        result = result.filter(guest => guest.is_invited);
+      } else {
+        result = result.filter(guest => !guest.is_invited);
+      }
+    }
     
     // Apply search term
     if (searchTerm) {
@@ -75,7 +85,7 @@ export default function GuestList() {
     }
     
     setFilteredGuests(result);
-  }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter, confirmDialog, animatedRows]);
+  }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter, invitedFilter, confirmDialog, animatedRows]);
 
   const handleAddGuest = async (newGuest: Omit<Guest, 'id' | 'unique_invite_id' | 'created_at' | 'updated_at'>) => {
     try {
@@ -180,18 +190,89 @@ export default function GuestList() {
     });
   };
 
-  const handleCopyLink = (uniqueId: string) => {
+  const handleCopyLink = async (uniqueId: string, guestId: string) => {
     const baseUrl = window.location.origin;
     const inviteUrl = `${baseUrl}/invite/${uniqueId}`;
     
-    navigator.clipboard.writeText(inviteUrl)
-      .then(() => {
-        showToast.success('Invitation link copied to clipboard!');
-      })
-      .catch((err) => {
-        console.error('Failed to copy link:', err);
-        showToast.error('Failed to copy link. Please try again.');
+    try {
+      // Copy the invitation link to clipboard
+      await navigator.clipboard.writeText(inviteUrl);
+      
+      // Mark the guest as invited by updating the is_invited field
+      const response = await fetch(`/api/guests/${guestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          is_invited: true
+        }),
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update guest invitation status');
+      }
+      
+      // Update local state
+      setGuests(prevGuests => {
+        const updatedGuests = prevGuests.map(guest => 
+          guest.id === guestId ? { ...guest, is_invited: true } : guest
+        );
+        
+        // Trigger animation for the updated guest
+        setAnimatedRows([{ id: guestId, action: 'update' }]);
+        setTimeout(() => setAnimatedRows([]), 1000);
+        
+        return updatedGuests;
+      });
+      
+      showToast.success('Invitation link copied and guest marked as invited!');
+    } catch (err) {
+      console.error('Failed to copy link or update invitation status:', err);
+      showToast.error('Failed to copy link. Please try again.');
+    }
+  };
+
+  const handleToggleInvited = async (guestId: string, currentStatus: boolean) => {
+    try {
+      // Toggle the is_invited status
+      const newStatus = !currentStatus;
+      
+      // Update the guest in the database
+      const response = await fetch(`/api/guests/${guestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          is_invited: newStatus
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update invitation status');
+      }
+      
+      // Update local state
+      setGuests(prevGuests => {
+        const updatedGuests = prevGuests.map(guest => 
+          guest.id === guestId ? { ...guest, is_invited: newStatus } : guest
+        );
+        
+        // Trigger animation for the updated guest
+        setAnimatedRows([{ id: guestId, action: 'update' }]);
+        setTimeout(() => setAnimatedRows([]), 1000);
+        
+        return updatedGuests;
+      });
+      
+      showToast.success(newStatus 
+        ? 'Guest marked as invited successfully' 
+        : 'Guest marked as not invited');
+    } catch (err) {
+      console.error('Failed to update invitation status:', err);
+      showToast.error('Failed to update invitation status');
+    }
   };
 
   const handleImportSuccess = () => {
@@ -267,7 +348,7 @@ export default function GuestList() {
     });
   };
 
-  const handleBulkEdit = async (data: { side?: GuestSide; rsvp_status?: RSVPStatus }) => {
+  const handleBulkEdit = async (data: { side?: GuestSide; rsvp_status?: RSVPStatus; is_invited?: boolean }) => {
     if (selectedGuests.length === 0) {
       showToast.error('No guests selected');
       return;
@@ -466,6 +547,21 @@ export default function GuestList() {
               <User className="text-gray-400" />
             </div>
           </div>
+          
+          <div className="relative">
+            <select
+              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              value={invitedFilter}
+              onChange={(e) => setInvitedFilter(e.target.value as 'all' | 'invited' | 'not-invited')}
+            >
+              <option value="all">All Invitation Status</option>
+              <option value="invited">Invited</option>
+              <option value="not-invited">Not Invited Yet</option>
+            </select>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Filter className="text-gray-400" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -492,6 +588,9 @@ export default function GuestList() {
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 RSVP Status
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Invited
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Tags
@@ -531,7 +630,7 @@ export default function GuestList() {
                             ? 'animate-pulse bg-blue-50' 
                             : ''
                         : ''
-                    } hover:bg-gray-50 transition-colors`}
+                    } ${guest.is_invited ? 'opacity-70' : ''} hover:opacity-100 hover:bg-gray-50 transition-all duration-200`}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <input
@@ -573,6 +672,27 @@ export default function GuestList() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center justify-center">
+                        <button
+                          onClick={() => handleToggleInvited(guest.id, Boolean(guest.is_invited))}
+                          className={`
+                            relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary
+                            ${guest.is_invited ? 'bg-primary' : 'bg-gray-200'}
+                          `}
+                          role="switch"
+                          aria-checked={guest.is_invited}
+                          title={guest.is_invited ? 'Click to mark as not invited' : 'Click to mark as invited'}
+                        >
+                          <span 
+                            className={`
+                              inline-block h-4 w-4 rounded-full bg-white transition-transform
+                              ${guest.is_invited ? 'translate-x-6' : 'translate-x-1'}
+                            `}
+                          />
+                        </button>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-wrap gap-1">
                         {guest.tags?.map((tag, index) => (
                           <span 
@@ -592,7 +712,7 @@ export default function GuestList() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
-                        onClick={() => handleCopyLink(guest.unique_invite_id)}
+                        onClick={() => handleCopyLink(guest.unique_invite_id, guest.id)}
                         className="text-indigo-600 hover:text-indigo-900 mr-3"
                         title="Copy invitation link"
                       >

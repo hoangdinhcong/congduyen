@@ -16,6 +16,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
   const [rsvpStatus, setRsvpStatus] = useState<'pending' | 'attending' | 'declined'>('pending');
+  const [isInvited, setIsInvited] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
       side,
       tags,
       rsvp_status: rsvpStatus,
+      is_invited: isInvited,
     });
   };
 
@@ -154,6 +156,24 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               <option value="attending">Attending</option>
               <option value="declined">Declined</option>
             </select>
+          </div>
+          
+          <div className="mb-4">
+            <label htmlFor="is_invited" className="block text-sm font-medium text-gray-700 mb-1">
+              Invitation Status
+            </label>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="is_invited"
+                checked={isInvited}
+                onChange={(e) => setIsInvited(e.target.checked)}
+                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+              />
+              <label htmlFor="is_invited" className="ml-2 block text-sm text-gray-900">
+                Invited
+              </label>
+            </div>
           </div>
           
           <div className="mt-6 flex justify-end">

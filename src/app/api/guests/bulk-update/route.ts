@@ -5,7 +5,7 @@ import { GuestSide, RSVPStatus } from '@/lib/types';
 // PATCH /api/guests/bulk-update - Update multiple guests by IDs
 export async function PATCH(request: NextRequest) {
   try {
-    const { ids, side, rsvp_status } = await request.json();
+    const { ids, side, rsvp_status, is_invited } = await request.json();
     
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json(
@@ -15,7 +15,7 @@ export async function PATCH(request: NextRequest) {
     }
     
     // Validate that at least one field to update is provided
-    if (!side && !rsvp_status) {
+    if (!side && !rsvp_status && is_invited === undefined) {
       return NextResponse.json(
         { message: 'No fields to update provided' },
         { status: 400 }
@@ -37,9 +37,17 @@ export async function PATCH(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Validate is_invited if provided
+    if (is_invited !== undefined && typeof is_invited !== 'boolean') {
+      return NextResponse.json(
+        { message: 'Invalid invitation status value' },
+        { status: 400 }
+      );
+    }
     
     // Prepare update data
-    const updateData: { side?: GuestSide; rsvp_status?: RSVPStatus } = {};
+    const updateData: { side?: GuestSide; rsvp_status?: RSVPStatus; is_invited?: boolean } = {};
     
     if (side) {
       updateData.side = side;
@@ -47,6 +55,10 @@ export async function PATCH(request: NextRequest) {
     
     if (rsvp_status) {
       updateData.rsvp_status = rsvp_status;
+    }
+
+    if (is_invited !== undefined) {
+      updateData.is_invited = is_invited;
     }
     
     // Update the guests

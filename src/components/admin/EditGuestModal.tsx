@@ -17,12 +17,14 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
   const [tags, setTags] = useState<string[]>(guest.tags || []);
   const [tagInput, setTagInput] = useState('');
   const [rsvpStatus, setRsvpStatus] = useState<'pending' | 'attending' | 'declined'>(guest.rsvp_status);
+  const [isInvited, setIsInvited] = useState<boolean>(guest.is_invited || false);
 
   useEffect(() => {
     setName(guest.name);
     setSide(guest.side);
     setTags(guest.tags || []);
     setRsvpStatus(guest.rsvp_status);
+    setIsInvited(guest.is_invited || false);
   }, [guest]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,6 +41,7 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
       side,
       tags,
       rsvp_status: rsvpStatus,
+      is_invited: isInvited,
     });
   };
 
@@ -163,6 +166,27 @@ export default function EditGuestModal({ guest, onClose, onUpdate }: EditGuestMo
               <option value="attending">Attending</option>
               <option value="declined">Declined</option>
             </select>
+          </div>
+          
+          <div className="mb-4">
+            <label htmlFor="is_invited" className="block text-sm font-medium text-gray-700 mb-1">
+              Invitation Status
+            </label>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="is_invited"
+                checked={isInvited}
+                onChange={(e) => setIsInvited(e.target.checked)}
+                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+              />
+              <label htmlFor="is_invited" className="ml-2 block text-sm text-gray-900">
+                Mark as invited
+              </label>
+              <div className="ml-2 text-xs text-gray-500">
+                {isInvited ? '(Link has been sent to this guest)' : '(Link has not been sent yet)'}
+              </div>
+            </div>
           </div>
           
           <div className="mt-6 flex justify-end">

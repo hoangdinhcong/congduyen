@@ -7,17 +7,18 @@ import { GuestSide, RSVPStatus } from '../../lib/types';
 type BulkEditModalProps = {
   selectedCount: number;
   onClose: () => void;
-  onUpdate: (data: { side?: GuestSide; rsvp_status?: RSVPStatus }) => void;
+  onUpdate: (data: { side?: GuestSide; rsvp_status?: RSVPStatus; is_invited?: boolean }) => void;
 };
 
 export default function BulkEditModal({ selectedCount, onClose, onUpdate }: BulkEditModalProps) {
   const [side, setSide] = useState<GuestSide | ''>('');
   const [rsvpStatus, setRsvpStatus] = useState<RSVPStatus | ''>('');
+  const [isInvited, setIsInvited] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const updateData: { side?: GuestSide; rsvp_status?: RSVPStatus } = {};
+    const updateData: { side?: GuestSide; rsvp_status?: RSVPStatus; is_invited?: boolean } = {};
     
     if (side) {
       updateData.side = side;
@@ -25,6 +26,10 @@ export default function BulkEditModal({ selectedCount, onClose, onUpdate }: Bulk
     
     if (rsvpStatus) {
       updateData.rsvp_status = rsvpStatus;
+    }
+    
+    if (isInvited !== '') {
+      updateData.is_invited = isInvited === 'true';
     }
     
     if (Object.keys(updateData).length === 0) {
@@ -83,6 +88,22 @@ export default function BulkEditModal({ selectedCount, onClose, onUpdate }: Bulk
               <option value="pending">Pending</option>
               <option value="attending">Attending</option>
               <option value="declined">Declined</option>
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="is_invited" className="block text-sm font-medium text-gray-700 mb-1">
+              Invitation Status
+            </label>
+            <select
+              id="is_invited"
+              value={isInvited}
+              onChange={(e) => setIsInvited(e.target.value)}
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
+            >
+              <option value="">-- No Change --</option>
+              <option value="true">Invited</option>
+              <option value="false">Not Invited</option>
             </select>
           </div>
           

@@ -48,26 +48,34 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
 
-    // Validate required fields
-    if (!body.name || !body.side || !body.rsvp_status) {
+    // Create a partial update data object
+    const updateData: Partial<{
+      name: string;
+      side: string;
+      tags: string[];
+      rsvp_status: string;
+      is_invited: boolean;
+    }> = {};
+
+    // Only add fields that are provided in the request body
+    if (body.name !== undefined) updateData.name = body.name;
+    if (body.side !== undefined) updateData.side = body.side;
+    if (body.tags !== undefined) updateData.tags = body.tags;
+    if (body.rsvp_status !== undefined) updateData.rsvp_status = body.rsvp_status;
+    if (body.is_invited !== undefined) updateData.is_invited = body.is_invited;
+
+    // Validate that there's at least one field to update
+    if (Object.keys(updateData).length === 0) {
       return NextResponse.json(
-        { message: 'Missing required fields' },
+        { message: 'No fields provided for update' },
         { status: 400 }
       );
     }
 
-    // Prepare the guest data
-    const guestData = {
-      name: body.name,
-      side: body.side,
-      tags: body.tags || [],
-      rsvp_status: body.rsvp_status,
-    };
-
     // Update the guest in the database
     const { data, error } = await supabase
       .from('guests')
-      .update(guestData)
+      .update(updateData)
       .eq('id', id)
       .select()
       .single();
