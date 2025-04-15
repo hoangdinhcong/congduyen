@@ -60,7 +60,7 @@ const GallerySection = () => {
       setTimeout(() => {
         setIsFading(false);
       }, 50);
-    }, 100);
+    }, 200);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
