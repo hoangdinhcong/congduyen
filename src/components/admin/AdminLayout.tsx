@@ -9,7 +9,9 @@ import {
   LogOut,
   Menu,
   X,
-  Heart
+  Heart,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 type AdminLayoutProps = {
@@ -18,6 +20,7 @@ type AdminLayoutProps = {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -107,34 +110,48 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden md:flex md:shrink-0">
-        <div className="flex flex-col w-64">
+      <div className={`hidden md:flex md:shrink-0 transition-all duration-300 ${sidebarCollapsed ? 'md:w-16' : 'md:w-64'}`}>
+        <div className={`flex flex-col w-full relative`}>
           <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
+            {/* Collapse toggle button */}
+            <button 
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="absolute -right-3 top-20 bg-white rounded-full h-6 w-6 flex items-center justify-center border border-gray-200 shadow-sm z-10 hover:bg-gray-50"
+              aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              {sidebarCollapsed ? (
+                <ChevronRight className="h-4 w-4 text-gray-500" />
+              ) : (
+                <ChevronLeft className="h-4 w-4 text-gray-500" />
+              )}
+            </button>
+
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-              <div className="flex items-center shrink-0 px-4">
+              <div className={`flex ${sidebarCollapsed ? 'justify-center' : 'items-center'} shrink-0 px-4`}>
                 <Link href="/host" className="text-xl font-semibold flex items-center gap-2">
-                  <span>Wedding Admin</span>
+                  {!sidebarCollapsed && <span>Wedding Admin</span>}
                   <Heart className="text-primary text-sm" />
                 </Link>
               </div>
-              <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
+              <nav className="mt-5 flex-1 px-2 bg-white space-y-1 overflow-x-hidden">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                    className={`group flex items-center ${sidebarCollapsed ? 'justify-center' : ''} px-2 py-2 text-sm font-medium rounded-md ${
                       pathname === item.href
                         ? 'bg-primary-light text-primary'
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`}
+                    title={item.name}
                   >
                     <item.icon
-                      className={`mr-3 h-5 w-5 ${
+                      className={`${sidebarCollapsed ? '' : 'mr-3'} h-5 w-5 ${
                         pathname === item.href ? 'text-primary' : 'text-gray-400 group-hover:text-gray-500'
                       }`}
                       aria-hidden="true"
                     />
-                    {item.name}
+                    {!sidebarCollapsed && item.name}
                   </Link>
                 ))}
               </nav>
@@ -144,10 +161,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="shrink-0 flex border-t border-gray-200 p-4">
               <button
                 onClick={handleLogout}
-                className="flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
+                className={`flex items-center ${sidebarCollapsed ? 'justify-center' : ''} px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full`}
+                title="Logout"
               >
-                <LogOut className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                Logout
+                <LogOut className={`${sidebarCollapsed ? '' : 'mr-3'} h-5 w-5 text-gray-400`} aria-hidden="true" />
+                {!sidebarCollapsed && 'Logout'}
               </button>
             </div>
           </div>

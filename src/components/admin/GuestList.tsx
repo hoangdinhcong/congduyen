@@ -80,12 +80,22 @@ export default function GuestList() {
       const term = searchTerm.toLowerCase();
       result = result.filter(guest =>
         guest.name.toLowerCase().includes(term) ||
-        guest.unique_invite_id.toLowerCase().includes(term)
+        guest.unique_invite_id.toLowerCase().includes(term) ||
+        guest.tags?.some(tag => tag.toLowerCase().includes(term))
       );
     }
 
     setFilteredGuests(result);
   }, [guests, searchTerm, sideFilter, statusFilter, anonymousFilter, invitedFilter, confirmDialog, animatedRows]);
+
+  // Function to reset all filters
+  const resetFilters = () => {
+    setSearchTerm('');
+    setSideFilter('all');
+    setStatusFilter('all');
+    setAnonymousFilter('all');
+    setInvitedFilter('all');
+  };
 
   const handleAddGuest = async (newGuest: Omit<Guest, 'id' | 'unique_invite_id' | 'created_at' | 'updated_at'>) => {
     try {
@@ -442,19 +452,11 @@ export default function GuestList() {
             onClick={() => {
               setIsRefreshing(true);
               fetchGuests()
-                .then(() => {
-                  showToast.success('Làm mới danh sách khách thành công');
-                })
-                .catch(() => {
-                  // Error is already handled in the hook
-                })
-                .finally(() => {
-                  setIsRefreshing(false);
-                });
+                .then(() => showToast.success('Làm mới danh sách khách thành công'))
+                .catch(() => {})
+                .finally(() => setIsRefreshing(false));
             }}
-            className={`btn-outline-sm flex items-center transition-all duration-200 ${
-              isRefreshing ? 'bg-gray-100' : ''
-            }`}
+            className={`btn-outline-sm flex items-center transition-all duration-200 ${isRefreshing ? 'bg-gray-100' : ''}`}
             disabled={isRefreshing}
             aria-label="Làm mới danh sách khách"
             title="Làm mới danh sách khách"
@@ -470,6 +472,15 @@ export default function GuestList() {
             <Upload className="mr-1" />
             Nhập
           </button>
+          {(searchTerm || sideFilter !== 'all' || statusFilter !== 'all' || anonymousFilter !== 'all' || invitedFilter !== 'all') && (
+            <button
+              onClick={resetFilters}
+              className="btn-secondary-sm flex items-center"
+            >
+              <RefreshCw className="mr-1" />
+              Hiện tất cả
+            </button>
+          )}
 
           {selectedGuests.length > 0 && (
             <>
@@ -493,39 +504,40 @@ export default function GuestList() {
         </div>
       </div>
 
-      <div className="p-4 border-b border-gray-200 bg-white flex flex-col md:flex-row gap-4">
-        <div className="flex-1 relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="text-gray-400" />
+      <div className="p-4 border-b border-gray-200 bg-white space-y-4">
+        {/* Search input in its own row */}
+        <div className="relative w-full">
+          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <Search className="h-4 w-4 text-gray-400" />
           </div>
           <input
             type="text"
-            placeholder="Tìm kiếm theo tên hoặc mã mời..."
+            placeholder="Tìm kiếm theo tên, mã mời hoặc tag..."
             className="pl-10 w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <div className="relative">
+        {/* Filter dropdowns in a scrollable row */}
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="relative min-w-[140px]">
             <select
-              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              className="w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white text-sm"
               value={sideFilter}
               onChange={(e) => setSideFilter(e.target.value as 'all' | GuestSide)}
             >
               <option value="all">Tất cả các bên</option>
-              <option value="bride">Bên nhà gái</option>
-              <option value="groom">Bên nhà trai</option>
+              <option value="bride">Nhà gái</option>
+              <option value="groom">Nhà trai</option>
             </select>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Filter className="text-gray-400" />
+            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+              <Filter className="h-4 w-4 text-gray-400" />
             </div>
           </div>
-
-          <div className="relative">
+          <div className="relative min-w-[140px]">
             <select
-              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              className="w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white text-sm"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as 'all' | RSVPStatus)}
             >
@@ -534,14 +546,13 @@ export default function GuestList() {
               <option value="declined">Từ chối</option>
               <option value="pending">Chưa phản hồi</option>
             </select>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Filter className="text-gray-400" />
+            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+              <Filter className="h-4 w-4 text-gray-400" />
             </div>
           </div>
-
-          <div className="relative">
+          <div className="relative min-w-[140px]">
             <select
-              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              className="w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white text-sm"
               value={anonymousFilter}
               onChange={(e) => setAnonymousFilter(e.target.value as 'all' | 'anonymous' | 'invited')}
             >
@@ -549,14 +560,13 @@ export default function GuestList() {
               <option value="anonymous">Khách vô danh</option>
               <option value="invited">Khách được mời</option>
             </select>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="text-gray-400" />
+            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+              <User className="h-4 w-4 text-gray-400" />
             </div>
           </div>
-
-          <div className="relative">
+          <div className="relative min-w-[140px]">
             <select
-              className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white"
+              className="w-full pl-9 pr-8 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary appearance-none bg-white text-sm"
               value={invitedFilter}
               onChange={(e) => setInvitedFilter(e.target.value as 'all' | 'invited' | 'not-invited')}
             >
@@ -564,8 +574,8 @@ export default function GuestList() {
               <option value="invited">Đã mời</option>
               <option value="not-invited">Chưa mời</option>
             </select>
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Filter className="text-gray-400" />
+            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+              <Filter className="h-4 w-4 text-gray-400" />
             </div>
           </div>
         </div>
@@ -657,7 +667,9 @@ export default function GuestList() {
                             guest.side === 'groom' ? 'bg-blue-100 text-blue-800' :
                             'bg-purple-100 text-purple-800'
                           }`}>
-                            {guest.side.charAt(0).toUpperCase() + guest.side.slice(1)}
+                            {guest.side === 'bride' ? 'Nhà gái' : 
+                             guest.side === 'groom' ? 'Nhà trai' : 
+                             'Khác'}
                           </span>
 
                           {guest.tags && guest.tags.length > 0 && guest.tags.filter(tag => tag !== 'anonymous').map((tag, index) => (
@@ -677,7 +689,9 @@ export default function GuestList() {
                         guest.rsvp_status === 'declined' ? 'bg-red-100 text-red-800' :
                         'bg-yellow-100 text-yellow-800'
                       }`}>
-                        {guest.rsvp_status.charAt(0).toUpperCase() + guest.rsvp_status.slice(1)}
+                        {guest.rsvp_status === 'attending' ? 'Sẽ tham dự' : 
+                         guest.rsvp_status === 'declined' ? 'Từ chối' : 
+                         'Chưa phản hồi'}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
