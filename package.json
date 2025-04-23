@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export",
-    "build:static": "npm run clean && npm run build",
+    "export": "next build",
+    "build:static": "npm run clean && next build",
     "serve": "npx serve out"
   },
   "dependencies": {

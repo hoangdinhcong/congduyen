@@ -26,16 +26,16 @@ export default function AnonymousRSVPList() {
       try {
         setLoading(true);
         const response = await fetch('/api/guests?anonymous=true');
-        
+
         if (!response.ok) {
-          throw new Error('Failed to fetch anonymous RSVPs');
+          throw new Error('Không thể tải danh sách khách vô danh');
         }
-        
+
         const data = await response.json();
         setAnonymousGuests(data);
       } catch (error) {
         console.error('Error loading anonymous RSVPs:', error);
-        showToast.error('Failed to load anonymous RSVPs');
+        showToast.error('Không thể tải danh sách khách vô danh');
       } finally {
         setLoading(false);
       }
@@ -45,14 +45,14 @@ export default function AnonymousRSVPList() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this anonymous RSVP?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa khách vô danh này?')) {
       try {
         await deleteGuest(id);
         setAnonymousGuests(prev => prev.filter(guest => guest.id !== id));
-        showToast.success('Anonymous RSVP deleted successfully');
+        showToast.success('Xóa khách vô danh thành công');
       } catch (error) {
         console.error('Error deleting anonymous RSVP:', error);
-        showToast.error('Failed to delete anonymous RSVP');
+        showToast.error('Không thể xóa khách vô danh');
       }
     }
   };
@@ -61,12 +61,12 @@ export default function AnonymousRSVPList() {
     try {
       await convertAnonymousToGuest(anonymousGuest.id);
       setAnonymousGuests(prev => prev.filter(guest => guest.id !== anonymousGuest.id));
-      showToast.success('Anonymous RSVP converted to guest successfully');
+      showToast.success('Chuyển khách vô danh thành khách mời thành công');
       // Refresh the guest list
       fetchGuests();
     } catch (error) {
       console.error('Error converting anonymous RSVP to guest:', error);
-      showToast.error('Failed to convert anonymous RSVP to guest');
+      showToast.error('Không thể chuyển khách vô danh thành khách mời');
     }
   };
 
@@ -74,7 +74,7 @@ export default function AnonymousRSVPList() {
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = anonymousGuests.slice(indexOfFirstItem, indexOfLastItem);
-  
+
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -93,7 +93,7 @@ export default function AnonymousRSVPList() {
       key: 'side',
       header: 'Side',
       render: (row: Guest) => (
-        <Badge 
+        <Badge
           variant={row.side === 'bride' ? 'primary' : 'secondary'}
         >
           {row.side === 'bride' ? 'Bride' : row.side === 'groom' ? 'Groom' : 'N/A'}
@@ -106,13 +106,13 @@ export default function AnonymousRSVPList() {
       render: (row: Guest) => {
         const status = row.rsvp_status;
         let badgeVariant: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' = 'warning';
-        
+
         if (status === 'attending') badgeVariant = 'success';
         else if (status === 'declined') badgeVariant = 'danger';
-        
+
         return (
           <Badge variant={badgeVariant}>
-            {status === 'attending' ? 'Attending' : 
+            {status === 'attending' ? 'Attending' :
              status === 'declined' ? 'Declined' : 'Pending'}
           </Badge>
         );
@@ -122,8 +122,8 @@ export default function AnonymousRSVPList() {
       key: 'created_at',
       header: 'Date',
       render: (row: Guest) => {
-        const date = row.created_at 
-          ? new Date(row.created_at).toLocaleDateString() 
+        const date = row.created_at
+          ? new Date(row.created_at).toLocaleDateString()
           : 'N/A';
         return date;
       },
@@ -138,16 +138,16 @@ export default function AnonymousRSVPList() {
             size="sm"
             icon={<UserPlus />}
             onClick={() => handleConvertToGuest(row)}
-            title="Convert to regular guest"
+            title="Chuyển thành khách mời"
           >
-            Convert
+            Chuyển
           </Button>
           <Button
             variant="danger"
             size="sm"
             icon={<Trash2 />}
             onClick={() => handleDelete(row.id)}
-            title="Delete anonymous RSVP"
+            title="Xóa khách vô danh"
           />
         </div>
       ),
@@ -159,7 +159,7 @@ export default function AnonymousRSVPList() {
       <Card>
         <div className="flex justify-center items-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <span className="ml-3">Loading anonymous RSVPs...</span>
+          <span className="ml-3">Đang tải danh sách khách vô danh...</span>
         </div>
       </Card>
     );
@@ -170,9 +170,9 @@ export default function AnonymousRSVPList() {
       <Card>
         <div className="text-center p-8">
           <User className="text-purple-400 text-4xl mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No Anonymous RSVPs</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Không có khách vô danh</h3>
           <p className="text-gray-500">
-            When guests RSVP without an invitation link, they will appear here.
+            Khi khách phản hồi mà không có liên kết mời, họ sẽ xuất hiện ở đây.
           </p>
         </div>
       </Card>
@@ -185,14 +185,14 @@ export default function AnonymousRSVPList() {
         <User className="text-purple-500 mr-2" />
         <h2 className="text-lg font-medium">Anonymous RSVPs ({anonymousGuests.length})</h2>
       </div>
-      
+
       <DataTable
         columns={columns}
         data={currentItems}
         keyField="id"
         emptyMessage="No anonymous RSVPs found"
       />
-      
+
       {anonymousGuests.length > pageSize && (
         <div className="mt-4">
           <Pagination

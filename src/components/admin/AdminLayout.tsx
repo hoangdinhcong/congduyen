@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { 
-  Gauge, 
-  Users, 
-  LogOut, 
-  Menu, 
+import {
+  Gauge,
+  Users,
+  LogOut,
+  Menu,
   X,
   Heart
 } from 'lucide-react';
@@ -26,7 +26,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       const response = await fetch('/api/auth/logout', {
         method: 'POST',
       });
-      
+
       if (response.ok) {
         router.push('/host/login');
         router.refresh();
@@ -37,19 +37,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   const navigation = [
-    { name: 'Dashboard', href: '/host', icon: Gauge },
-    { name: 'Guest List', href: '/host/guests', icon: Users },
+    { name: 'Bảng điều khiển', href: '/host', icon: Gauge },
+    { name: 'Danh sách khách mời', href: '/host/guests', icon: Users },
   ];
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       {/* Mobile sidebar */}
       <div className={`md:hidden ${sidebarOpen ? 'fixed inset-0 flex z-40' : 'hidden'}`}>
-        <div 
+        <div
           className="fixed inset-0 bg-gray-600 bg-opacity-75"
           onClick={() => setSidebarOpen(false)}
         />
-        
+
         <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
           <div className="absolute top-0 right-0 -mr-12 pt-2">
             <button
@@ -61,12 +61,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <X className="h-6 w-6 text-white" aria-hidden="true" />
             </button>
           </div>
-          
+
           {/* Sidebar content */}
           <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
             <div className="shrink-0 flex items-center px-4">
               <Link href="/host" className="text-xl font-semibold flex items-center gap-2">
-                <span>Wedding Admin</span>
+                <span>Quản trị thiệp cưới</span>
                 <Heart className="text-primary text-sm" />
               </Link>
             </div>
@@ -92,7 +92,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               ))}
             </nav>
           </div>
-          
+
           {/* Logout button */}
           <div className="shrink-0 flex border-t border-gray-200 p-4">
             <button
@@ -139,7 +139,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 ))}
               </nav>
             </div>
-            
+
             {/* Logout button */}
             <div className="shrink-0 flex border-t border-gray-200 p-4">
               <button
@@ -153,7 +153,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </div>
         </div>
       </div>
-      
+
       {/* Main content */}
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
@@ -166,7 +166,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Menu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        
+
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-hidden">
           {children}
         </main>

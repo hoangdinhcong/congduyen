@@ -6,15 +6,15 @@ export async function POST() {
     // Clear the admin session cookie
     const cookieStore = await cookies();
     cookieStore.delete('admin_session');
-    
+
     return NextResponse.json(
-      { message: 'Logout successful' },
+      { message: 'Đăng xuất thành công' },
       { status: 200 }
     );
   } catch (error) {
     console.error('Logout error:', error);
     return NextResponse.json(
-      { message: 'An error occurred during logout' },
+      { message: 'Đã xảy ra lỗi khi đăng xuất' },
       { status: 500 }
     );
   }

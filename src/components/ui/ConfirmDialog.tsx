@@ -18,8 +18,8 @@ export default function ConfirmDialog({
   isOpen,
   title,
   message,
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
+  confirmText = 'Xác nhận',
+  cancelText = 'Hủy',
   onConfirm,
   onCancel,
   type = 'danger'
@@ -64,11 +64,11 @@ export default function ConfirmDialog({
             <X />
           </button>
         </div>
-        
+
         <div className="px-6 py-4">
           <p className="text-sm text-gray-600">{message}</p>
         </div>
-        
+
         <div className="px-6 py-3 bg-gray-50 flex justify-end">
           <button
             type="button"

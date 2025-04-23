@@ -10,7 +10,7 @@ export const WEDDING_CONFIG = {
     GROOM_NAME: 'Cong',
     FULL_NAMES: 'Cong & Duyen',
   },
-  
+
   // Event details
   EVENT: {
     DATE: new Date('2025-05-15T17:00:00+07:00'),
@@ -20,7 +20,7 @@ export const WEDDING_CONFIG = {
     VENUE_ADDRESS: '123 Đường Nguyễn Văn Linh, Quận 7, TP. Hồ Chí Minh',
     VENUE_MAP_URL: 'https://maps.google.com/?q=10.7553,106.7539',
   },
-  
+
   // Contact information
   CONTACT: {
     BRIDE: {
@@ -32,7 +32,7 @@ export const WEDDING_CONFIG = {
       EMAIL: 'cong@example.com',
     },
   },
-  
+
   // Gift information
   GIFT: {
     BRIDE: {
@@ -101,8 +101,8 @@ export const PAGINATION = {
 
 // Default form validation messages
 export const VALIDATION_MESSAGES = {
-  REQUIRED: 'This field is required',
-  INVALID_EMAIL: 'Please enter a valid email address',
-  MIN_LENGTH: (min: number) => `Must be at least ${min} characters`,
-  MAX_LENGTH: (max: number) => `Must be no more than ${max} characters`,
+  REQUIRED: 'Vui lòng nhập thông tin này',
+  INVALID_EMAIL: 'Vui lòng nhập địa chỉ email hợp lệ',
+  MIN_LENGTH: (min: number) => `Phải có ít nhất ${min} ký tự`,
+  MAX_LENGTH: (max: number) => `Không được vượt quá ${max} ký tự`,
 };

@@ -24,10 +24,12 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Công & Duyên | Thiệp mời cưới",
-  description: "Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi",
-  metadataBase: new URL('https://congduyen.vercel.app'),
+// Use dynamic metadata to handle multiple deployment domains
+export function generateMetadata({ params }: { params: any }): Metadata {
+  // This will be replaced at request time with the actual URL
+  return {
+    title: "Công & Duyên | Thiệp mời cưới",
+    description: "Trân trọng kính mời quý vị đến dự lễ cưới của chúng tôi",
   applicationName: 'Công & Duyên Wedding',
   keywords: ['đám cưới', 'thiệp mời', 'lễ cưới', 'Công và Duyên'],
   authors: [{ name: 'Công & Duyên' }],
@@ -43,6 +45,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  // Remove metadataBase to use the current request's origin
   openGraph: {
     type: 'website',
     title: 'Công & Duyên | Thiệp mời cưới',
@@ -63,7 +66,7 @@ export const metadata: Metadata = {
       }
     ],
     locale: 'vi_VN',
-    url: '/',
+    url: './',
   },
   twitter: {
     card: 'summary_large_image',
@@ -92,7 +95,8 @@ export const metadata: Metadata = {
       { url: '/favicon.svg' }
     ],
   },
-};
+  };
+}
 
 export default function RootLayout({
   children,

@@ -12,15 +12,15 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!password.trim()) {
-      setError('Password is required');
+      setError('Vui lòng nhập mật khẩu');
       return;
     }
-    
+
     setLoading(true);
     setError('');
-    
+
     try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
@@ -29,18 +29,18 @@ export default function LoginForm() {
         },
         body: JSON.stringify({ password }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || 'Đăng nhập không thành công');
       }
-      
+
       // Redirect to admin dashboard on successful login
       router.push('/host');
       router.refresh();
     } catch (err: any) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.message || 'Đã xảy ra lỗi khi đăng nhập');
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
-              placeholder="Enter admin password"
+              placeholder="Nhập mật khẩu quản trị"
             />
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function LoginForm() {
             disabled={loading}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-xs text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
           </button>
         </div>
       </form>

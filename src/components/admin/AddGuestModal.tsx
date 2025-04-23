@@ -20,12 +20,12 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim()) {
-      showToast.error('Please enter a name for the guest');
+      showToast.error('Vui lòng nhập tên khách');
       return;
     }
-    
+
     onAdd({
       name,
       side,
@@ -57,7 +57,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
     <div className="fixed inset-0 bg-gray-600/75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center px-6 py-4 border-b">
-          <h2 className="text-lg font-medium text-gray-900">Add New Guest</h2>
+          <h2 className="text-lg font-medium text-gray-900">Thêm khách mới</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
@@ -65,11 +65,11 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
             <X />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="px-6 py-4">
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name *
+              Tên *
             </label>
             <input
               type="text"
@@ -77,11 +77,11 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
-              placeholder="Enter guest name"
+              placeholder="Nhập tên khách"
               required
             />
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="side" className="block text-sm font-medium text-gray-700 mb-1">
               Side *
@@ -96,7 +96,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               <option value="groom">Groom&apos;s Side</option>
             </select>
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
               Tags
@@ -119,7 +119,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
                 Add
               </button>
             </div>
-            
+
             {tags.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {tags.map((tag, index) => (
@@ -141,7 +141,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               </div>
             )}
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="rsvp_status" className="block text-sm font-medium text-gray-700 mb-1">
               RSVP Status *
@@ -157,7 +157,7 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               <option value="declined">Declined</option>
             </select>
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="is_invited" className="block text-sm font-medium text-gray-700 mb-1">
               Invitation Status
@@ -175,20 +175,20 @@ export default function AddGuestModal({ onClose, onAdd }: AddGuestModalProps) {
               </label>
             </div>
           </div>
-          
+
           <div className="mt-6 flex justify-end">
             <button
               type="button"
               onClick={onClose}
               className="mr-3 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-xs text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
-              Cancel
+              Hủy
             </button>
             <button
               type="submit"
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-xs text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
-              Add Guest
+              Thêm khách
             </button>
           </div>
         </form>

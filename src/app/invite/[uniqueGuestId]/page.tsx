@@ -27,14 +27,27 @@ export async function generateMetadata({
 
   if (!guest) {
     return {
-      title: 'Invitation Not Found | Hoàng Công & Mỹ Duyên Wedding',
-      description: 'The invitation you are looking for could not be found.',
+      title: 'Không tìm thấy lời mời | Đám cưới Hoàng Công & Mỹ Duyên',
+      description: 'Lời mời bạn đang tìm kiếm không tồn tại.',
     };
   }
 
   return {
-    title: `${guest.name}'s Invitation | Hoàng Công & Mỹ Duyên Wedding`,
-    description: `${guest.name}, you are cordially invited to Hoàng Công & Mỹ Duyên's wedding.`,
+    title: `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`,
+    description: `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`,
+    openGraph: {
+      title: `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`,
+      description: `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`,
+      url: `./`,
+      images: [
+        {
+          url: '/hero.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Thiệp mời cưới Công & Duyên',
+        }
+      ],
+    },
   };
 }
 

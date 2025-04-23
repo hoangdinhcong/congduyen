@@ -33,14 +33,14 @@ export default function DashboardStats() {
         const response = await fetch('/api/stats');
 
         if (!response.ok) {
-          throw new Error('Failed to fetch statistics');
+          throw new Error('Không thể tải thống kê');
         }
 
         const data = await response.json();
         setStats(data);
       } catch (err: any) {
         console.error('Error fetching stats:', err);
-        setError(err.message || 'An error occurred while fetching statistics');
+        setError(err.message || 'Đã xảy ra lỗi khi tải thống kê');
       } finally {
         setLoading(false);
       }
@@ -53,7 +53,7 @@ export default function DashboardStats() {
     return (
       <div className="text-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        <p className="mt-4 text-gray-600">Loading statistics...</p>
+        <p className="mt-4 text-gray-600">Đang tải thống kê...</p>
       </div>
     );
   }
@@ -62,42 +62,42 @@ export default function DashboardStats() {
     return (
       <div className="text-center py-12 text-red-600">
         <p>{error}</p>
-        <p className="mt-2 text-sm">Please try refreshing the page.</p>
+        <p className="mt-2 text-sm">Vui lòng thử làm mới trang.</p>
       </div>
     );
   }
 
   const statCards = [
     {
-      title: 'Total Guests',
+      title: 'Tổng số khách',
       value: stats.total,
       icon: Users,
       color: 'bg-blue-100 text-blue-800',
       iconColor: 'text-blue-500',
     },
     {
-      title: 'Attending',
+      title: 'Sẽ tham dự',
       value: stats.attending,
       icon: Check,
       color: 'bg-green-100 text-green-800',
       iconColor: 'text-green-500',
     },
     {
-      title: 'Declined',
+      title: 'Từ chối',
       value: stats.declined,
       icon: X,
       color: 'bg-red-100 text-red-800',
       iconColor: 'text-red-500',
     },
     {
-      title: 'Pending',
+      title: 'Chưa phản hồi',
       value: stats.pending,
       icon: Clock,
       color: 'bg-yellow-100 text-yellow-800',
       iconColor: 'text-yellow-500',
     },
     {
-      title: 'Anonymous',
+      title: 'Khách vô danh',
       value: stats.anonymous || 0,
       icon: User,
       color: 'bg-purple-100 text-purple-800',
@@ -107,7 +107,7 @@ export default function DashboardStats() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-gray-900 mb-4">RSVP Statistics</h2>
+      <h2 className="text-lg font-medium text-gray-900 mb-4">Thống kê phản hồi</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {statCards.map((card) => (
@@ -134,24 +134,24 @@ export default function DashboardStats() {
       {/* Side-specific stats if available */}
       {(stats.bride || stats.groom) && (
         <div>
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Side-Specific Statistics</h2>
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Thống kê theo bên</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Bride's Side */}
             {stats.bride && (
               <div className="bg-white overflow-hidden shadow-sm rounded-lg p-6">
-                <h3 className="text-lg font-medium text-primary mb-4">Bride&apos;s Side</h3>
+                <h3 className="text-lg font-medium text-primary mb-4">Bên nhà gái</h3>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Total</p>
+                    <p className="text-sm text-gray-500">Tổng</p>
                     <p className="text-xl font-semibold">{stats.bride.total}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Attending</p>
+                    <p className="text-sm text-gray-500">Tham dự</p>
                     <p className="text-xl font-semibold text-green-600">{stats.bride.attending}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Pending</p>
+                    <p className="text-sm text-gray-500">Chưa phản hồi</p>
                     <p className="text-xl font-semibold text-yellow-600">{stats.bride.pending}</p>
                   </div>
                 </div>
@@ -161,18 +161,18 @@ export default function DashboardStats() {
             {/* Groom's Side */}
             {stats.groom && (
               <div className="bg-white overflow-hidden shadow-sm rounded-lg p-6">
-                <h3 className="text-lg font-medium text-primary mb-4">Groom&apos;s Side</h3>
+                <h3 className="text-lg font-medium text-primary mb-4">Bên nhà trai</h3>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Total</p>
+                    <p className="text-sm text-gray-500">Tổng</p>
                     <p className="text-xl font-semibold">{stats.groom.total}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Attending</p>
+                    <p className="text-sm text-gray-500">Tham dự</p>
                     <p className="text-xl font-semibold text-green-600">{stats.groom.attending}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-500">Pending</p>
+                    <p className="text-sm text-gray-500">Chưa phản hồi</p>
                     <p className="text-xl font-semibold text-yellow-600">{stats.groom.pending}</p>
                   </div>
                 </div>

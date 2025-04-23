@@ -17,15 +17,15 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    
+
     if (selectedFile) {
       // Check if it's a CSV file
       if (selectedFile.type !== 'text/csv' && !selectedFile.name.endsWith('.csv')) {
-        setError('Please select a CSV file');
+        setError('Vui lòng chọn tập tin CSV');
         setFile(null);
         return;
       }
-      
+
       setFile(selectedFile);
       setError('');
     }
@@ -53,19 +53,19 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    
+
     const droppedFiles = e.dataTransfer.files;
-    
+
     if (droppedFiles.length > 0) {
       const selectedFile = droppedFiles[0];
-      
+
       // Check if it's a CSV file
       if (selectedFile.type !== 'text/csv' && !selectedFile.name.endsWith('.csv')) {
         setError('Please select a CSV file');
         setFile(null);
         return;
       }
-      
+
       setFile(selectedFile);
       setError('');
     }
@@ -73,35 +73,35 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!file) {
       setError('Please select a CSV file to import');
       return;
     }
-    
+
     setUploading(true);
     setError('');
-    
+
     try {
       const formData = new FormData();
       formData.append('file', file);
-      
+
       const response = await fetch('/api/guests/import', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Failed to import guests');
+        throw new Error(data.message || 'Không thể nhập danh sách khách');
       }
-      
-      showToast.success('Guests imported successfully');
+
+      showToast.success('Nhập danh sách khách thành công');
       onImportSuccess();
     } catch (err: any) {
       console.error('Error importing guests:', err);
-      setError(err.message || 'An error occurred while importing guests');
-      showToast.error(err.message || 'An error occurred while importing guests');
+      setError(err.message || 'Đã xảy ra lỗi khi nhập danh sách khách');
+      showToast.error(err.message || 'Đã xảy ra lỗi khi nhập danh sách khách');
     } finally {
       setUploading(false);
     }
@@ -110,11 +110,11 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
   const handleDownloadTemplate = () => {
     // Create CSV content with UTF-8 BOM (Byte Order Mark) to ensure UTF-8 encoding is recognized
     // Including Vietnamese examples to demonstrate support
-    const csvContent = '\ufeff' + 'name,side,tags,rsvp_status\n' + 
-      'Nguyễn Văn Anh,bride,"family,friend",pending\n' + 
-      'Trần Thị Bình,groom,"colleague",pending\n' + 
+    const csvContent = '\ufeff' + 'name,side,tags,rsvp_status\n' +
+      'Nguyễn Văn Anh,bride,"family,friend",pending\n' +
+      'Trần Thị Bình,groom,"colleague",pending\n' +
       'Phạm Xuân Cường,bride,"family",pending\n';
-    
+
     // Create a blob with UTF-8 encoding specified
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -139,18 +139,18 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
             <X />
           </button>
         </div>
-        
+
         <div className="px-6 py-4">
           <p className="text-sm text-gray-600 mb-4">
-            Upload a CSV file with guest information. The file should have the following columns:
+            Tải lên tập tin CSV với thông tin khách mời. Tập tin nên có các cột sau:
             <code className="block bg-gray-100 p-2 mt-2 rounded text-xs">
               name,side,tags,rsvp_status
             </code>
             <span className="block mt-2 text-xs">
-              Both comma (,) and semicolon (;) separators are supported.
+              Hỗ trợ cả dấu phân cách dấu phẩy (,) và dấu chấm phẩy (;).
             </span>
           </p>
-          
+
           <div className="mb-6">
             <button
               type="button"
@@ -158,17 +158,17 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-xs text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               <Download className="-ml-1 mr-2 h-4 w-4" />
-              Download Template
+              Tải mẫu
             </button>
           </div>
-          
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Select CSV File
               </label>
-              
-              <div 
+
+              <div
                 className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${isDragging ? 'border-primary bg-primary-light' : 'border-gray-300'} border-dashed rounded-md`}
                 onDragEnter={handleDragEnter}
                 onDragOver={handleDragOver}
@@ -199,20 +199,20 @@ export default function ImportGuestsModal({ onClose, onImportSuccess }: ImportGu
                   </p>
                 </div>
               </div>
-              
+
               {file && (
                 <div className="mt-2 text-sm text-gray-600">
                   Selected file: <span className="font-medium">{file.name}</span>
                 </div>
               )}
-              
+
               {error && (
                 <div className="mt-2 text-sm text-red-600">
                   {error}
                 </div>
               )}
             </div>
-            
+
             <div className="mt-6 flex justify-end">
               <button
                 type="button"

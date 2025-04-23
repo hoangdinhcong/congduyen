@@ -21,20 +21,20 @@ export function useAdminGuests() {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const response = await fetch('/api/guests');
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch guests');
+        throw new Error('Không thể tải danh sách khách');
       }
-      
+
       const data = await response.json();
       setGuests(data);
       return data;
     } catch (error) {
       console.error('Error fetching guests:', error);
-      setError(error instanceof Error ? error.message : 'Failed to load guests');
-      showToast.error('Failed to load guests');
+      setError(error instanceof Error ? error.message : 'Không thể tải danh sách khách');
+      showToast.error('Không thể tải danh sách khách');
       throw error;
     } finally {
       setIsLoading(false);

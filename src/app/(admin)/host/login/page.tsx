@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 import LoginForm from '@/components/admin/LoginForm';
 
 export const metadata: Metadata = {
-  title: 'Admin Login | Cong & Duyen Wedding',
-  description: 'Admin login for Cong & Duyen wedding invitation website',
+  title: 'Đăng nhập quản trị | Thiệp cưới Công & Duyên',
+  description: 'Trang đăng nhập quản trị thiệp cưới Công & Duyên',
 };
 
 export default function LoginPage() {
@@ -13,13 +13,13 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-heading font-medium text-secondary">
-            Admin Login
+            Đăng nhập quản trị
           </h1>
           <p className="mt-2 text-sm text-gray-600">
-            Please enter your credentials to access the admin panel
+            Vui lòng nhập mật khẩu để truy cập trang quản trị
           </p>
         </div>
-        
+
         <LoginForm />
       </div>
     </div>
