@@ -1,21 +1,14 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  functions = "netlify/functions"
+
+[build.environment]
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NODE_VERSION = "20.12.1"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Handle dynamic routes and SPA fallback
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
-  conditions = {Role = ["anonymous"]}
-
-# Ensure invite links work properly
-[[redirects]]
-  from = "/invite/*"
-  to = "/invite/[uniqueGuestId].html"
-  status = 200
-  force = false
+[[plugins]]
+  package = "netlify-plugin-cache-nextjs"

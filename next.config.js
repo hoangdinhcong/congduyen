@@ -28,40 +28,31 @@ let nextConfig = {
       // Allow images from your own domains
       { protocol: 'https', hostname: 'congduyen.vercel.app' },
       { protocol: 'https', hostname: 'congduyen.netlify.app' },
+      // Common image hosting services
+      { protocol: 'https', hostname: '*.cloudinary.com' },
+      { protocol: 'https', hostname: '*.unsplash.com' },
     ],
   },
 
-  // Recommended security headers
+  // Security headers externalized
   async headers() {
+    const { securityHeaders } = require('./lib/security');
     return [
       {
         source: '/:path*',
-        headers: [
-          { key: 'X-DNS-Prefetch-Control', value: 'on' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' }, // Changed from DENY to allow embedding in your own site
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          // Add Content-Security-Policy for better security
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https:;"
-          },
-        ],
+        headers: securityHeaders,
       },
     ];
   },
 
-  // Redirects for handling social media sharing links
-  async redirects() {
-    return [
-      {
-        // Ensure invite links are properly handled
-        source: '/invite/:uniqueGuestId',
-        destination: '/invite/:uniqueGuestId',
-        permanent: true,
-      },
-    ];
+  // Performance optimizations
+  experimental: {
+    // Server Actions configuration in Next.js 15
+    serverActions: {
+      allowedOrigins: ['localhost:3000, localhost:3001', 'congduyen.vercel.app', 'congduyen.netlify.app']
+    },
+    // Improved bundle optimization
+    optimizePackageImports: ['@/components'],
   },
 
   // Only ignore ESLint errors in production builds
@@ -71,20 +62,6 @@ let nextConfig = {
     dirs: ['src'],
   },
 };
-
-// Netlify-specific configuration
-if (isNetlify) {
-  nextConfig = {
-    ...nextConfig,
-    // For static site generation on Netlify
-    output: 'export',
-    // Disable image optimization for static export
-    images: {
-      ...nextConfig.images,
-      unoptimized: true,
-    },
-  };
-}
 
 // Vercel-specific configuration
 if (isVercel) {
