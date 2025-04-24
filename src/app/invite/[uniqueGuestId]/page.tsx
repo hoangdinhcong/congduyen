@@ -45,7 +45,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`;
+  const title = `Lời mời tới ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`;
   const description = `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`;
 
   return {
