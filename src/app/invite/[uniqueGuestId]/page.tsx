@@ -58,21 +58,13 @@ export async function generateMetadata({
       description,
       siteName: 'Đám cưới Công & Duyên',
       url: `${baseUrl}/invite/${uniqueGuestId}`,
-      images: [
-        {
-          url: `${baseUrl}/hero.jpg`,
-          width: 1200,
-          height: 630,
-          alt: 'Thiệp mời cưới Công & Duyên',
-        }
-      ],
       locale: 'vi_VN',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${baseUrl}/hero.jpg`],
+      images: [`${baseUrl}/invite/${uniqueGuestId}/opengraph-image.png`],
     },
   };
 }
