@@ -17,6 +17,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ uniqueGuestId: string }>
 }): Promise<Metadata> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://congduyen.vercel.app';
   // Fetch guest data
   const { uniqueGuestId } = await params;
   const { data: guest } = await supabase
@@ -29,24 +30,49 @@ export async function generateMetadata({
     return {
       title: 'Không tìm thấy lời mời | Đám cưới Hoàng Công & Mỹ Duyên',
       description: 'Lời mời bạn đang tìm kiếm không tồn tại.',
+      openGraph: {
+        title: 'Không tìm thấy lời mời | Đám cưới Hoàng Công & Mỹ Duyên',
+        description: 'Lời mời bạn đang tìm kiếm không tồn tại.',
+        images: [
+          {
+            url: `${baseUrl}/hero.jpg`,
+            width: 1200,
+            height: 630,
+            alt: 'Thiệp mời cưới Công & Duyên',
+          }
+        ],
+      }
     };
   }
 
+  const title = `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`;
+  const description = `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`;
+
   return {
-    title: `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`,
-    description: `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`,
+    title,
+    description,
+    metadataBase: new URL(baseUrl),
     openGraph: {
-      title: `Lời mời của ${guest.name} | Đám cưới Hoàng Công & Mỹ Duyên`,
-      description: `${guest.name}, bạn được trân trọng mời đến dự đám cưới của Hoàng Công & Mỹ Duyên.`,
-      url: `./`,
+      type: 'website',
+      title,
+      description,
+      siteName: 'Đám cưới Công & Duyên',
+      url: `${baseUrl}/invite/${uniqueGuestId}`,
       images: [
         {
-          url: '/hero.jpg',
+          url: `${baseUrl}/hero.jpg`,
           width: 1200,
           height: 630,
           alt: 'Thiệp mời cưới Công & Duyên',
         }
       ],
+      locale: 'vi_VN',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${baseUrl}/hero.jpg`],
     },
   };
 }
