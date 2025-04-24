@@ -13,7 +13,7 @@ export const contentType = 'image/png';
 export default async function OGImage() {
   // Use absolute URL for the background image
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://congduyen.vercel.app';
-  const imageUrl = `${baseUrl}/hero.jpg`;
+  const imageUrl = `${baseUrl}/og-image.jpg`;
 
   return new ImageResponse(
     (
