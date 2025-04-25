@@ -364,7 +364,8 @@ const RsvpSection = ({
         </div>
 
         <div className="text-center mt-12 text-gray-600 fade-in font-sans" style={{ animationDelay: "0.4s" }}>
-          <p className="font-sans">Xác nhận giúp chúng mình trước ngày 24 tháng 4, 2025 nha, để chúng mình chuẩn bị và đón tiếp bạn tốt nhất</p>
+          <p className="font-sans">Để chúng mình chuẩn bị và đón tiếp bạn tốt nhất,</p>
+          <p className="font-sans">{guestName} vui lòng xác nhận trước <strong>ngày 28 tháng 4, 2025</strong> nha</p>
           <p className="mt-2 font-sans">Nếu bạn cần hỗ trợ, cứ nhắn chúng mình 🥂</p>
 
           <div className="flex justify-center gap-4 mt-4">

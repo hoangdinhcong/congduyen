@@ -4,8 +4,8 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import DashboardStats from '@/components/admin/DashboardStats';
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard | Cong & Duyen Wedding',
-  description: 'Admin dashboard for Cong & Duyen wedding invitation website',
+  title: 'Bảng điều khiển quản trị | Thiệp cưới Công & Duyên',
+  description: 'Trang quản trị cho website thiệp cưới Công & Duyên',
 };
 
 export default function AdminDashboardPage() {

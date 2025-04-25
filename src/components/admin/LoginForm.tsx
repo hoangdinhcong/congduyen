@@ -50,9 +50,9 @@ export default function LoginForm() {
     <div className="mt-8 bg-white py-8 px-4 shadow-sm sm:rounded-lg sm:px-10">
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
+          {/* <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Mật khẩu
+          </label> */}
           <div className="mt-1 relative rounded-md shadow-xs">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Lock className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -66,7 +66,7 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-hidden focus:ring-primary focus:border-primary sm:text-sm"
-              placeholder="Nhập mật khẩu quản trị"
+              placeholder="Nhập mật khẩu"
             />
           </div>
         </div>

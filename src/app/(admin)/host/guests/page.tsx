@@ -4,8 +4,8 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import GuestList from '@/components/admin/GuestList';
 
 export const metadata: Metadata = {
-  title: 'Guest Management | Cong & Duyen Wedding',
-  description: 'Manage guests for Cong & Duyen wedding invitation',
+  title: 'Quản lý khách mời | Thiệp cưới Công & Duyên',
+  description: 'Quản lý khách mời cho thiệp cưới Công & Duyên',
 };
 
 export default function GuestManagementPage() {
